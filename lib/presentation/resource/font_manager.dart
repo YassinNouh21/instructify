@@ -28,63 +28,61 @@ class FontWeightManager {
   static const FontWeight bold = FontWeight.w700;
 }
 
-class FontManager {
-  TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, double height,
-      {Color color = Colors.black}) {
-    return TextStyle(
-      fontSize: fontSize,
-      fontFamily: GoogleFonts.poppins().fontFamily,
-      color: color,
-      fontWeight: fontWeight,
-      height: height,
-    );
-  }
+TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, double height,
+    {Color color = Colors.black}) {
+  return TextStyle(
+    fontSize: fontSize,
+    fontFamily: GoogleFonts.poppins().fontFamily,
+    color: color,
+    fontWeight: fontWeight,
+    height: height,
+  );
+}
 
-  TextStyle getRegularStyle(
-      {double fontSize = FontSize.s12,
-      double height = 1,
-      Color color = Colors.black}) {
-    return _getTextStyle(
-      fontSize,
-      FontWeightManager.regular,
-      height,
-      color: color,
-    );
-  }
+TextStyle getRegularStyle(
+    {double fontSize = FontSize.s12,
+    double height = 1,
+    Color color = Colors.black}) {
+  return _getTextStyle(
+    fontSize,
+    FontWeightManager.regular,
+    height,
+    color: color,
+  );
+}
 
-  TextStyle getBoldStyle(
-      {double fontSize = FontSize.s12,
-      double height = 1,
-      Color color = Colors.black}) {
-    return _getTextStyle(
-      fontSize,
-      FontWeightManager.bold,
-      height,
-      color: color,
-    );
-  }
+TextStyle getBoldStyle(
+    {double fontSize = FontSize.s12,
+    double height = 1,
+    Color color = Colors.black}) {
+  return _getTextStyle(
+    fontSize,
+    FontWeightManager.bold,
+    height,
+    color: color,
+  );
+}
 
-  TextStyle getSemiBoldStyle(
-      {double fontSize = FontSize.s12,
-      double height = 1,
-      Color color = Colors.black}) {
-    return _getTextStyle(
-      fontSize,
-      FontWeightManager.semiBold,
-      height,
-      color: color,
-    );
-  }
+TextStyle getSemiBoldStyle(
+    {double fontSize = FontSize.s12,
+    double height = 1,
+    Color color = Colors.black}) {
+  return _getTextStyle(
+    fontSize,
+    FontWeightManager.semiBold,
+    height,
+    color: color,
+  );
+}
 
-  TextStyle getMediumStyle(
-      {double fontSize = FontSize.s12,
-      double height = 1,
-      Color color = Colors.black}) {
-    return _getTextStyle(
-      fontSize,
-      FontWeightManager.medium,
-      height,
-      color: color,
-    );
-  }
+TextStyle getMediumStyle(
+    {double fontSize = FontSize.s12,
+    double height = 1,
+    Color color = Colors.black}) {
+  return _getTextStyle(
+    fontSize,
+    FontWeightManager.medium,
+    height,
+    color: color,
+  );
 }

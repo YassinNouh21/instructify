@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ColorManager {
   static Color primaryColor = HexColor.fromHex("F2F6F9");
   static Color secondaryColor = HexColor.fromHex("3D5CFF");
+  static Color scaffoldBackgroundColor = HexColor.fromHex("#2F6F9");
   static Color fontColor = HexColor.fromHex("FF6905");
   static Color backgroundButtonColor = HexColor.fromHex("FFEBF0");
   static Color foregroundButtonColor = HexColor.fromHex("FF6905");

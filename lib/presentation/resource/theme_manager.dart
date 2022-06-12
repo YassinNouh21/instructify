@@ -7,5 +7,8 @@ class AppThemeData{
     scaffoldBackgroundColor: ColorManager.scaffoldBackgroundColor,
     primaryColor: ColorManager.primaryColor,
     
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle()
+    )
   );
 }

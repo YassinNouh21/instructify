@@ -17,7 +17,10 @@ class Routes {
   static const String splashRoute = "/";
   static const String onBoardingRoute = "/onboarding";
   static const String loginRoute = "/login";
-  static const String registerRoute = "/register";
+  static const String registerOneRoute = "/registertwo";
+  static const String registerTwoRoute = "/registerone";
+  static const String choosePositionRoute = "/chooseposition";
+  static const String chooseSignInMehtodRoute = "/choosesigninmethod";
   static const String forgotPasswordRoute = "/forgotpassword";
   static const String mainRoute = "/main";
   static const String categoryRoute = "/category";

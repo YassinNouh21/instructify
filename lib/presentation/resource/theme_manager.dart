@@ -3,8 +3,8 @@ import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/font_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 
-class AppThemeData {
-  ThemeData themeData = ThemeData(
+ThemeData getApplicationTheme(context) {
+  return ThemeData(
     primarySwatch: Colors.blue,
     scaffoldBackgroundColor: ColorManager.scaffoldBackgroundColor,
     primaryColor: ColorManager.primaryColor,
@@ -35,18 +35,18 @@ class AppThemeData {
         height: SizeManager.s1,
       ),
     ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(SizeManager.s8))),
-        backgroundColor: MaterialStateProperty.all(ColorManager.primaryColor),
-        alignment: Alignment.center,
-        fixedSize: MaterialStateProperty.all(
-            const Size(SizeManager.s325, SizeManager.s60)),
-        textStyle: MaterialStateProperty.all(
-            AppThemeData().themeData.textTheme.button),
-      ),
-    ),
   );
 }
+//  elevatedButtonTheme: ElevatedButtonThemeData(
+//       style: ButtonStyle(
+//         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+//             RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(SizeManager.s8))),
+//         backgroundColor: MaterialStateProperty.all(ColorManager.primaryColor),
+//         alignment: Alignment.center,
+//         fixedSize: MaterialStateProperty.all(
+//             const Size(SizeManager.s325, SizeManager.s60)),
+//         textStyle: MaterialStateProperty.all(
+//             getApplicationTheme(context).textTheme.button),
+//       ),
+//     ),

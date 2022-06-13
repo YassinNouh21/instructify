@@ -35,7 +35,6 @@ TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, double height,
     fontFamily: GoogleFonts.poppins().fontFamily,
     color: color,
     fontWeight: fontWeight,
-    height: height,
   );
 }
 

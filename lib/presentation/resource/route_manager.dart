@@ -5,9 +5,11 @@ import 'package:instructify/presentation/screens/main/main_view.dart';
 import 'package:instructify/presentation/screens/on_boarding/on_boarding_view.dart';
 import 'package:instructify/presentation/screens/payment/payment_view.dart';
 import 'package:instructify/presentation/screens/register/register_view.dart';
+import 'package:instructify/presentation/screens/register_two/register_two_view.dart';
 import 'package:instructify/presentation/screens/splash/splash_view.dart';
-
 import '../screens/category/category_view.dart';
+import '../screens/choose_position/choose_position_view.dart';
+import '../screens/choose_sigin_method/choose_signin_method_view.dart';
 import '../screens/course_detail/course_detail_view.dart';
 import '../screens/course_progress/course_progress_view.dart';
 import '../screens/courses/courses_view.dart';
@@ -17,7 +19,7 @@ class Routes {
   static const String splashRoute = "/";
   static const String onBoardingRoute = "/onboarding";
   static const String loginRoute = "/login";
-  static const String registerOneRoute = "/registertwo";
+  static const String registerRoute = "/register";
   static const String registerTwoRoute = "/registerone";
   static const String choosePositionRoute = "/chooseposition";
   static const String chooseSignInMehtodRoute = "/choosesigninmethod";
@@ -58,6 +60,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CoursesView());
       case Routes.courseDetailRoute:
         return MaterialPageRoute(builder: (_) => const CourseDetailView());
+      case Routes.registerTwoRoute:
+        return MaterialPageRoute(builder: (_) => const RegisterTwoView());
+      case Routes.choosePositionRoute:
+        return MaterialPageRoute(builder: (_) => const ChoosePositionView());
+      case Routes.chooseSignInMehtodRoute:
+        return MaterialPageRoute(builder: (_) => const ChooseSignInMethodView());
       default:
         return unDefinedRoute();
     }

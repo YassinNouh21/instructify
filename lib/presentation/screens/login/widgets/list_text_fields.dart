@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/shared/single_text_field.dart';
 
-class ListTextFields extends StatefulWidget {
-  const ListTextFields({Key? key}) : super(key: key);
-
-  @override
-  State<ListTextFields> createState() => ListTextFieldsState();
-}
-
-class ListTextFieldsState extends State<ListTextFields> {
+class ListTextFields extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  ListTextFields({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -20,15 +15,16 @@ class ListTextFieldsState extends State<ListTextFields> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SingleTextField(
-            controller: _firstNameController,
-            label: 'First Name',
+            controller: _emailController,
+            label: 'Email',
           ),
           const SizedBox(
             height: SizeManager.s28,
           ),
           SingleTextField(
-            controller: _firstNameController,
-            label: 'Last Name',
+            controller: _passwordController,
+            label: 'Password',
+            showPassword: true,
           )
         ],
       ),

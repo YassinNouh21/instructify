@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/shared/single_text_field.dart';
@@ -21,14 +22,17 @@ class ListTextFieldsState extends State<ListTextFields> {
         children: [
           SingleTextField(
             controller: _firstNameController,
-            label: 'First Name',
+            label: 'Password',
+            showPassword: true,
           ),
           const SizedBox(
             height: SizeManager.s28,
           ),
           SingleTextField(
             controller: _firstNameController,
-            label: 'Last Name',
+            label: 'Repeat Password',
+            showPassword: true,
+
           )
         ],
       ),

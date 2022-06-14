@@ -8,6 +8,7 @@ class ColorManager {
   static Color backgroundButtonColor = HexColor.fromHex("FFEBF0");
   static Color foregroundButtonColor = HexColor.fromHex("FF6905");
   static Color secondBackgroundButtonColor = HexColor.fromHex("F4F3FD");
+  static Color borderColor = HexColor.fromHex("707070");
 }
 
 class LinearGradientManager {

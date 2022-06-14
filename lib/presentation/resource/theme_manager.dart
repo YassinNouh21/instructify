@@ -31,6 +31,10 @@ ThemeData getApplicationTheme(context) {
         fontSize: SizeManager.s16,
         height: SizeManager.s1,
       ),
+      bodyText1: getRegularStyle(
+        fontSize: SizeManager.s18,
+        height: SizeManager.s1,
+      ),
       subtitle1: getRegularStyle(
         fontSize: SizeManager.s16,
         height: SizeManager.s1,
@@ -42,6 +46,23 @@ ThemeData getApplicationTheme(context) {
       caption: getRegularStyle(
         fontSize: SizeManager.s12,
         height: SizeManager.s1,
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: const OutlineInputBorder(),
+      enabledBorder:  OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(SizeManager.s8)),
+        borderSide: BorderSide(
+          color: ColorManager.borderColor,
+          width: SizeManager.s1,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(SizeManager.s8)),
+        borderSide: BorderSide(
+          color: ColorManager.secondaryColor,
+          width: SizeManager.s1,
+        ),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

@@ -35,18 +35,57 @@ ThemeData getApplicationTheme(context) {
         height: SizeManager.s1,
       ),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(SizeManager.s8))),
+        backgroundColor: MaterialStateProperty.all(ColorManager.secondaryColor),
+        alignment: Alignment.center,
+        fixedSize: MaterialStateProperty.all(
+            const Size(SizeManager.s325, SizeManager.s60)),
+        textStyle: MaterialStateProperty.all(
+          getRegularStyle(
+            color: Colors.white,
+            fontSize: SizeManager.s16,
+            height: SizeManager.s1,
+          ),
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(SizeManager.s8))),
+        backgroundColor: MaterialStateProperty.all(Colors.white),
+        alignment: Alignment.center,
+        fixedSize: MaterialStateProperty.all(
+          const Size(SizeManager.s325, SizeManager.s60),
+        ),
+        textStyle: MaterialStateProperty.all(
+          getRegularStyle(
+            color: Colors.white,
+            fontSize: SizeManager.s16,
+            height: SizeManager.s1,
+          ),
+        ),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(SizeManager.s8))),
+        backgroundColor: MaterialStateProperty.all(Colors.white),
+        alignment: Alignment.center,
+        textStyle: MaterialStateProperty.all(
+          getRegularStyle(
+            fontSize: SizeManager.s16,
+            height: SizeManager.s1,
+          ).copyWith(decoration: TextDecoration.underline),
+        ),
+      ),
+    ),
   );
 }
-//  elevatedButtonTheme: ElevatedButtonThemeData(
-//       style: ButtonStyle(
-//         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-//             RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(SizeManager.s8))),
-//         backgroundColor: MaterialStateProperty.all(ColorManager.primaryColor),
-//         alignment: Alignment.center,
-//         fixedSize: MaterialStateProperty.all(
-//             const Size(SizeManager.s325, SizeManager.s60)),
-//         textStyle: MaterialStateProperty.all(
-//             getApplicationTheme(context).textTheme.button),
-//       ),
-//     ),

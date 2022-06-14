@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'presentation/resource/theme_manager.dart';
+import 'presentation/screens/choose_sigin_method/choose_signin_method_view.dart';
 import 'presentation/screens/on_boarding/on_boarding_view.dart';
 
 class MyApp extends StatelessWidget{
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget{
     return  MaterialApp(
       theme: getApplicationTheme(context),
       title: 'Flutter Demo',
-      home: OnBoardingView(),
+      home: ChooseSignInMethodView(),
     );
   }
 }

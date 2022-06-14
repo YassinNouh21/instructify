@@ -5,9 +5,18 @@ import 'package:instructify/presentation/resource/size_manager.dart';
 
 ThemeData getApplicationTheme(context) {
   return ThemeData(
-    primarySwatch: Colors.blue,
     scaffoldBackgroundColor: ColorManager.scaffoldBackgroundColor,
     primaryColor: ColorManager.primaryColor,
+    unselectedWidgetColor: Colors.black,
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      titleTextStyle: getRegularStyle(
+        fontSize: SizeManager.s16,
+        height: SizeManager.s1,
+      ),
+    ),
     textTheme: TextTheme(
       headline5: getRegularStyle(
         fontSize: SizeManager.s25,
@@ -53,6 +62,13 @@ ThemeData getApplicationTheme(context) {
         ),
       ),
     ),
+    listTileTheme: ListTileThemeData(
+      selectedTileColor: (ColorManager.secondaryColor),
+      iconColor: (ColorManager.secondaryColor),
+    ),
+    radioTheme: RadioThemeData(
+        fillColor: MaterialStateColor.resolveWith(
+            (states) => ColorManager.secondaryColor)),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(

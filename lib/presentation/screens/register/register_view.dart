@@ -5,9 +5,11 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Register Screen'),
+    return SafeArea(
+      child:  Scaffold(
+        body: Center(
+          child: Text('Register Screen'),
+        ),
       ),
     );
   }

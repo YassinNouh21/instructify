@@ -1,0 +1,4 @@
+enum SignPositionOptions {
+  student,
+  teacher,
+}

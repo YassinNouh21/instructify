@@ -12,7 +12,8 @@ class ListTextFields extends StatefulWidget {
 
 class ListTextFieldsState extends State<ListTextFields> {
   final _formKey = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _repeatedPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -21,7 +22,7 @@ class ListTextFieldsState extends State<ListTextFields> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SingleTextField(
-            controller: _firstNameController,
+            controller: _passwordController,
             label: 'Password',
             showPassword: true,
           ),
@@ -29,7 +30,7 @@ class ListTextFieldsState extends State<ListTextFields> {
             height: SizeManager.s28,
           ),
           SingleTextField(
-            controller: _firstNameController,
+            controller: _repeatedPasswordController,
             label: 'Repeat Password',
             showPassword: true,
 

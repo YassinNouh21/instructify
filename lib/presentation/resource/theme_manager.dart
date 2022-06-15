@@ -5,7 +5,7 @@ import 'package:instructify/presentation/resource/size_manager.dart';
 
 ThemeData getApplicationTheme(context) {
   return ThemeData(
-    scaffoldBackgroundColor: ColorManager.scaffoldBackgroundColor,
+    scaffoldBackgroundColor: Colors.white,
     primaryColor: ColorManager.primaryColor,
     unselectedWidgetColor: Colors.black,
     appBarTheme: AppBarTheme(

@@ -12,6 +12,7 @@ class ListTextFields extends StatefulWidget {
 class ListTextFieldsState extends State<ListTextFields> {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -27,7 +28,7 @@ class ListTextFieldsState extends State<ListTextFields> {
             height: SizeManager.s28,
           ),
           SingleTextField(
-            controller: _firstNameController,
+            controller: _lastNameController,
             label: 'Last Name',
           )
         ],

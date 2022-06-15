@@ -4,9 +4,9 @@ import 'package:instructify/presentation/resource/size_manager.dart';
 
 class SingleTextField extends StatefulWidget {
   final String label;
-  TextEditingController controller;
+  final TextEditingController controller;
   final bool? showPassword;
-  SingleTextField({
+  const SingleTextField({
     Key? key,
     required this.label,
     required this.controller,
@@ -18,9 +18,15 @@ class SingleTextField extends StatefulWidget {
 }
 
 class _SingleTextFieldState extends State<SingleTextField> {
-  bool _showSwitchIcon = false;
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool? _showSwitchIcon = widget.showPassword ?? false;
     double width = MediaQuery.of(context).size.width -
         (MediaQuery.of(context).size.width * 0.15);
     return SizedBox(
@@ -38,9 +44,10 @@ class _SingleTextFieldState extends State<SingleTextField> {
           const SizedBox(
             height: SizeManager.s16,
           ),
-          TextField(
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
             controller: widget.controller,
-            obscureText: _showSwitchIcon ? false : true,
+            obscureText: _showSwitchIcon,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(SizeManager.s8),
@@ -49,26 +56,24 @@ class _SingleTextFieldState extends State<SingleTextField> {
                   ? IconButton(
                       icon: Icon(
                         _showSwitchIcon
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                         color: ColorManager.secondaryColor,
                         size: SizeManager.s20,
                       ),
                       onPressed: () {
                         setState(() {
-                          _showSwitchIcon = !_showSwitchIcon;
+                          if (!_showSwitchIcon!) {
+                            _showSwitchIcon = false;
+                          } else {
+                            _showSwitchIcon = true;
+                          }
                         });
                       },
                     )
                   : null,
             ),
-            onChanged: (value) {
-              setState(() {
-                widget.controller.text = value;
-              });
-            },
-            keyboardType: TextInputType.text,
-          )
+          ),
         ],
       ),
     );

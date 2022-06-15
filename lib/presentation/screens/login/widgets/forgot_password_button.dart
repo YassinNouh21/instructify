@@ -8,11 +8,11 @@ class ForgotPasswordButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () =>
-          Navigator.pushNamed(context, Routes.loginRoute),
+          Navigator.pushNamed(context, Routes.forgotPasswordRoute),
       child: const Text(
         'Forgot Password',
         style: TextStyle(color: Colors.black),
       ),
     );
-  }
+  } 
 }

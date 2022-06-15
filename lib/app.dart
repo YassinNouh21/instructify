@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:instructify/presentation/screens/choose_position/choose_position_view.dart';
+import 'package:instructify/presentation/resource/route_manager.dart';
 
 import 'presentation/resource/theme_manager.dart';
-import 'presentation/screens/choose_sigin_method/choose_signin_method_view.dart';
-import 'presentation/screens/login/login_view.dart';
-import 'presentation/screens/on_boarding/on_boarding_view.dart';
-import 'presentation/screens/register/register_view.dart';
-import 'presentation/screens/register_two/register_two_view.dart';
 
 class MyApp extends StatelessWidget {
   static const instance = MyApp._private();
@@ -18,7 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: getApplicationTheme(context),
       title: 'Flutter Demo',
-      home: LoginView(),
+      onGenerateRoute: RouteGenerator.getRoute,
+      initialRoute: Routes.onBoardingRoute,
     );
   }
 }

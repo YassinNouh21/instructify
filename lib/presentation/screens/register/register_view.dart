@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/screens/register/widgets/list_text_fields.dart';
 import 'package:instructify/presentation/shared/app_main_button.dart';
@@ -28,7 +29,11 @@ class RegisterView extends StatelessWidget {
             const ListTextFields(),
             const Expanded(flex: 6, child: SizedBox()),
             AppMainButton.fullWidth(
-                onPressed: () {}, text: 'Next', widthQuery: width),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.registerTwoRoute);
+                },
+                text: 'Next',
+                widthQuery: width),
             const SizedBox(
               height: SizeManager.s28,
             )

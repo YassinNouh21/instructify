@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
+import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -68,7 +69,7 @@ class OnBoarding extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyText1,
       ),
       onDone: () {
-        Navigator.of(context).pushReplacementNamed('/login');
+        Navigator.of(context).pushReplacementNamed(Routes.chooseSignInMehtodRoute);
       },
     );
   }

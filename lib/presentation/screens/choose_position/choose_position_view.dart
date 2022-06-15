@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/screens/choose_position/widgets/radio_buttons.dart';
 import 'package:instructify/presentation/shared/app_main_button.dart';
 
 import '../../shared/sign_in_app_bar.dart';
+
 // FIXME app bar top margin
 class ChoosePositionView extends StatelessWidget {
   const ChoosePositionView({Key? key}) : super(key: key);
@@ -22,8 +24,14 @@ class ChoosePositionView extends StatelessWidget {
           const AppRadioButtons(),
           Expanded(child: Container()),
           AppMainButton.fullWidth(
-              onPressed: () {}, text: 'Next', widthQuery: width ),
-              const SizedBox(height: SizeManager.s28,),
+              onPressed: () {
+                Navigator.of(context).pushNamed(Routes.registerRoute);
+              },
+              text: 'Next',
+              widthQuery: width),
+          const SizedBox(
+            height: SizeManager.s28,
+          ),
         ],
       ),
     );

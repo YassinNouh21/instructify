@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/font_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 
+// FIXME font size respnsive
 ThemeData getApplicationTheme(context) {
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
@@ -19,38 +21,38 @@ ThemeData getApplicationTheme(context) {
     ),
     textTheme: TextTheme(
       headline5: getRegularStyle(
-        fontSize: SizeManager.s25,
+        fontSize: SizeManager.s25.sp,
         height: SizeManager.s1,
       ),
       headline6: getRegularStyle(
-        fontSize: SizeManager.s20,
+        fontSize: SizeManager.s20.sp,
         height: SizeManager.s1,
       ),
       button: getRegularStyle(
         color: Colors.white,
-        fontSize: SizeManager.s16,
+        fontSize: SizeManager.s16.sp,
         height: SizeManager.s1,
       ),
       bodyText1: getRegularStyle(
-        fontSize: SizeManager.s18,
+        fontSize: SizeManager.s18.sp,
         height: SizeManager.s1,
       ),
       subtitle1: getRegularStyle(
-        fontSize: SizeManager.s16,
+        fontSize: SizeManager.s16.sp,
         height: SizeManager.s1,
       ),
       subtitle2: getBoldStyle(
-        fontSize: SizeManager.s14,
+        fontSize: SizeManager.s14.sp,
         height: SizeManager.s1,
       ),
       caption: getRegularStyle(
-        fontSize: SizeManager.s12,
+        fontSize: SizeManager.s12.sp,
         height: SizeManager.s1,
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       border: const OutlineInputBorder(),
-      enabledBorder:  OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderRadius: const BorderRadius.all(Radius.circular(SizeManager.s8)),
         borderSide: BorderSide(
           color: ColorManager.borderColor,

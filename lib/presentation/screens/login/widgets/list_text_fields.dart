@@ -17,6 +17,7 @@ class ListTextFields extends StatelessWidget {
           SingleTextField(
             controller: _emailController,
             label: 'Email',
+            showPassword: false,
           ),
           const SizedBox(
             height: SizeManager.s28,

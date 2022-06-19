@@ -23,6 +23,8 @@ class ListTextFieldsState extends State<ListTextFields> {
           SingleTextField(
             controller: _firstNameController,
             label: 'First Name',
+            showPassword: false,
+
           ),
           const SizedBox(
             height: SizeManager.s28,
@@ -30,6 +32,8 @@ class ListTextFieldsState extends State<ListTextFields> {
           SingleTextField(
             controller: _lastNameController,
             label: 'Last Name',
+            showPassword: false,
+
           )
         ],
       ),

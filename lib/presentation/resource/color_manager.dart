@@ -9,6 +9,8 @@ class ColorManager {
   static Color foregroundButtonColor = HexColor.fromHex("FF6905");
   static Color secondBackgroundButtonColor = HexColor.fromHex("F4F3FD");
   static Color borderColor = HexColor.fromHex("707070");
+  static Color shadowColor = HexColor.fromHex("B8B8D2");
+  static Color textUnselectedColor = HexColor.fromHex("B8B8D2");
 }
 
 class LinearGradientManager {

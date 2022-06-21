@@ -9,7 +9,7 @@ class CategoryContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(4),
@@ -24,20 +24,25 @@ class CategoryContainer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            height: 45.h,
-            width: 45.w,
-            child: Image.network(
-              'https://dummyimage.com/125x100/000/fff',
-              fit: BoxFit.cover,
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.network(
+                'https://dummyimage.com/125x100/000/fff',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-          SizedBox(height: 5.h,),
+          SizedBox(
+            height: 6.h,
+          ),
           Text(
             // TODO: Add name in Category
             'Topics',
             maxLines: 1,
-            style: Theme.of(context).textTheme.subtitle2!,
+            style: Theme.of(context).textTheme.caption!,
             textAlign: TextAlign.center,
           ),
         ],

@@ -8,4 +8,5 @@ class AssetsManager{
   static const String downloadIcon = "assets/svg/download_icon.svg";
   static const String profileIcon = "assets/svg/profile_icon.svg";
   static const String homeIcon = "assets/svg/home_icon.svg";
+  static const String backIcon = "assets/svg/back.svg";
 }

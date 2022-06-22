@@ -8,6 +8,8 @@ import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/shared/category_viewer.dart';
 import 'package:instructify/presentation/shared/courses_viewer.dart';
 import 'package:instructify/presentation/shared/main_app_bar.dart';
+
+import '../../resource/route_manager.dart';
 // FIXME: Responsive design
 
 class HomeView extends StatelessWidget {
@@ -111,7 +113,9 @@ class HomeView extends StatelessWidget {
               SizedBox(
                 width: SizeManager.s75,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.categoryRoute);
+                  },
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent)),

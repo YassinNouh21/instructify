@@ -1,4 +1,4 @@
-class AssetsManager{
+class AssetsManager {
   static const String onBoardingImg = "assets/svg/illustration.svg";
   static const String onBoardingImg2 = "assets/svg/illustration-1.svg";
   static const String onBoardingImg3 = "assets/svg/illustration-2.svg";
@@ -9,4 +9,6 @@ class AssetsManager{
   static const String profileIcon = "assets/svg/profile_icon.svg";
   static const String homeIcon = "assets/svg/home_icon.svg";
   static const String backIcon = "assets/svg/back.svg";
+  static const String downloadedIcon = "assets/svg/downloaded_icon.svg";
+  static const String playIcon = "assets/svg/button-play.svg";
 }

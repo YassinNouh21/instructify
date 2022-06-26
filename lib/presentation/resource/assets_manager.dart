@@ -11,4 +11,5 @@ class AssetsManager {
   static const String backIcon = "assets/svg/back.svg";
   static const String downloadedIcon = "assets/svg/downloaded_icon.svg";
   static const String playIcon = "assets/svg/button-play.svg";
+  static const String rightIcon = "assets/svg/right_arrow.svg";
 }

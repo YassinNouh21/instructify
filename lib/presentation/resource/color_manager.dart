@@ -11,6 +11,7 @@ class ColorManager {
   static Color borderColor = HexColor.fromHex("707070");
   static Color shadowColor = HexColor.fromHex("B8B8D2");
   static Color textUnselectedColor = HexColor.fromHex("B8B8D2");
+  static Color selectedProgressBarColor = HexColor.fromHex("707070");
 }
 
 class LinearGradientManager {

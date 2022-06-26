@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
         backgroundColor: ColorManager.primaryColor,
         body: Column(
           children: [
-            MainAppBar(),
+            MainAppBar.withSearchBar(),
             Expanded(flex: 3, child: categoryViewer(context, 'Yassin')),
             Expanded(flex: 4, child: courseViewer(context, 'Computer Science')),
             Expanded(flex: 4, child: courseViewer(context, 'Mathematics')),

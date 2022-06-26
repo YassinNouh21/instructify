@@ -28,6 +28,7 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorManager.secondBackgroundButtonColor,
       bottomNavigationBar: appBottomNavBar(),
       body: screens[_currentIndex],
     );

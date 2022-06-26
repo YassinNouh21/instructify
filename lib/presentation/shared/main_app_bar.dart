@@ -7,8 +7,13 @@ import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:sizer/sizer.dart';
 
 class MainAppBar extends StatelessWidget {
-  const MainAppBar({Key? key}) : super(key: key);
-
+  final bool searchBar;
+  const MainAppBar({Key? key, required this.searchBar}) : super(key: key);
+  factory MainAppBar.withSearchBar({searchBar = true}) {
+    return MainAppBar(
+      searchBar: searchBar = true,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +24,7 @@ class MainAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(
+          const SizedBox(
             width: double.infinity,
           ),
           Container(
@@ -62,11 +67,13 @@ class MainAppBar extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            height: SizeManager.s50,
-            width: 85.w,
-            color: ColorManager.primaryColor,
-          ),
+          searchBar
+              ? Container(
+                  height: SizeManager.s50,
+                  width: 85.w,
+                  color: ColorManager.primaryColor,
+                )
+              : Container(),
         ],
       ),
     );

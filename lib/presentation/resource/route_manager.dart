@@ -62,7 +62,7 @@ class RouteGenerator {
       case Routes.paymentRoute:
         return MaterialPageRoute(builder: (_) => const PaymentView());
       case Routes.searchRoute:
-        return MaterialPageRoute(builder: (_) => const SearchView());
+        return MaterialPageRoute(builder: (_) =>  SearchView());
       case Routes.courseProgressRoute:
         return MaterialPageRoute(builder: (_) => const CourseProgressView());
       case Routes.coursesRoute:

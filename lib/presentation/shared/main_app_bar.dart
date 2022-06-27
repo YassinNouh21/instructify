@@ -68,10 +68,15 @@ class MainAppBar extends StatelessWidget {
             ),
           ),
           searchBar
-              ? Container(
-                  height: SizeManager.s50,
-                  width: 85.w,
-                  color: ColorManager.primaryColor,
+              ? InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.searchRoute);
+                  },
+                  child: Container(
+                    height: SizeManager.s50,
+                    width: 85.w,
+                    color: ColorManager.primaryColor,
+                  ),
                 )
               : Container(),
         ],

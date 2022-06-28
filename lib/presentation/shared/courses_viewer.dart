@@ -20,7 +20,7 @@ class CoursesViewer extends StatelessWidget {
       ),
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        return const CourseContainer();
+        return  CourseContainer();
       },
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,

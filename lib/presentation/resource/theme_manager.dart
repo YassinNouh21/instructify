@@ -50,8 +50,7 @@ ThemeData getApplicationTheme(context) {
         height: SizeManager.s1,
       ),
     ),
-    sliderTheme: SliderThemeData(
-        trackHeight: 1, thumbShape: ),
+    sliderTheme: SliderThemeData(trackHeight: 1),
     inputDecorationTheme: InputDecorationTheme(
       border: const OutlineInputBorder(),
       enabledBorder: OutlineInputBorder(

@@ -1,11 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:instructify/data/model/course.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 
 class CourseContainer extends StatelessWidget {
-  const CourseContainer({Key? key}) : super(key: key);
+  final Course course;
+  const CourseContainer({Key? key, required this.course}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,10 @@ class CourseContainer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // TODO: Add name in course photo
             Expanded(
               flex: 3,
               child: Image.network(
-                'https://dummyimage.com/125x100/000/fff',
+                course.imgUrl,
                 height: 100.h,
                 width: 100.w,
               ),
@@ -45,7 +46,7 @@ class CourseContainer extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Ahmed',
+                  course.courseName,
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
@@ -65,9 +66,8 @@ class CourseContainer extends StatelessWidget {
                   SizedBox(
                     width: 5.w,
                   ),
-                  // TODO: Add name of the instructor
                   Text(
-                    'Instructor',
+                    course.instructor,
                     style: Theme.of(context).textTheme.subtitle2!.copyWith(
                           color: ColorManager.textUnselectedColor,
                         ),
@@ -82,9 +82,8 @@ class CourseContainer extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // TODO: Add price of the course
                   Text(
-                    '\$ 190',
+                    '\$ ${course.price}',
                     style: Theme.of(context).textTheme.subtitle1!.copyWith(
                           color: ColorManager.secondaryColor,
                         ),
@@ -102,9 +101,8 @@ class CourseContainer extends StatelessWidget {
                         color: ColorManager.backgroundButtonColor,
                         borderRadius: BorderRadius.circular(13),
                       ),
-                      // TODO: Add number of hours of the course
                       child: Text(
-                        '15 hours',
+                        '${course.convertMinutesToHours(course.duration)} hours',
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.clip,
                         style: Theme.of(context).textTheme.caption!.copyWith(

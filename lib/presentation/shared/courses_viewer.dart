@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 
+import '../../data/model/course.dart';
 import 'course_container.dart';
 
 class CoursesViewer extends StatelessWidget {
@@ -20,12 +21,12 @@ class CoursesViewer extends StatelessWidget {
       ),
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        return  CourseContainer();
+        return  CourseContainer(course: Course(),);
       },
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
         childAspectRatio: 1.1,
-        crossAxisSpacing: 15.0,
+        crossAxisSpacing: 15.0, 
         mainAxisSpacing: 10.0,
       ),
     );

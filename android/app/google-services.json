@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "717386503330",
+    "project_id": "instructify-34702",
+    "storage_bucket": "instructify-34702.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717386503330:android:5784b940bc8468dee4f3fb",
+        "android_client_info": {
+          "package_name": "com.example.instructify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717386503330-6po29coh1nf0pegvums4p6kpshgm11sq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXik9QxshqhTghurR6f13uc_x0lhN1rsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717386503330-6po29coh1nf0pegvums4p6kpshgm11sq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

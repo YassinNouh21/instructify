@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:instructify/data/model/course.dart';
+import 'package:instructify/domain/model/course.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 

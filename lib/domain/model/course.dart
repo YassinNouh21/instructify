@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class Content {
   final String topic;
-  final int duration;
+  final String duration;
   Content({
     required this.topic,
     required this.duration,
@@ -12,7 +13,7 @@ class Content {
 
   Content copyWith({
     String? topic,
-    int? duration,
+    String? duration,
   }) {
     return Content(
       topic: topic ?? this.topic,
@@ -32,7 +33,7 @@ class Content {
   factory Content.fromMap(Map<String, dynamic> map) {
     return Content(
       topic: map['topic'] ?? '',
-      duration: map['duration']?.toInt() ?? 0,
+      duration: map['duration'] ?? '',
     );
   }
 
@@ -59,49 +60,48 @@ class Content {
 
 @immutable
 class Course {
-  final int courseId;
+  final String courseId;
   final String createdDate;
   final String courseName;
   final String instructor;
+  final String teachingLanguage;
+  final List<Content> content;
+  final String imgUrl;
   final int duration;
   final int price;
-  final String teachingLanguage;
-  final Content content;
-  final String imgUrl;
-
   const Course({
     required this.courseId,
     required this.createdDate,
     required this.courseName,
     required this.instructor,
-    required this.duration,
-    required this.price,
     required this.teachingLanguage,
     required this.content,
     required this.imgUrl,
+    required this.duration,
+    required this.price,
   });
 
   Course copyWith({
-    int? courseId,
+    String? courseId,
     String? createdDate,
     String? courseName,
     String? instructor,
+    String? teachingLanguage,
+    List<Content>? content,
+    String? imgUrl,
     int? duration,
     int? price,
-    String? teachingLanguage,
-    Content? content,
-    String? imgUrl,
   }) {
     return Course(
       courseId: courseId ?? this.courseId,
       createdDate: createdDate ?? this.createdDate,
       courseName: courseName ?? this.courseName,
       instructor: instructor ?? this.instructor,
-      duration: duration ?? this.duration,
-      price: price ?? this.price,
       teachingLanguage: teachingLanguage ?? this.teachingLanguage,
       content: content ?? this.content,
       imgUrl: imgUrl ?? this.imgUrl,
+      duration: duration ?? this.duration,
+      price: price ?? this.price,
     );
   }
 
@@ -112,31 +112,32 @@ class Course {
     result.addAll({'createdDate': createdDate});
     result.addAll({'courseName': courseName});
     result.addAll({'instructor': instructor});
+    result.addAll({'teachingLanguage': teachingLanguage});
+    result.addAll({'content': content.map((x) => x.toMap()).toList()});
+    result.addAll({'imgUrl': imgUrl});
     result.addAll({'duration': duration});
     result.addAll({'price': price});
-    result.addAll({'teachingLanguage': teachingLanguage});
-    result.addAll({'content': content.toMap()});
-    result.addAll({'imgUrl': imgUrl});
 
     return result;
   }
 
+  double convertMinutesToHours(int minutes) {
+    return minutes / 60;
+  }
+
   factory Course.fromMap(Map<String, dynamic> map) {
     return Course(
-      courseId: map['courseId']?.toInt() ?? 0,
+      courseId: map['courseId'] ?? '',
       createdDate: map['createdDate'] ?? '',
       courseName: map['courseName'] ?? '',
       instructor: map['instructor'] ?? '',
-      duration: map['duration']?.toInt() ?? 0,
-      price: map['price']?.toInt() ?? 0,
       teachingLanguage: map['teachingLanguage'] ?? '',
-      content: Content.fromMap(map['content']),
+      content:
+          List<Content>.from(map['content']?.map((x) => Content.fromMap(x))),
       imgUrl: map['imgUrl'] ?? '',
+      duration: map['duration'] ?? 0,
+      price: map['price'] ?? 0,
     );
-  }
-  
-  double convertMinutesToHours(int minutes) {
-    return minutes / 60;
   }
 
   String toJson() => json.encode(toMap());
@@ -145,7 +146,7 @@ class Course {
 
   @override
   String toString() {
-    return 'Course(courseId: $courseId, createdDate: $createdDate, courseName: $courseName, instructor: $instructor, duration: $duration, price: $price, teachingLanguage: $teachingLanguage, content: $content, imgUrl: $imgUrl)';
+    return 'Course(courseId: $courseId, createdDate: $createdDate, courseName: $courseName, instructor: $instructor, teachingLanguage: $teachingLanguage, content: $content, imgUrl: $imgUrl, duration: $duration, price: $price)';
   }
 
   @override
@@ -157,11 +158,11 @@ class Course {
         other.createdDate == createdDate &&
         other.courseName == courseName &&
         other.instructor == instructor &&
-        other.duration == duration &&
-        other.price == price &&
         other.teachingLanguage == teachingLanguage &&
-        other.content == content &&
-        other.imgUrl == imgUrl;
+        listEquals(other.content, content) &&
+        other.imgUrl == imgUrl &&
+        other.duration == duration &&
+        other.price == price;
   }
 
   @override
@@ -170,10 +171,10 @@ class Course {
         createdDate.hashCode ^
         courseName.hashCode ^
         instructor.hashCode ^
-        duration.hashCode ^
-        price.hashCode ^
         teachingLanguage.hashCode ^
         content.hashCode ^
-        imgUrl.hashCode;
+        imgUrl.hashCode ^
+        duration.hashCode ^
+        price.hashCode;
   }
 }

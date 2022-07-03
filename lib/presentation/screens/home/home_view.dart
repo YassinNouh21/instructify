@@ -1,19 +1,30 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:instructify/domain/model/course.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/shared/category_viewer.dart';
 import 'package:instructify/presentation/shared/courses_viewer.dart';
 import 'package:instructify/presentation/shared/main_app_bar.dart';
 
+import '../../../infrastructure/firebase_cloud/firebase_cloud.dart';
 import '../../resource/route_manager.dart';
 // FIXME: Responsive design
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +35,19 @@ class HomeView extends StatelessWidget {
           children: [
             MainAppBar.withSearchBar(),
             Expanded(flex: 3, child: categoryViewer(context, 'Yassin')),
-            Expanded(flex: 4, child: courseViewer(context, 'Computer Science')),
-            Expanded(flex: 4, child: courseViewer(context, 'Mathematics')),
+            Expanded(
+                flex: 4,
+                child: courseViewer(context, 'Computer Science', _courses)),
+            Expanded(
+                flex: 4, child: courseViewer(context, 'Mathematics', _courses)),
           ],
         ),
       ),
     );
   }
 
-  Container courseViewer(BuildContext context, String title) {
+  Container courseViewer(
+      BuildContext context, String title, List<Course> courses) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: SizeManager.s10),
@@ -42,7 +57,7 @@ class HomeView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                margin: EdgeInsets.only(left: SizeManager.s10),
+                margin: const EdgeInsets.only(left: SizeManager.s10),
                 child: AutoSizeText(
                   'Popular in $title',
                   maxLines: 1,
@@ -78,8 +93,10 @@ class HomeView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          const Expanded(
-            child: CoursesViewer(),
+          Expanded(
+            child: CoursesViewer(
+              courses: courses,
+            ),
           )
         ],
       ),

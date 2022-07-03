@@ -1,17 +1,38 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instructify/domain/model/course.dart';
 import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/screens/search/widget/bottom_filter.dart';
 import 'package:instructify/presentation/screens/search/widget/search_container.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-class SearchView extends StatelessWidget {
-  final Random random = Random();
+import '../../../infrastructure/firebase_cloud/firebase_cloud.dart';
+
+class SearchView extends StatefulWidget {
   SearchView({Key? key}) : super(key: key);
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView> {
+  final Random random = Random();
+
+  final CloudRepository _cloudRepository = CloudRepository();
+
+  Future<List<Course>> data() async {
+    return _cloudRepository.getCourses();
+  }
+
+  @override
+  void initState() {;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

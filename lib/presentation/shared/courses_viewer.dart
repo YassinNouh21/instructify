@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import 'package:instructify/presentation/resource/size_manager.dart';
 
-import '../../data/model/course.dart';
+import '../../domain/model/course.dart';
 import 'course_container.dart';
 
 class CoursesViewer extends StatelessWidget {
-  const CoursesViewer({Key? key}) : super(key: key);
+  final List<Course> courses;
+  const CoursesViewer({
+    Key? key,
+    required this.courses,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +26,14 @@ class CoursesViewer extends StatelessWidget {
       ),
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        return  CourseContainer(course: Course(),);
+        return CourseContainer(
+          course: courses[index],
+        );
       },
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
         childAspectRatio: 1.1,
-        crossAxisSpacing: 15.0, 
+        crossAxisSpacing: 15.0,
         mainAxisSpacing: 10.0,
       ),
     );

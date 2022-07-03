@@ -5,6 +5,7 @@ import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/screens/account/account_view.dart';
 import 'package:instructify/presentation/screens/courses/courses_view.dart';
 import 'package:instructify/presentation/screens/download/download_view.dart';
+import 'package:instructify/presentation/screens/home/home_view.dart';
 import 'package:instructify/presentation/screens/search/search_view.dart';
 
 class MainView extends StatefulWidget {
@@ -17,7 +18,7 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
   final List<Widget> screens = [
-    SearchView(),
+    HomeView(),
     CoursesView(),
     DownloadView(),
     AccountView(),

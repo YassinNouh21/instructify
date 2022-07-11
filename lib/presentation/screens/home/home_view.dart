@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:instructify/domain/firebase/firebase_cloud.dart';
 import 'package:instructify/domain/model/course.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
@@ -19,8 +20,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  
-
   @override
   void initState() {
     super.initState();
@@ -31,17 +30,23 @@ class _HomeViewState extends State<HomeView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorManager.primaryColor,
-        body: Column(
-          children: [
-            MainAppBar.withSearchBar(),
-            Expanded(flex: 3, child: categoryViewer(context, 'Yassin')),
-            Expanded(
-                flex: 4,
-                child: courseViewer(context, 'Computer Science', _courses)),
-            Expanded(
-                flex: 4, child: courseViewer(context, 'Mathematics', _courses)),
-          ],
-        ),
+        body: FutureBuilder<List<Course>>(
+            future: CloudRepository().getCourses(),
+            builder: (context, snapshot) {
+              return Column(
+                children: [
+                  MainAppBar.withSearchBar(),
+                  Expanded(flex: 3, child: categoryViewer(context, 'Yassin')),
+                  Expanded(
+                      flex: 4,
+                      child:
+                          courseViewer(context, 'Computer Science', snapshot.data!)),
+                  Expanded(
+                      flex: 4,
+                      child: courseViewer(context, 'Mathematics', snapshot.data!)),
+                ],
+              );
+            }),
       ),
     );
   }

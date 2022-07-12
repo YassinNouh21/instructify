@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:instructify/domain/firebase/firebase_cloud.dart';
-
-import '../../domain/model/course.dart';
+import 'package:instructify/model/course.dart';
 
 class CloudRepository implements IFirebaseCloud {
   final FirebaseFirestore _firestore;

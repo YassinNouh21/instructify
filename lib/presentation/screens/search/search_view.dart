@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instructify/domain/model/course.dart';
+import 'package:instructify/model/course.dart';
 import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/screens/search/widget/bottom_filter.dart';

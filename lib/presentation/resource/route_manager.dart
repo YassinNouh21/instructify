@@ -46,7 +46,7 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.splashRoute:
-        return MaterialPageRoute(builder: (_) => const MainView());
+        return MaterialPageRoute(builder: (_) => const OnBoardingView());
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.onBoardingRoute:

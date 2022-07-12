@@ -1,6 +1,4 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:instructify/domain/model/course.dart';
+import 'package:instructify/model/course.dart';
 
 abstract class IFirebaseCloud {
   Future<List<Course>> getCourses();

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:instructify/model/course.dart';
 
 import 'package:instructify/presentation/resource/size_manager.dart';
 
-import '../../domain/model/course.dart';
 import 'course_container.dart';
 
 class CoursesViewer extends StatelessWidget {

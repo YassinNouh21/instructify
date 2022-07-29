@@ -4,7 +4,7 @@ import 'package:form_validator/form_validator.dart';
 import 'package:instructify/domain/core/sign_form_failure.dart';
 import 'package:instructify/domain/core/sign_object.dart';
 
-class EmailSignObject implements SignObject<String> {
+class EmailSignObject extends SignObject<String> {
   final Either<SignFormFailure<String>, String> value;
 
   EmailSignObject._(this.value);

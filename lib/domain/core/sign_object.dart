@@ -5,6 +5,13 @@ import 'package:instructify/domain/core/sign_form_failure.dart';
 abstract class SignObject<T> {
   const SignObject();
   Either<SignFormFailure<T>, T> get value;
+
+  T getUnExpectedFailure() {
+    return value.fold(
+        (f) => throw SignFormFailure.unExpectedFailure(failedValue: f),
+        (value) => value);
+  }
+
   @override
   String toString() => 'SignObject(value: $value)';
 

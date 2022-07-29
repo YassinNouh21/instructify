@@ -4,7 +4,7 @@ import 'package:form_validator/form_validator.dart';
 import 'package:instructify/domain/core/sign_form_failure.dart';
 import 'package:instructify/domain/core/sign_object.dart';
 
-class PasswordSignObject implements SignObject<String> {
+class PasswordSignObject extends SignObject<String> {
   final Either<SignFormFailure<String>, String> value;
   final Either<SignFormFailure<String>, String> repeatedValue;
 
@@ -14,7 +14,6 @@ class PasswordSignObject implements SignObject<String> {
       String password, String repeatedPassword) {
     final validatorPassword =
         ValidationBuilder().minLength(6, 'Password too short').test(password);
-    print(validatorPassword);
     if (password != repeatedPassword) {
       return PasswordSignObject._(
           const Left(

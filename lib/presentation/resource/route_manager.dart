@@ -62,7 +62,7 @@ class RouteGenerator {
       case Routes.paymentRoute:
         return MaterialPageRoute(builder: (_) => const PaymentView());
       case Routes.searchRoute:
-        return MaterialPageRoute(builder: (_) =>  SearchView());
+        return MaterialPageRoute(builder: (_) => SearchView());
       case Routes.courseProgressRoute:
         return MaterialPageRoute(builder: (_) => const CourseProgressView());
       case Routes.coursesRoute:
@@ -70,7 +70,7 @@ class RouteGenerator {
       case Routes.courseDetailRoute:
         return MaterialPageRoute(builder: (_) => const CourseDetailView());
       case Routes.registerTwoRoute:
-        return MaterialPageRoute(builder: (_) => const RegisterTwoView());
+        return MaterialPageRoute(builder: (_) => RegisterTwoView());
       case Routes.downloadRoute:
         return MaterialPageRoute(builder: (_) => const DownloadView());
       case Routes.accountRoute:

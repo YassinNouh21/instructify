@@ -5,7 +5,8 @@ import 'package:instructify/presentation/shared/app_main_button.dart';
 import 'package:instructify/presentation/shared/sign_in_app_bar.dart';
 
 class RegisterTwoView extends StatelessWidget {
-  const RegisterTwoView({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+  RegisterTwoView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,33 +18,45 @@ class RegisterTwoView extends StatelessWidget {
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: SignInAppBar(title: 'Your Password'),
         ),
-        body: Column(
-          children: [
-            const Expanded(
-              flex: 1,
-              child: SizedBox(
-                width: double.infinity,
+        body: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const Expanded(
+                flex: 1,
+                child: SizedBox(
+                  width: double.infinity,
+                ),
               ),
-            ),
-            Container(
-              width: width,
-              child: Text(
-                'Must be at Least 6 Characters in Length',
-                style: Theme.of(context).textTheme.subtitle1,
-                textAlign: TextAlign.start,
+              SizedBox(
+                width: width,
+                child: Text(
+                  'Must be at Least 6 Characters in Length',
+                  style: Theme.of(context).textTheme.subtitle1,
+                  textAlign: TextAlign.start,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: SizeManager.s16,
-            ),
-            const ListTextFields(),
-            const Expanded(flex: 6, child: SizedBox()),
-            AppMainButton.fullWidth(
-                onPressed: () {}, text: 'Create Account', widthQuery: width),
-            const SizedBox(
-              height: SizeManager.s28,
-            )
-          ],
+              const SizedBox(
+                height: SizeManager.s16,
+              ),
+              const ListTextFields(),
+              const Expanded(flex: 6, child: SizedBox()),
+              AppMainButton.fullWidth(
+                onPressed: () {
+                  print('Form is not valid');
+                  
+                  if (_formKey.currentState!.validate()) {
+                    print('Form is valid');
+                  }
+                },
+                text: 'Create Account',
+                widthQuery: width,
+              ),
+              const SizedBox(
+                height: SizeManager.s28,
+              )
+            ],
+          ),
         ),
       ),
     );

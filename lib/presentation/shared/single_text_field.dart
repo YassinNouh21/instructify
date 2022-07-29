@@ -5,9 +5,13 @@ import 'package:instructify/presentation/resource/size_manager.dart';
 class SingleTextField extends StatefulWidget {
   final String label;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
   final bool showPassword;
+  final Function(String)? onChanged;
   const SingleTextField({
     Key? key,
+    this.validator,
+    this.onChanged,
     required this.label,
     required this.controller,
     required this.showPassword,
@@ -53,9 +57,11 @@ class _SingleTextFieldState extends State<SingleTextField> {
             height: SizeManager.s16,
           ),
           TextFormField(
+            validator: widget.validator,
             keyboardType: TextInputType.emailAddress,
             controller: widget.controller,
             obscureText: _obscureText,
+            onChanged: widget.onChanged,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(SizeManager.s8),

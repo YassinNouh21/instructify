@@ -6,7 +6,6 @@ import 'package:sizer/sizer.dart';
 import 'presentation/resource/theme_manager.dart';
 
 class MyApp extends StatelessWidget {
-  
   static const instance = MyApp._private();
   const MyApp._private();
   factory MyApp() => instance;
@@ -20,7 +19,6 @@ class MyApp extends StatelessWidget {
           splitScreenMode: true,
           builder: (context, child) {
             return MaterialApp(
-              
               theme: getApplicationTheme(context),
               title: 'Flutter Demo',
               onGenerateRoute: RouteGenerator.getRoute,

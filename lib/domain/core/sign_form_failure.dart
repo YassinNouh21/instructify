@@ -24,4 +24,7 @@ abstract class SignFormFailure<T> with _$SignFormFailure<T> {
   const factory SignFormFailure.shortPassword({
     required T failedValue,
   }) = ShortPassword<T>;
+  const factory SignFormFailure.unExpectedFailure({
+    required T failedValue,
+  }) = UnExpectedFailure<T>;
 }

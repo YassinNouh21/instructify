@@ -21,7 +21,6 @@ class User {
     required this.progess,
     required this.fullName,
   });
-
   User copyWith({
     String? userId,
     String? email,

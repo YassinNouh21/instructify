@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:instructify/domain/auth/i_auth_facade.dart';
 import 'package:instructify/domain/core/auth_failure.dart';
 import 'package:instructify/domain/auth/password_sign_object.dart';
+import 'package:instructify/model/user.dart' as model;
 
 @LazySingleton(as: IAuthFacade)
 class AuthFirebase implements IAuthFacade {
@@ -31,14 +32,18 @@ class AuthFirebase implements IAuthFacade {
     final emailAddressStr = emailAddress.getUnExpectedFailure();
     final passwordStr = password.getUnExpectedFailure();
     try {
-      await _auth?.signInWithEmailAndPassword(
-          email: emailAddressStr, password: passwordStr);
+      UserCredential? userTemp;
+      await _auth
+          ?.signInWithEmailAndPassword(
+              email: emailAddressStr, password: passwordStr)
+          .then((value) => userTemp = value);
+      // model.User(email: );
       return right(unit);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_WRONG_PASSWORD' ||
           e.code == 'ERROR_USER_NOT_FOUND') {
         return left(const AuthFailure.invalidEmailAndPasswordCombination());
-      } else {
+      } else {  
         return left(const AuthFailure.serverError());
       }
     } catch (e) {

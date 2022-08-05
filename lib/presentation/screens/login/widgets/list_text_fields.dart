@@ -4,6 +4,8 @@ import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/shared/single_text_field.dart';
 
 class ListTextFields extends StatelessWidget {
+  static String email = '';
+  static String password = '';
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -24,6 +26,7 @@ class ListTextFields extends StatelessWidget {
               _emailController.text = value;
               _emailController.selection = TextSelection.fromPosition(
                   TextPosition(offset: _emailController.text.length));
+              email = _emailController.text;
             },
             showPassword: false,
           ),
@@ -38,6 +41,7 @@ class ListTextFields extends StatelessWidget {
               _passwordController.text = value;
               _passwordController.selection = TextSelection.fromPosition(
                   TextPosition(offset: _passwordController.text.length));
+              password = _passwordController.text;
             },
             showPassword: true,
           )

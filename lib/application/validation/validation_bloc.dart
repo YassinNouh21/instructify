@@ -36,7 +36,6 @@ class ValidationBloc extends Bloc<ValidationEvent, ValidationState> {
       );
       emit(state.copyWith(
         isSubmitting: false,
-        authFailureOrSuccessOption: Some(authFailureOrSuccess),
       ));
     }
     emit(state.copyWith(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/app.dart';
+import 'package:instructify/application/auth/authentication_bloc.dart';
 import 'package:instructify/domain/auth/i_auth_facade.dart';
 import 'package:instructify/firebase_options.dart';
 import 'package:instructify/injection.dart';
@@ -21,6 +22,9 @@ void main() async {
       runApp(MultiBlocProvider(providers: [
         BlocProvider<ValidationBloc>(
           create: (BuildContext context) => getIt<ValidationBloc>(),
+        ),
+        BlocProvider<AuthenticationBloc>(
+          create: (BuildContext context) => getIt<AuthenticationBloc>(),
         ),
       ], child: MyApp()));
     },

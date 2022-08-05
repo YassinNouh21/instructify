@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:instructify/application/auth/authentication_bloc.dart';
+import 'package:instructify/injection.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/screens/login/widgets/list_text_fields.dart';
 import 'package:instructify/presentation/shared/app_main_button.dart';
@@ -35,7 +39,18 @@ class LoginView extends StatelessWidget {
             const ForgotPasswordButton(),
             const Expanded(flex: 2, child: SizedBox()),
             AppMainButton.fullWidth(
-                onPressed: () {}, text: 'Login', widthQuery: width),
+                onPressed: () {
+                  print('email in login view: ${ListTextFields.email}');
+                  print('email in login view: ${ListTextFields.password}');
+                  context.read<AuthenticationBloc>().add(
+                        AuthenticationSignIn(
+                          email: ListTextFields.email,
+                          password: ListTextFields.password,
+                        ),
+                      );
+                },
+                text: 'Login',
+                widthQuery: width),
             const SizedBox(height: SizeManager.s28)
           ],
         ),

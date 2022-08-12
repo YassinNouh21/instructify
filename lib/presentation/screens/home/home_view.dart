@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:instructify/domain/firebase/firebase_cloud.dart';
+import 'package:instructify/domain/firebase/i_firebase_cloud.dart';
 import 'package:instructify/model/course.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';

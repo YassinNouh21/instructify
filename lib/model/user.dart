@@ -11,6 +11,8 @@ class User {
   final List<PurshasedCourses> purshasedCourses;
   final List<Progess> progess;
   final String fullName;
+  final String password;
+
   User({
     required this.userId,
     required this.email,
@@ -20,7 +22,28 @@ class User {
     required this.purshasedCourses,
     required this.progess,
     required this.fullName,
+    required this.password,
   });
+
+  factory User.register({
+    required String email,
+    required String password,
+    required String type,
+    required String fullName,
+  }) {
+    return User(
+      userId: '',
+      email: email,
+      phoneNumber: '',
+      type: type,
+      imgUrl: '',
+      purshasedCourses: [],
+      progess: [],
+      fullName: fullName,
+      password: password,
+    );
+  }
+
   User copyWith({
     String? userId,
     String? email,
@@ -30,6 +53,7 @@ class User {
     List<PurshasedCourses>? purshasedCourses,
     List<Progess>? progess,
     String? fullName,
+    String? password,
   }) {
     return User(
       userId: userId ?? this.userId,
@@ -40,21 +64,24 @@ class User {
       purshasedCourses: purshasedCourses ?? this.purshasedCourses,
       progess: progess ?? this.progess,
       fullName: fullName ?? this.fullName,
+      password: password ?? this.password,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'userId': userId});
     result.addAll({'email': email});
     result.addAll({'phoneNumber': phoneNumber});
     result.addAll({'type': type});
     result.addAll({'imgUrl': imgUrl});
-    result.addAll({'purshasedCourses': purshasedCourses.map((x) => x.toMap()).toList()});
+    result.addAll(
+        {'purshasedCourses': purshasedCourses.map((x) => x.toMap()).toList()});
     result.addAll({'progess': progess.map((x) => x.toMap()).toList()});
     result.addAll({'fullName': fullName});
-  
+    result.addAll({'password': password});
+
     return result;
   }
 
@@ -65,9 +92,12 @@ class User {
       phoneNumber: map['phoneNumber'] ?? '',
       type: map['type'] ?? '',
       imgUrl: map['imgUrl'] ?? '',
-      purshasedCourses: List<PurshasedCourses>.from(map['purshasedCourses']?.map((x) => PurshasedCourses.fromMap(x))),
-      progess: List<Progess>.from(map['progess']?.map((x) => Progess.fromMap(x))),
+      purshasedCourses: List<PurshasedCourses>.from(
+          map['purshasedCourses']?.map((x) => PurshasedCourses.fromMap(x))),
+      progess:
+          List<Progess>.from(map['progess']?.map((x) => Progess.fromMap(x))),
       fullName: map['fullName'] ?? '',
+      password: map['password'] ?? '',
     );
   }
 
@@ -77,34 +107,36 @@ class User {
 
   @override
   String toString() {
-    return 'User(userId: $userId, email: $email, phoneNumber: $phoneNumber, type: $type, imgUrl: $imgUrl, purshasedCourses: $purshasedCourses, progess: $progess, fullName: $fullName)';
+    return 'User(userId: $userId, email: $email, phoneNumber: $phoneNumber, type: $type, imgUrl: $imgUrl, purshasedCourses: $purshasedCourses, progess: $progess, fullName: $fullName, password: $password)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is User &&
-      other.userId == userId &&
-      other.email == email &&
-      other.phoneNumber == phoneNumber &&
-      other.type == type &&
-      other.imgUrl == imgUrl &&
-      listEquals(other.purshasedCourses, purshasedCourses) &&
-      listEquals(other.progess, progess) &&
-      other.fullName == fullName;
+        other.userId == userId &&
+        other.email == email &&
+        other.phoneNumber == phoneNumber &&
+        other.type == type &&
+        other.imgUrl == imgUrl &&
+        listEquals(other.purshasedCourses, purshasedCourses) &&
+        listEquals(other.progess, progess) &&
+        other.fullName == fullName &&
+        other.password == password;
   }
 
   @override
   int get hashCode {
     return userId.hashCode ^
-      email.hashCode ^
-      phoneNumber.hashCode ^
-      type.hashCode ^
-      imgUrl.hashCode ^
-      purshasedCourses.hashCode ^
-      progess.hashCode ^
-      fullName.hashCode;
+        email.hashCode ^
+        phoneNumber.hashCode ^
+        type.hashCode ^
+        imgUrl.hashCode ^
+        purshasedCourses.hashCode ^
+        progess.hashCode ^
+        fullName.hashCode ^
+        password.hashCode;
   }
 }
 

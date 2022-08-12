@@ -6,10 +6,8 @@ import 'package:instructify/model/user.dart';
 
 abstract class IAuthFacade {
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword({
-    required String imgUrl,
-    required EmailSignObject emailAddress,
-    required PasswordSignObject password,
-    
+    required String emailAddress,
+    required String password,
   });
   Future<Either<AuthFailure, Unit>> signInWithEmailAndPassword({
     required EmailSignObject emailAddress,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instructify/application/auth/authentication_bloc.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/screens/register/widgets/list_text_fields.dart';
@@ -30,7 +32,10 @@ class RegisterView extends StatelessWidget {
             const Expanded(flex: 6, child: SizedBox()),
             AppMainButton.fullWidth(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.registerTwoRoute);
+                  if (ListTextFields.formKey.currentState!.validate()) {
+                    
+                    Navigator.of(context).pushNamed(Routes.registerTwoRoute);
+                  }
                 },
                 text: 'Next',
                 widthQuery: width),

@@ -28,12 +28,11 @@ class ValidationBloc extends Bloc<ValidationEvent, ValidationState> {
         isSubmitting: true,
         authFailureOrSuccessOption: none(),
       ));
-      final authFailureOrSuccess =
-          await authFacade.registerWithEmailAndPassword(
-        imgUrl: '',
-        emailAddress: state.emailAddress,
-        password: state.password,
-      );
+      // final authFailureOrSuccess =
+      //     await authFacade.registerWithEmailAndPassword(
+      //   emailAddress: state.emailAddress,
+      //   password: state.password,
+      // );
       emit(state.copyWith(
         isSubmitting: false,
       ));

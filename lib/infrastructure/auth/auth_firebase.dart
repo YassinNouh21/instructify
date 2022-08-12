@@ -10,19 +10,27 @@ import 'package:instructify/model/user.dart' as model;
 
 @LazySingleton(as: IAuthFacade)
 class AuthFirebase implements IAuthFacade {
-  final FirebaseAuth? _auth;
-  final GoogleSignIn? _googleSignIn;
-  AuthFirebase({FirebaseAuth? auth, GoogleSignIn? googleSignIn})
-      : _auth = auth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignIn ?? GoogleSignIn();
+  final FirebaseAuth _auth;
+  final GoogleSignIn _googleSignIn;
+  AuthFirebase(this._auth, this._googleSignIn);
 
   @override
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword(
-      {required String imgUrl,
-      required EmailSignObject emailAddress,
-      required PasswordSignObject password}) {
-    // TODO: implement registerWithEmailAndPassword
-    throw UnimplementedError();
+      {required String emailAddress, required String password}) async {
+    try {
+      UserCredential? userTemp;
+      await _auth.createUserWithEmailAndPassword(
+          email: emailAddress, password: password);
+      return right(unit);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        return left(AuthFailure.invalidEmailAndPasswordCombination());
+      } else {
+        return left(AuthFailure.serverError());
+      }
+    } catch (e) {
+      return left(AuthFailure.serverError());
+    }
   }
 
   @override
@@ -34,20 +42,15 @@ class AuthFirebase implements IAuthFacade {
     try {
       UserCredential? userTemp;
       await _auth
-          ?.signInWithEmailAndPassword(
+          .signInWithEmailAndPassword(
               email: emailAddressStr, password: passwordStr)
           .then((value) => userTemp = value);
       // model.User(email: );
       return right(unit);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'ERROR_WRONG_PASSWORD' ||
-          e.code == 'ERROR_USER_NOT_FOUND') {
-        return left(const AuthFailure.invalidEmailAndPasswordCombination());
-      } else {  
-        return left(const AuthFailure.serverError());
-      }
+      return left(AuthFailure.getFailure(e.code));
     } catch (e) {
-      return left(const AuthFailure.serverError());
+      return left(AuthFailure.serverError());
     }
   }
 

@@ -6,14 +6,14 @@ import 'package:instructify/presentation/shared/single_text_field.dart';
 class ListTextFields extends StatelessWidget {
   static String email = '';
   static String password = '';
-  final _formKey = GlobalKey<FormState>();
+  static final formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   ListTextFields({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

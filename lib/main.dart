@@ -15,18 +15,22 @@ void main() async {
     () async {
       configureInjection(Environment.prod);
       WidgetsFlutterBinding.ensureInitialized();
-      IAuthFacade authFacade;
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
-      runApp(MultiBlocProvider(providers: [
-        BlocProvider<ValidationBloc>(
-          create: (BuildContext context) => getIt<ValidationBloc>(),
+      runApp(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider<ValidationBloc>(
+              create: (BuildContext context) => getIt<ValidationBloc>(),
+            ),
+            BlocProvider(
+              create: (BuildContext context) => getIt<AuthenticationBloc>(),
+            ),
+          ],
+          child: MyApp(),
         ),
-        BlocProvider<AuthenticationBloc>(
-          create: (BuildContext context) => getIt<AuthenticationBloc>(),
-        ),
-      ], child: MyApp()));
+      );
     },
   );
 }

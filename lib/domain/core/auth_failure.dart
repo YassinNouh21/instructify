@@ -1,59 +1,51 @@
 import 'package:flutter/material.dart';
 
-Map<String, AuthFailure> _authFailureLookup = {
+Map<String, AuthFailure> _authFailureLookup = const {
   'user-disabled': CancelledByUser(),
   'user-not-found': InvalidEmailAndPasswordCombination(),
   'wrong-password': InvalidEmailAndPasswordCombination(),
-};
-Map<AuthFailure, String> _authFailureErrorMessage = {
-  AuthFailure.cancelledByUser(): 'This user has been disabled',
-  AuthFailure.invalidEmailAndPasswordCombination():
-      ' Invalid email and password combination',
-  AuthFailure.serverError(): 'Server Error',
+  'email-already-in-use': EmailAlreadyInUse(),
+  'weak-password': WeakPassword(),
+  'invalid-email': InvalidEmail(),
 };
 
 @immutable
 class AuthFailure implements Exception {
   final String errorMessage;
-  AuthFailure._({required this.errorMessage});
-  factory AuthFailure.cancelledByUser() => AuthFailure._(
-      errorMessage: _authFailureErrorMessage[AuthFailure.cancelledByUser()]!);
-  factory AuthFailure.serverError() => AuthFailure._(
-      errorMessage: _authFailureErrorMessage[AuthFailure.serverError()]!);
-  factory AuthFailure.invalidEmailAndPasswordCombination() => AuthFailure._(
-      errorMessage: _authFailureErrorMessage[
-          AuthFailure.invalidEmailAndPasswordCombination()]!);
-  factory AuthFailure.emailAlreadyInUse() => AuthFailure._(
-      errorMessage: _authFailureErrorMessage[AuthFailure.emailAlreadyInUse()]!);
-  factory AuthFailure.getFailure(String errorCode) {
-    switch (errorCode) {
-      case 'user-disabled':
-        return _authFailureLookup['user-disabled']!;
-      case 'user-not-found':
-        return _authFailureLookup['user-not-found']!;
-      case 'wrong-password':
-        return _authFailureLookup['wrong-password']!;
+  const AuthFailure._({required this.errorMessage});
 
-      default:
-        return ServerError();
+  factory AuthFailure.getFailure(String errorCode) {
+    if (_authFailureLookup.containsKey(errorCode)) {
+      return _authFailureLookup[errorCode]!;
+    } else {
+      return const ServerError();
     }
   }
-  AuthFailure get cancelledByUser => AuthFailure.cancelledByUser();
-  AuthFailure get serverError => AuthFailure.serverError();
-  AuthFailure get invalidEmailAndPasswordCombination =>
-      AuthFailure.invalidEmailAndPasswordCombination();
-  AuthFailure get emailAlreadyInUse => AuthFailure.emailAlreadyInUse();
 }
 
 class CancelledByUser extends AuthFailure {
-  CancelledByUser() : super._(errorMessage: 'This user has been disabled');
+  const CancelledByUser()
+      : super._(errorMessage: 'This user has been disabled');
 }
 
 class InvalidEmailAndPasswordCombination extends AuthFailure {
-  InvalidEmailAndPasswordCombination()
+  const InvalidEmailAndPasswordCombination()
       : super._(errorMessage: 'Invalid email and password combination');
 }
 
 class ServerError extends AuthFailure {
-  ServerError() : super._(errorMessage: 'Server Error');
+  const ServerError() : super._(errorMessage: 'Server Error');
+}
+
+class InvalidEmail extends AuthFailure {
+  const InvalidEmail() : super._(errorMessage: ' Invalid Email');
+}
+
+class EmailAlreadyInUse extends AuthFailure {
+  const EmailAlreadyInUse()
+      : super._(errorMessage: 'This email is already in use');
+}
+
+class WeakPassword extends AuthFailure {
+  const WeakPassword() : super._(errorMessage: 'This password is too weak');
 }

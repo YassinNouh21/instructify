@@ -23,7 +23,7 @@ class AuthenticationBloc
   AuthenticationBloc(this._authFacade, this._firebaseCloud)
       : super(AuthenticationState.initial()) {
     on<AuthenticationSignIn>(_onSignInWithEmailAndPasswordPressed);
-    // on<AuthenticationRegister>(_onRegisterWithEmailAndPasswordPressed);
+    on<AuthenticationRegister>(_onRegisterWithEmailAndPasswordPressed);
   }
 
   Future<void> _onSignInWithEmailAndPasswordPressed(
@@ -41,6 +41,7 @@ class AuthenticationBloc
         .then((value) => emit(state.copyWith(
               authFailureOrSuccessOption: some(value),
               isSubmitting: false,
+              state: AuthenticationStates.authenticated,
             )));
   }
 
@@ -53,19 +54,33 @@ class AuthenticationBloc
         'Event: ${transition.event}// Current: ${transition.currentState}// NextState: ${transition.nextState}');
   }
 
-  // Future<void> _onRegisterWithEmailAndPasswordPressed(
-  //     AuthenticationRegister event, Emitter<AuthenticationState> emit) async {
-  //   emit(state.copyWith(
-  //     isSubmitting: true,
-  //     authFailureOrSuccessOption: none(),
-  //   ));
+  Future<void> _onRegisterWithEmailAndPasswordPressed(
+      AuthenticationRegister event, Emitter<AuthenticationState> emit) async {
+    emit(state.copyWith(
+      state: AuthenticationStates.unAuthenticated,
+      isSubmitting: true,
+      authFailureOrSuccessOption: none(),
+    ));
 
-  //   await _authFacade
-  //       .registerWithEmailAndPassword(
-  //           emailAddress: event.email, password: event.password)
-  //       .then((value) => emit(state.copyWith(
-  //             authFailureOrSuccessOption: some(value),
-  //             isSubmitting: false,
-  //           )));
-  // }
+    await _authFacade
+        .registerWithEmailAndPassword(
+            emailAddress: event.email, password: event.password)
+        .then((value) {
+      value.fold(
+          (l) => emit(state.copyWith(
+                isSubmitting: false,
+                showErrorMessages: true,
+                state: AuthenticationStates.unAuthenticated,
+                authFailureOrSuccessOption: some(left(l)),
+              )), (r) async {
+        // await _firebaseCloud.registerUser();
+        emit(state.copyWith(
+          isSubmitting: false,
+          showErrorMessages: false,
+          state: AuthenticationStates.authenticated,
+          authFailureOrSuccessOption: some(right(r)),
+        ));
+      });
+    });
+  }
 }

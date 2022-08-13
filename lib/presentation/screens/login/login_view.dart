@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instructify/application/auth/authentication_bloc.dart';
 import 'package:instructify/injection.dart';
+import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/screens/login/widgets/list_text_fields.dart';
 import 'package:instructify/presentation/shared/app_main_button.dart';
+import 'package:instructify/presentation/shared/dialog.dart';
 import 'package:instructify/presentation/shared/sign_in_app_bar.dart';
 
 import 'widgets/forgot_password_button.dart';
@@ -23,10 +25,13 @@ class LoginView extends StatelessWidget {
       listener: (context, state) {
         state.authFailureOrSuccessOption.map((a) => a.fold(
               (f) async {
-                await _showMyDialog(context, f.errorMessage);
+                await showMyDialog(context, f.errorMessage);
               },
               (_) {},
             ));
+        if (state.state == AuthenticationStates.authenticated) {
+          Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+        }
       },
       child: SafeArea(
         child: Scaffold(
@@ -67,33 +72,6 @@ class LoginView extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> _showMyDialog(BuildContext context, String error) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(error),
-                const Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

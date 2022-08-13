@@ -37,14 +37,12 @@ class AuthenticationRegister extends AuthenticationEvent {
   final String password;
   final String firstName;
   final String lastName;
-  final String phonewNumber;
 
   AuthenticationRegister({
     required this.email,
     required this.password,
     required this.firstName,
     required this.lastName,
-    required this.phonewNumber,
   });
 
   @override
@@ -55,8 +53,7 @@ class AuthenticationRegister extends AuthenticationEvent {
         other.email == email &&
         other.password == password &&
         other.firstName == firstName &&
-        other.lastName == lastName &&
-        other.phonewNumber == phonewNumber;
+        other.lastName == lastName;
   }
 
   @override
@@ -64,8 +61,7 @@ class AuthenticationRegister extends AuthenticationEvent {
     return email.hashCode ^
         password.hashCode ^
         firstName.hashCode ^
-        lastName.hashCode ^
-        phonewNumber.hashCode;
+        lastName.hashCode;
   }
 }
 

@@ -18,18 +18,14 @@ class AuthFirebase implements IAuthFacade {
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword(
       {required String emailAddress, required String password}) async {
     try {
-      UserCredential? userTemp;
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential? userTemp = await _auth.createUserWithEmailAndPassword(
           email: emailAddress, password: password);
+
       return right(unit);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-        return left(AuthFailure.invalidEmailAndPasswordCombination());
-      } else {
-        return left(AuthFailure.serverError());
-      }
+      return left(AuthFailure.getFailure(e.code));
     } catch (e) {
-      return left(AuthFailure.serverError());
+      return left(const ServerError());
     }
   }
 
@@ -50,7 +46,7 @@ class AuthFirebase implements IAuthFacade {
     } on FirebaseAuthException catch (e) {
       return left(AuthFailure.getFailure(e.code));
     } catch (e) {
-      return left(AuthFailure.serverError());
+      return left(const ServerError());
     }
   }
 

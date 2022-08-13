@@ -1,9 +1,8 @@
 part of 'authentication_bloc.dart';
 
 enum AuthenticationStates {
-  logOut,
-  loggedIn,
-  registered,
+  unAuthenticated,
+  authenticated,
 }
 
 @freezed
@@ -15,7 +14,7 @@ class AuthenticationState with _$AuthenticationState {
     Option<Either<AuthFailure, Unit>> authFailureOrSuccessOption,
   ) = _AuthenticationState;
   factory AuthenticationState.initial() => AuthenticationState(
-        AuthenticationStates.logOut,
+        AuthenticationStates.unAuthenticated,
         false,
         false,
         none(),

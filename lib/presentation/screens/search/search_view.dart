@@ -21,16 +21,10 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
-  final Random random = Random();
-
-  final CloudRepository _cloudRepository = CloudRepository();
-
-  Future<List<Course>> data() async {
-    return _cloudRepository.getCourses();
-  }
 
   @override
-  void initState() {;
+  void initState() {
+    ;
     super.initState();
   }
 

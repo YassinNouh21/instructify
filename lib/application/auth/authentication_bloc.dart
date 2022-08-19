@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/domain/auth/password_sign_object.dart';
 import 'package:instructify/domain/core/auth_failure.dart';
+import 'package:instructify/model/user.dart';
 
 import '../../domain/auth/email_sign_object.dart';
 import '../../domain/auth/i_auth_facade.dart';
@@ -71,15 +72,25 @@ class AuthenticationBloc
                 isSubmitting: false,
                 showErrorMessages: true,
                 state: AuthenticationStates.unAuthenticated,
-                authFailureOrSuccessOption: some(left(l)),
-              )), (r) async {
-        // await _firebaseCloud.registerUser();
-        emit(state.copyWith(
-          isSubmitting: false,
-          showErrorMessages: false,
-          state: AuthenticationStates.authenticated,
-          authFailureOrSuccessOption: some(right(r)),
-        ));
+                authFailureOrSuccessOption: some(
+                  left(l),
+                ),
+              )), (r) {
+        _firebaseCloud
+            .registerUser(User(
+              email: event.email,
+              fullName: event.firstName + ' ' + event.lastName,
+              type: 'student',
+            ))
+            .then((value) => value.fold((l) => some(l), (r) => none()));
+        emit(
+          state.copyWith(
+            isSubmitting: false,
+            showErrorMessages: false,
+            state: AuthenticationStates.authenticated,
+            authFailureOrSuccessOption: some(right(r)),
+          ),
+        );
       });
     });
   }

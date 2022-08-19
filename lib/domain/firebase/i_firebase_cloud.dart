@@ -4,7 +4,7 @@ import 'package:instructify/model/course.dart';
 import 'package:instructify/model/user.dart';
 
 abstract class IFirebaseCloud {
-  Future<List<Course>> getCourses();
+  Future<Either<CloudFailure, List<Course>>> getCourses();
   Future<Either<CloudFailure, Unit>> registerUser(User user);
   Future<Either<CloudFailure, Unit>> updateUser(User user);
 }

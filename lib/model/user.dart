@@ -2,102 +2,91 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+@immutable
 class User {
-  final String userId;
   final String email;
-  final String phoneNumber;
-  final String type;
-  final String imgUrl;
-  final List<PurshasedCourses> purshasedCourses;
-  final List<Progess> progess;
   final String fullName;
-  final String password;
-
-  User({
-    required this.userId,
+  final String type;
+  final String? userId;
+  final String? phoneNumber;
+  final List<PurshasedCourses>? purshasedCourses;
+  final List<Progess>? progess;
+  final String? imgUrl;
+  const User({
     required this.email,
-    required this.phoneNumber,
-    required this.type,
-    required this.imgUrl,
-    required this.purshasedCourses,
-    required this.progess,
     required this.fullName,
-    required this.password,
+    required this.type,
+    this.userId,
+    this.phoneNumber,
+    this.purshasedCourses,
+    this.progess,
+    this.imgUrl,
   });
 
-  factory User.register({
-    required String email,
-    required String password,
-    required String type,
-    required String fullName,
-  }) {
-    return User(
-      userId: '',
-      email: email,
-      phoneNumber: '',
-      type: type,
-      imgUrl: '',
-      purshasedCourses: [],
-      progess: [],
-      fullName: fullName,
-      password: password,
-    );
-  }
-
   User copyWith({
-    String? userId,
     String? email,
-    String? phoneNumber,
+    String? fullName,
     String? type,
-    String? imgUrl,
+    String? userId,
+    String? phoneNumber,
     List<PurshasedCourses>? purshasedCourses,
     List<Progess>? progess,
-    String? fullName,
-    String? password,
+    String? imgUrl,
   }) {
     return User(
-      userId: userId ?? this.userId,
       email: email ?? this.email,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
+      fullName: fullName ?? this.fullName,
       type: type ?? this.type,
-      imgUrl: imgUrl ?? this.imgUrl,
+      userId: userId ?? this.userId,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
       purshasedCourses: purshasedCourses ?? this.purshasedCourses,
       progess: progess ?? this.progess,
-      fullName: fullName ?? this.fullName,
-      password: password ?? this.password,
+      imgUrl: imgUrl ?? this.imgUrl,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'userId': userId});
     result.addAll({'email': email});
-    result.addAll({'phoneNumber': phoneNumber});
-    result.addAll({'type': type});
-    result.addAll({'imgUrl': imgUrl});
-    result.addAll(
-        {'purshasedCourses': purshasedCourses.map((x) => x.toMap()).toList()});
-    result.addAll({'progess': progess.map((x) => x.toMap()).toList()});
     result.addAll({'fullName': fullName});
-    result.addAll({'password': password});
+    result.addAll({'type': type});
+    if (userId != null) {
+      result.addAll({'userId': userId});
+    }
+    if (phoneNumber != null) {
+      result.addAll({'phoneNumber': phoneNumber});
+    }
+    if (purshasedCourses != null) {
+      result.addAll({
+        'purshasedCourses': purshasedCourses!.map((x) => x?.toMap()).toList()
+      });
+    }
+    if (progess != null) {
+      result.addAll({'progess': progess!.map((x) => x?.toMap()).toList()});
+    }
+    if (imgUrl != null) {
+      result.addAll({'imgUrl': imgUrl});
+    }
 
     return result;
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      userId: map['userId'] ?? '',
       email: map['email'] ?? '',
-      phoneNumber: map['phoneNumber'] ?? '',
-      type: map['type'] ?? '',
-      imgUrl: map['imgUrl'] ?? '',
-      purshasedCourses: List<PurshasedCourses>.from(
-          map['purshasedCourses']?.map((x) => PurshasedCourses.fromMap(x))),
-      progess:
-          List<Progess>.from(map['progess']?.map((x) => Progess.fromMap(x))),
       fullName: map['fullName'] ?? '',
-      password: map['password'] ?? '',
+      type: map['type'] ?? '',
+      userId: map['userId'],
+      phoneNumber: map['phoneNumber'],
+      purshasedCourses: map['purshasedCourses'] != null
+          ? List<PurshasedCourses>.from(
+              map['purshasedCourses']?.map((x) => PurshasedCourses.fromMap(x)))
+          : null,
+      progess: map['progess'] != null
+          ? List<Progess>.from(map['progess']?.map((x) => Progess.fromMap(x)))
+          : null,
+      imgUrl: map['imgUrl'],
     );
   }
 
@@ -107,7 +96,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(userId: $userId, email: $email, phoneNumber: $phoneNumber, type: $type, imgUrl: $imgUrl, purshasedCourses: $purshasedCourses, progess: $progess, fullName: $fullName, password: $password)';
+    return 'User(email: $email, fullName: $fullName, type: $type, userId: $userId, phoneNumber: $phoneNumber, purshasedCourses: $purshasedCourses, progess: $progess, imgUrl: $imgUrl)';
   }
 
   @override
@@ -115,28 +104,26 @@ class User {
     if (identical(this, other)) return true;
 
     return other is User &&
-        other.userId == userId &&
         other.email == email &&
-        other.phoneNumber == phoneNumber &&
+        other.fullName == fullName &&
         other.type == type &&
-        other.imgUrl == imgUrl &&
+        other.userId == userId &&
+        other.phoneNumber == phoneNumber &&
         listEquals(other.purshasedCourses, purshasedCourses) &&
         listEquals(other.progess, progess) &&
-        other.fullName == fullName &&
-        other.password == password;
+        other.imgUrl == imgUrl;
   }
 
   @override
   int get hashCode {
-    return userId.hashCode ^
-        email.hashCode ^
-        phoneNumber.hashCode ^
+    return email.hashCode ^
+        fullName.hashCode ^
         type.hashCode ^
-        imgUrl.hashCode ^
+        userId.hashCode ^
+        phoneNumber.hashCode ^
         purshasedCourses.hashCode ^
         progess.hashCode ^
-        fullName.hashCode ^
-        password.hashCode;
+        imgUrl.hashCode;
   }
 }
 

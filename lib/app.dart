@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
       return ScreenUtilInit(
           designSize: const Size(414, 868),
           minTextAdapt: true,
-          splitScreenMode: true,
           builder: (context, child) {
             return MaterialApp(
               theme: getApplicationTheme(context),

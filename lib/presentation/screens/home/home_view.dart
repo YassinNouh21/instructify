@@ -50,7 +50,6 @@ class _HomeViewState extends State<HomeView> {
                 (a) => a.fold(
                     (l) => Container(
                         height: 100.h, width: 100.w, child: Text('data')), (r) {
-                  print('ui data $r');
                   return Column(
                     children: [
                       MainAppBar.withSearchBar(),

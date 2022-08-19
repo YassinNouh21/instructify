@@ -121,8 +121,8 @@ class Course {
     return result;
   }
 
-  double convertMinutesToHours(int minutes) {
-    return minutes / 60;
+  String convertMinutesToHours(int minutes) {
+    return (minutes / 60).toStringAsFixed(0);
   }
 
   factory Course.fromMap(Map<String, dynamic> map) {

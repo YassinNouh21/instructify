@@ -30,15 +30,17 @@ class CourseContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 125.w,
-              height: 90.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: Colors.white,
-                image: DecorationImage(
-                  image: NetworkImage(course.imgUrl),
-                  fit: BoxFit.fitWidth,
+            Center(
+              child: Container(
+                width: 125.w,
+                height: 90.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: NetworkImage(course.imgUrl),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

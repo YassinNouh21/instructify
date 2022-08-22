@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+
+import 'package:instructify/model/category.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 
 import '../../../shared/category_container.dart';
 
 class CategoriesViewer extends StatelessWidget {
-  const CategoriesViewer({Key? key}) : super(key: key);
+  final List<Category> categories;
+  const CategoriesViewer({
+    Key? key,
+    required this.categories,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,9 @@ class CategoriesViewer extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        return const CategoryContainer();
+        return CategoryContainer(
+          category: categories[index],
+        );
       },
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

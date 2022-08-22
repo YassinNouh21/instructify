@@ -14,8 +14,6 @@ class Category {
     required this.imgUrl,
   });
 
-
-
   Category copyWith({
     String? categoryId,
     String? name,
@@ -32,12 +30,12 @@ class Category {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'categoryId': categoryId});
     result.addAll({'name': name});
     result.addAll({'coursesId': coursesId});
     result.addAll({'imgUrl': imgUrl});
-  
+
     return result;
   }
 
@@ -45,14 +43,15 @@ class Category {
     return Category(
       categoryId: map['categoryId'] ?? '',
       name: map['name'] ?? '',
-      coursesId: List<String>.from(map['coursesId']),
+      coursesId: List<String>.from(map['courseId']),
       imgUrl: map['imgUrl'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Category.fromJson(String source) => Category.fromMap(json.decode(source));
+  factory Category.fromJson(String source) =>
+      Category.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -62,19 +61,19 @@ class Category {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Category &&
-      other.categoryId == categoryId &&
-      other.name == name &&
-      listEquals(other.coursesId, coursesId) &&
-      other.imgUrl == imgUrl;
+        other.categoryId == categoryId &&
+        other.name == name &&
+        listEquals(other.coursesId, coursesId) &&
+        other.imgUrl == imgUrl;
   }
 
   @override
   int get hashCode {
     return categoryId.hashCode ^
-      name.hashCode ^
-      coursesId.hashCode ^
-      imgUrl.hashCode;
+        name.hashCode ^
+        coursesId.hashCode ^
+        imgUrl.hashCode;
   }
 }

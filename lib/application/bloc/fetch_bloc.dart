@@ -16,7 +16,9 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
   final IFirebaseCloud _firebaseCloud;
 
   FetchBloc(this._firebaseCloud) : super(FetchState.initial()) {
-    on<FetchEvent>(_onFetchCourse);
+    print('fetch bloc ${hashCode}');
+    on<FetchCourse>(_onFetchCourse);
+    on<FetchCategory>(_onFetchCategory);
   }
 
   Future<void> _onFetchCourse(
@@ -38,5 +40,24 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
     super.onTransition(transition);
     print(
         'Event: ${transition.event}// Current: ${transition.currentState}// NextState: ${transition.nextState}');
+  }
+
+  Future<void> _onFetchCategory(
+      FetchCategory event, Emitter<FetchState> emit) async {
+    emit(FetchState(
+      true,
+      none(),
+      false,
+      DataType.Category,
+    ));
+    await _firebaseCloud.getCategories().then((value) {
+      print('fetch bloc Fetched category $value');
+      emit(FetchState(
+        false,
+        some(value),
+        true,
+        DataType.Category,
+      ));
+    });
   }
 }

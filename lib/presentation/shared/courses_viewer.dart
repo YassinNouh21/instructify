@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instructify/model/course.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:instructify/presentation/resource/size_manager.dart';
 
@@ -18,10 +19,9 @@ class CoursesViewer extends StatelessWidget {
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemCount: 10,
-      padding: const EdgeInsets.only(
-        left: SizeManager.s10,
-        bottom: SizeManager.s10,
-        top: SizeManager.s10,
+      padding: EdgeInsets.only(
+        left: SizeManager.s10.w,
+        bottom: 5.h,
       ),
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
@@ -29,11 +29,11 @@ class CoursesViewer extends StatelessWidget {
           course: courses[index],
         );
       },
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
-        childAspectRatio: 1.1,
-        crossAxisSpacing: 15.0,
-        mainAxisSpacing: 10.0,
+        childAspectRatio: 0.9,
+        crossAxisSpacing: 15.w,
+        mainAxisSpacing: 10.0.h,
       ),
     );
   }

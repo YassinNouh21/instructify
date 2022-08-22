@@ -20,3 +20,23 @@ class FetchCourse extends FetchEvent {
   @override
   int get hashCode => dataType.hashCode ^ id.hashCode;
 }
+
+class FetchCategory extends FetchEvent {
+  final DataType dataType;
+  final String? id;
+  FetchCategory({
+    required this.dataType,
+    this.id,
+  });
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is FetchCategory &&
+        other.dataType == dataType &&
+        other.id == id;
+  }
+
+  @override
+  int get hashCode => dataType.hashCode ^ id.hashCode;
+}

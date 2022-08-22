@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               theme: getApplicationTheme(context),
               title: 'Flutter Demo',
-              home: MainView(),
-              // onGenerateRoute: RouteGenerator.getRoute,
+              // home: MainView(),
+              onGenerateRoute: RouteGenerator.getRoute,
             );
           });
     });

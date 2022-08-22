@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:instructify/model/category.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 
 class CategoryContainer extends StatelessWidget {
-  const CategoryContainer({Key? key}) : super(key: key);
+  Category category;
+  CategoryContainer({
+    Key? key,
+    required this.category,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,7 @@ class CategoryContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Image.network(
-                'https://dummyimage.com/125x100/000/fff',
+                category.imgUrl,
                 fit: BoxFit.cover,
               ),
             ),
@@ -40,7 +46,7 @@ class CategoryContainer extends StatelessWidget {
           ),
           Text(
             // TODO: Add name in Category
-            'Topics',
+              category.name,
             maxLines: 1,
             style: Theme.of(context).textTheme.caption!,
             textAlign: TextAlign.center,

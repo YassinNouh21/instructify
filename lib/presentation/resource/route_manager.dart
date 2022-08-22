@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instructify/application/bloc/fetch_bloc.dart';
+import 'package:instructify/injection.dart';
 import 'package:instructify/presentation/screens/account/account_view.dart';
 import 'package:instructify/presentation/screens/download/download_view.dart';
 import 'package:instructify/presentation/screens/forgot_password/forgot_password_view.dart';
@@ -58,7 +61,10 @@ class RouteGenerator {
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const MainView());
       case Routes.categoryRoute:
-        return MaterialPageRoute(builder: (_) => const CategoryView());
+        return MaterialPageRoute(
+            builder: (_) => CategoryView(
+                  categories: [],
+                ));
       case Routes.paymentRoute:
         return MaterialPageRoute(builder: (_) => const PaymentView());
       case Routes.searchRoute:
@@ -76,7 +82,11 @@ class RouteGenerator {
       case Routes.accountRoute:
         return MaterialPageRoute(builder: (_) => const AccountView());
       case Routes.homeRoute:
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIt<FetchBloc>(),
+                  child: HomeView(),
+                ));
       case Routes.choosePositionRoute:
         return MaterialPageRoute(builder: (_) => const ChoosePositionView());
       case Routes.chooseSignInMehtodRoute:

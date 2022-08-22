@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -27,11 +25,10 @@ class LoginView extends StatelessWidget {
               (f) async {
                 await showMyDialog(context, f.errorMessage);
               },
-              (_) {},
+              (_) {
+                Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+              },
             ));
-        if (state.state == AuthenticationStates.authenticated) {
-          Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-        }
       },
       child: SafeArea(
         child: Scaffold(

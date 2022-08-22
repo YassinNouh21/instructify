@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
+import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/shared/secondary_app_bar.dart';
 
 import 'widgets/account_button.dart';

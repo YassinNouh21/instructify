@@ -27,6 +27,7 @@ void main() async {
             BlocProvider(
               create: (BuildContext context) => getIt<AuthenticationBloc>(),
             ),
+            
           ],
           child: MyApp(),
         ),

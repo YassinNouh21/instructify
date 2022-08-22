@@ -144,13 +144,7 @@ class _$_FetchState implements _FetchState {
 
   @override
   String toString() {
-    return failureOrSuccess
-        .map((a) => a.fold(
-            (l) =>
-                'FetchState(isLoading: $isLoading, failureOrSuccess: $failureOrSuccess , isSuccess: $isSuccess, dataType: $dataType)',
-            (r) =>
-                'FetchState(isLoading: $isLoading, failureOrSuccess: data correct, isSuccess: $isSuccess, dataType: $dataType)'))
-        .toString();
+    return 'FetchState(isLoading: $isLoading, failureOrSuccess: ${failureOrSuccess.fold(() => 'nothing', (a) => a.fold((l) => l.toString(), (r) => 'courses data'))}, isSuccess: $isSuccess, dataType: $dataType)';
   }
 
   @override

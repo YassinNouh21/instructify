@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:instructify/model/category.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/screens/category/widgets/category_viewer.dart';
 import 'package:instructify/presentation/shared/secondary_app_bar.dart';
 
 class CategoryView extends StatelessWidget {
-  const CategoryView({Key? key}) : super(key: key);
+  List<Category> categories;
+  CategoryView({
+    Key? key,
+    required this.categories,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,11 @@ class CategoryView extends StatelessWidget {
               flex: 1,
               child: SecondaryAppBar(title: 'HI'),
             ),
-            Expanded(flex: 12, child: CategoriesViewer()),
+            Expanded(
+                flex: 12,
+                child: CategoriesViewer(
+                  categories: categories,
+                )),
           ],
         ),
       ),

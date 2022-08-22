@@ -51,6 +51,13 @@ class AccountView extends StatelessWidget {
             title: 'Help',
             onPressed: () {},
           ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+            },
+            child: Text('Logout'),
+          ),
         ],
       ),
     );

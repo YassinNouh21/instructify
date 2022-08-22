@@ -25,6 +25,7 @@ class AuthenticationBloc
       : super(AuthenticationState.initial()) {
     on<AuthenticationSignIn>(_onSignInWithEmailAndPasswordPressed);
     on<AuthenticationRegister>(_onRegisterWithEmailAndPasswordPressed);
+    on<AuthenticationSignOut>(_onSignOutPressed);
   }
 
   Future<void> _onSignInWithEmailAndPasswordPressed(
@@ -93,5 +94,14 @@ class AuthenticationBloc
         );
       });
     });
+  }
+
+  FutureOr<void> _onSignOutPressed(
+      AuthenticationSignOut event, Emitter<AuthenticationState> emit) {
+    emit(state.copyWith(
+      state: AuthenticationStates.unAuthenticated,
+      isSubmitting: false,
+      authFailureOrSuccessOption: none(),
+    ));
   }
 }

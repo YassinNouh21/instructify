@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 
 import 'package:instructify/presentation/resource/size_manager.dart';
@@ -29,7 +30,7 @@ class RegisterTwoView extends StatelessWidget {
               (_) {},
             ));
         if (state.state == AuthenticationStates.authenticated) {
-          Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+          Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
         }
       },
       child: SafeArea(
@@ -40,44 +41,46 @@ class RegisterTwoView extends StatelessWidget {
           ),
           body: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                const Expanded(
-                  flex: 1,
-                  child: SizedBox(
-                    width: double.infinity,
-                  ),
+            child: SingleChildScrollView(
+              child: Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: double.infinity,
+                      height: SizeManager.s16,
+                    ),
+                    const ListTextFields(),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    AppMainButton.fullWidth(
+                      onPressed: () {
+                        if (ListTextFields.formKey.currentState!.validate() &&
+                            ListTextFields.password ==
+                                ListTextFields.rePassword) {
+                          context.read<AuthenticationBloc>().add(
+                                AuthenticationRegister(
+                                  email: ListTextFields.email,
+                                  password: ListTextFields.password,
+                                  firstName: RegisterListTexts
+                                      .ListTextFields.firstName,
+                                  lastName:
+                                      RegisterListTexts.ListTextFields.lastName,
+                                ),
+                              );
+  
+                        }
+                      },
+                      text: 'Create Account',
+                      widthQuery: width,
+                    ),
+                    const SizedBox(
+                      height: SizeManager.s28,
+                    )
+                  ],
                 ),
-                const SizedBox(
-                  height: SizeManager.s16,
-                ),
-                const ListTextFields(),
-                const Expanded(flex: 6, child: SizedBox()),
-                AppMainButton.fullWidth(
-                  onPressed: () {
-                    if (ListTextFields.formKey.currentState!.validate() &&
-                        ListTextFields.password == ListTextFields.rePassword) {
-                      context.read<AuthenticationBloc>().add(
-                            AuthenticationRegister(
-                              email: ListTextFields.email,
-                              password: ListTextFields.password,
-                              firstName:
-                                  RegisterListTexts.ListTextFields.firstName,
-                              lastName:
-                                  RegisterListTexts.ListTextFields.lastName,
-                            ),
-                          );
-                      print(
-                          "RegisterTwoView email: ${ListTextFields.email}, password: ${ListTextFields.password}, firstName: ${RegisterListTexts.ListTextFields.firstName}, lastName: ${RegisterListTexts.ListTextFields.lastName},");
-                    }
-                  },
-                  text: 'Create Account',
-                  widthQuery: width,
-                ),
-                const SizedBox(
-                  height: SizeManager.s28,
-                )
-              ],
+              ),
             ),
           ),
         ),

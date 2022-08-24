@@ -17,7 +17,7 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
-  final List<Widget> screens = [
+  final List<Widget> screens = const [
     HomeView(),
     CoursesView(),
     DownloadView(),

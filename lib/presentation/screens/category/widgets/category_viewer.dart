@@ -16,7 +16,7 @@ class CategoriesViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
-      itemCount: 10,
+      itemCount: categories.length,
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {

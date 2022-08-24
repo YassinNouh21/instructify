@@ -1,11 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:sizer/sizer.dart';
 
 import 'presentation/resource/theme_manager.dart';
-import 'presentation/screens/home/home_view.dart';
-import 'presentation/screens/main/main_view.dart';
 
 class MyApp extends StatelessWidget {
   static const instance = MyApp._private();
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               theme: getApplicationTheme(context),
               title: 'Flutter Demo',
-              // home: MainView(),
+              // home: CategoryView(),
               onGenerateRoute: RouteGenerator.getRoute,
             );
           });

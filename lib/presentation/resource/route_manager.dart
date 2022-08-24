@@ -61,10 +61,7 @@ class RouteGenerator {
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const MainView());
       case Routes.categoryRoute:
-        return MaterialPageRoute(
-            builder: (_) => CategoryView(
-                  categories: [],
-                ));
+        return MaterialPageRoute(builder: (_) => CategoryView());
       case Routes.paymentRoute:
         return MaterialPageRoute(builder: (_) => const PaymentView());
       case Routes.searchRoute:

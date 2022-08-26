@@ -40,3 +40,20 @@ class FetchCategory extends FetchEvent {
   @override
   int get hashCode => dataType.hashCode ^ id.hashCode;
 }
+
+class SearchByCategory extends FetchEvent {
+  final List<String> ids;
+  SearchByCategory({
+    required this.ids,
+  });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SearchByCategory && listEquals(other.ids, ids);
+  }
+
+  @override
+  int get hashCode => ids.hashCode;
+}

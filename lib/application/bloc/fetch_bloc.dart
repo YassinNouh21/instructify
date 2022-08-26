@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/domain/core/cloud_failure.dart';
@@ -19,6 +21,7 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
     print('fetch bloc ${hashCode}');
     on<FetchCourse>(_onFetchCourse);
     on<FetchCategory>(_onFetchCategory);
+    on<SearchByCategory>(_onSearchByCategory);
   }
 
   Future<void> _onFetchCourse(
@@ -33,13 +36,6 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
         failureOrSuccess: some(value),
       ));
     });
-  }
-
-  @override
-  void onTransition(Transition<FetchEvent, FetchState> transition) {
-    super.onTransition(transition);
-    print(
-        'Event: ${transition.event}// Current: ${transition.currentState}// NextState: ${transition.nextState}');
   }
 
   Future<void> _onFetchCategory(
@@ -57,6 +53,32 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
         some(value),
         true,
         DataType.Category,
+      ));
+    });
+  }
+
+  @override
+  void onTransition(Transition<FetchEvent, FetchState> transition) {
+    super.onTransition(transition);
+    print(
+        'Event: ${transition.event}// Current: ${transition.currentState}// NextState: ${transition.nextState}');
+  }
+
+  Future<void> _onSearchByCategory(
+      SearchByCategory event, Emitter<FetchState> emit) async {
+    emit(FetchState(
+      true,
+      none(),
+      false,
+      DataType.Course,
+    ));
+    print('fetch bloc search by category ${event.ids}');
+    return await _firebaseCloud.searchByCategory(event.ids).then((value) {
+      emit(FetchState(
+        false,
+        some(value),
+        true,
+        DataType.Course,
       ));
     });
   }

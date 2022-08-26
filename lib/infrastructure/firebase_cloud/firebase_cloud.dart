@@ -39,7 +39,7 @@ class CloudRepository implements IFirebaseCloud {
       return await _firestore.collection('categories').get().then((value) {
         return right(value.docs.map((e) {
           Map<String, dynamic> categoryJson = e.data();
-        print('cloud category try $categoryJson');
+          print('cloud category try $categoryJson');
           return Category.fromMap(categoryJson);
         }).toList());
       });
@@ -86,6 +86,39 @@ class CloudRepository implements IFirebaseCloud {
         return left(const CloudFailure.objectServerError());
       }
     } catch (e) {
+      return left(const CloudFailure.unkown());
+    }
+  }
+
+  @override
+  Future<Either<CloudFailure, List<Course>>> searchByCategory(
+      List<String> coursesId) async {
+    try {
+      print('cloud courses try start $coursesId');
+
+      List<Course> courses = [];
+      for (String courseId in coursesId) {
+        final course = await _firestore
+            .collection('courses')
+            .doc(courseId)
+            .get()
+            .then((value) {
+          Map<String, dynamic> courseJson = value.data()!;
+          return Course.fromMap(courseJson);
+        });
+        courses.add(course);
+      }
+
+      return right(courses);
+    } on FirebaseException catch (e) {
+      if (e.code == 'ERROR_INVALID_ARGUMENT') {
+        return left(CloudFailure.objectNotFound());
+      } else {
+        return left(CloudFailure.objectServerError());
+      }
+    } catch (e) {
+      print('cloud Error: searchByCategory $e');
+      print('cloud id $coursesId');
       return left(const CloudFailure.unkown());
     }
   }

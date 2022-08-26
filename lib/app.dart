@@ -5,6 +5,8 @@ import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:sizer/sizer.dart';
 
 import 'presentation/resource/theme_manager.dart';
+import 'presentation/screens/category/category_view.dart';
+import 'presentation/screens/course/course._screen.dart';
 
 class MyApp extends StatelessWidget {
   static const instance = MyApp._private();
@@ -21,8 +23,8 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               theme: getApplicationTheme(context),
               title: 'Flutter Demo',
-              // home: CategoryView(),
-              onGenerateRoute: RouteGenerator.getRoute,
+              home: CategoryView(),
+              // onGenerateRoute: RouteGenerator.getRoute,
             );
           });
     });

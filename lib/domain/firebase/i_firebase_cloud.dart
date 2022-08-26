@@ -8,6 +8,8 @@ import '../../model/category.dart';
 abstract class IFirebaseCloud {
   Future<Either<CloudFailure, List<Course>>> getCourses();
   Future<Either<CloudFailure, List<Category>>> getCategories();
+  Future<Either<CloudFailure, List<Course>>> searchByCategory(
+      List<String> coursesId);
   Future<Either<CloudFailure, Unit>> registerUser(User user);
   Future<Either<CloudFailure, Unit>> updateUser(User user);
 }

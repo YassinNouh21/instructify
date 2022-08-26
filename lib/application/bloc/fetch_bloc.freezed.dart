@@ -129,7 +129,7 @@ class __$$_FetchStateCopyWithImpl<$Res> extends _$FetchStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FetchState implements _FetchState {
+class _$_FetchState with DiagnosticableTreeMixin implements _FetchState {
   const _$_FetchState(
       this.isLoading, this.failureOrSuccess, this.isSuccess, this.dataType);
 
@@ -143,8 +143,19 @@ class _$_FetchState implements _FetchState {
   final DataType dataType;
 
   @override
-  String toString() {
-    return 'FetchState(isLoading: $isLoading, failureOrSuccess: ${failureOrSuccess.fold(() => 'nothing', (a) => a.fold((l) => l.toString(), (r) => 'courses data'))}, isSuccess: $isSuccess, dataType: $dataType)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'FetchState(isLoading: $isLoading, failureOrSuccess: $failureOrSuccess, isSuccess: $isSuccess, dataType: $dataType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'FetchState'))
+      ..add(DiagnosticsProperty('isLoading', isLoading))
+      ..add(DiagnosticsProperty('failureOrSuccess', failureOrSuccess))
+      ..add(DiagnosticsProperty('isSuccess', isSuccess))
+      ..add(DiagnosticsProperty('dataType', dataType));
   }
 
   @override

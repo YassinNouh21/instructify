@@ -43,13 +43,16 @@ class CategoryContainer extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Image.network(
-                  category.imgUrl,
-                  fit: BoxFit.cover,
+              child: Padding(
+                padding: EdgeInsets.all(25.r),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Image.network(
+                    category.imgUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -57,10 +60,11 @@ class CategoryContainer extends StatelessWidget {
               height: 6.h,
             ),
             Text(
-              // TODO: Add name in Category
               category.name,
               maxLines: 1,
-              style: Theme.of(context).textTheme.caption!,
+              style: Theme.of(context).textTheme.caption!.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
               textAlign: TextAlign.center,
             ),
           ],

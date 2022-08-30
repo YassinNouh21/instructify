@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
+import 'package:instructify/presentation/screens/course_detail/course_detail_view.dart';
 import 'package:sizer/sizer.dart';
 
 import 'presentation/resource/theme_manager.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               theme: getApplicationTheme(context),
               title: 'Flutter Demo',
-              home: CategoryView(),
+              home: const CourseDetailView(),
               // onGenerateRoute: RouteGenerator.getRoute,
             );
           });

@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/domain/auth/email_sign_object.dart';
 import 'package:dartz/dartz.dart';
+import 'package:instructify/model/user.dart' as AppUser;
 import 'package:instructify/domain/auth/i_auth_facade.dart';
 import 'package:instructify/domain/core/auth_failure.dart';
 import 'package:instructify/domain/auth/password_sign_object.dart';
+import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/model/user.dart' as model;
 
 @LazySingleton(as: IAuthFacade)
@@ -41,11 +45,19 @@ class AuthFirebase implements IAuthFacade {
           .signInWithEmailAndPassword(
               email: emailAddressStr, password: passwordStr)
           .then((value) => userTemp = value);
-      // model.User(email: );
+      AppUser.User tempUser = AppUser.User(
+        userId: userTemp?.user?.uid,
+        email: userTemp!.user!.email.toString(),
+        type: 'student',
+        fullName: userTemp!.user!.email.toString(),
+      );
+      await PreferenceRepository.pref
+          .setString('user', jsonDecode(json.encode(tempUser)));
       return right(unit);
     } on FirebaseAuthException catch (e) {
       return left(AuthFailure.getFailure(e.code));
     } catch (e) {
+      print('error: $e');
       return left(const ServerError());
     }
   }

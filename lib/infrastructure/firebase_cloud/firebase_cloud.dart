@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:instructify/domain/core/auth_failure.dart';
 
 import 'package:instructify/domain/core/cloud_failure.dart';
 import 'package:instructify/domain/firebase/i_firebase_cloud.dart';
@@ -39,7 +40,6 @@ class CloudRepository implements IFirebaseCloud {
       return await _firestore.collection('categories').get().then((value) {
         return right(value.docs.map((e) {
           Map<String, dynamic> categoryJson = e.data();
-          print('cloud category try $categoryJson');
           return Category.fromMap(categoryJson);
         }).toList());
       });
@@ -50,7 +50,6 @@ class CloudRepository implements IFirebaseCloud {
         return left(const CloudFailure.objectServerError());
       }
     } catch (e) {
-      print('cloud Error: category $e');
       return left(const CloudFailure.unkown());
     }
   }
@@ -94,8 +93,6 @@ class CloudRepository implements IFirebaseCloud {
   Future<Either<CloudFailure, List<Course>>> searchByCategory(
       List<String> coursesId) async {
     try {
-      print('cloud courses try start $coursesId');
-
       List<Course> courses = [];
       for (String courseId in coursesId) {
         final course = await _firestore
@@ -117,9 +114,33 @@ class CloudRepository implements IFirebaseCloud {
         return left(CloudFailure.objectServerError());
       }
     } catch (e) {
-      print('cloud Error: searchByCategory $e');
-      print('cloud id $coursesId');
+      ('cloud Error: searchByCategory $e');
       return left(const CloudFailure.unkown());
+    }
+  }
+
+  @override
+  Future<Either<AuthFailure, Unit>> addCourseToUser(
+      String courseId, User user) async {
+    try {
+      // await _firestore.collection('users').doc(user.userId).update({
+      //   'courses': FieldValue.arrayUnion([courseId])
+      // });
+      List<PurshasedCourses>? purshasedCourses = user.purshasedCourses;
+      purshasedCourses!.add(PurshasedCourses(courseId: courseId));
+      User newUser = user.copyWith(purshasedCourses: purshasedCourses);
+      await _firestore
+          .collection('users')
+          .doc(user.userId)
+          .update(newUser.toMap());
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.code == 'ERROR_INVALID_ARGUMENT') {
+        return left(const CancelledByUser());
+      }
+      return left(const ServerError());
+    } catch (e) {
+      return left(const ServerError());
     }
   }
 }

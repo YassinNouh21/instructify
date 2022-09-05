@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instructify/application/bloc/fetch_bloc.dart';
+import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/injection.dart';
 import 'package:instructify/presentation/screens/account/account_view.dart';
 import 'package:instructify/presentation/screens/download/download_view.dart';
@@ -49,7 +50,10 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.splashRoute:
-        return MaterialPageRoute(builder: (_) => const OnBoardingView());
+        return MaterialPageRoute(
+            builder: (_) => PreferenceRepository.pref.getString('user') == null
+                ? OnBoardingView()
+                : MainView());
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.onBoardingRoute:
@@ -71,7 +75,8 @@ class RouteGenerator {
       case Routes.coursesRoute:
         return MaterialPageRoute(builder: (_) => const CoursesView());
       case Routes.courseDetailRoute:
-        return MaterialPageRoute(builder: (_) => const CourseDetailView());
+        return MaterialPageRoute(
+            builder: (_) => const CourseDetailView(), settings: routeSettings);
       case Routes.registerTwoRoute:
         return MaterialPageRoute(builder: (_) => RegisterTwoView());
       case Routes.downloadRoute:
@@ -82,7 +87,7 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => getIt<FetchBloc>(),
-                  child: HomeView(),
+                  child: const HomeView(),
                 ));
       case Routes.choosePositionRoute:
         return MaterialPageRoute(builder: (_) => const ChoosePositionView());

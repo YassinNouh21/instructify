@@ -25,7 +25,8 @@ class CourseContainer extends StatelessWidget {
         ],
       ),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, Routes.courseDetailRoute),
+        onTap: () => Navigator.pushNamed(context, Routes.courseDetailRoute,
+            arguments: course.toMap()),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +78,7 @@ class CourseContainer extends StatelessWidget {
                     color: ColorManager.textUnselectedColor,
                   ),
                   overflow: TextOverflow.clip,
+                  
                 ),
               ],
             ),

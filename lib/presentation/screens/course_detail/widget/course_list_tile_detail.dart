@@ -21,8 +21,11 @@ class CourseListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 15.h),
       height: 60.h,
+      width: 370.w,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -47,6 +50,7 @@ class CourseListTile extends StatelessWidget {
                 ),
                 child: Text(
                   courseName,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.sp,

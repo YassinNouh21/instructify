@@ -31,6 +31,7 @@ class BottomContainer extends StatelessWidget {
         ),
         InkWell(
           onTap: () {},
+          splashColor: Colors.amberAccent,
           child: Center(
             child: Container(
               width: 100.w,
@@ -49,7 +50,7 @@ class BottomContainer extends StatelessWidget {
         ),
         SizedBox(width: 15.w),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: onPressedBuy,
           style: ElevatedButton.styleFrom(
             primary: const Color(0xFF3D5CFF),
             fixedSize: Size(250.w, 60.h),

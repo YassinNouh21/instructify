@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/domain/auth/password_sign_object.dart';
 import 'package:instructify/domain/core/auth_failure.dart';
+import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/model/user.dart';
 
 import '../../domain/auth/email_sign_object.dart';
@@ -26,6 +27,7 @@ class AuthenticationBloc
     on<AuthenticationSignIn>(_onSignInWithEmailAndPasswordPressed);
     on<AuthenticationRegister>(_onRegisterWithEmailAndPasswordPressed);
     on<AuthenticationSignOut>(_onSignOutPressed);
+    on<AuthenticationAddCourseToUser>(_onAddCourseToUser);
   }
 
   Future<void> _onSignInWithEmailAndPasswordPressed(
@@ -51,9 +53,6 @@ class AuthenticationBloc
   void onTransition(
       Transition<AuthenticationEvent, AuthenticationState> transition) {
     super.onTransition(transition);
-
-    print(
-        'Event: ${transition.event}// Current: ${transition.currentState}// NextState: ${transition.nextState}');
   }
 
   Future<void> _onRegisterWithEmailAndPasswordPressed(
@@ -97,11 +96,32 @@ class AuthenticationBloc
   }
 
   FutureOr<void> _onSignOutPressed(
-      AuthenticationSignOut event, Emitter<AuthenticationState> emit) {
+      AuthenticationSignOut event, Emitter<AuthenticationState> emit) async {
+    await PreferenceRepository.pref.clear();
     emit(state.copyWith(
       state: AuthenticationStates.unAuthenticated,
       isSubmitting: false,
       authFailureOrSuccessOption: none(),
     ));
+  }
+
+  Future<void> _onAddCourseToUser(AuthenticationAddCourseToUser event,
+      Emitter<AuthenticationState> emit) async {
+    emit(state.copyWith(
+      isSubmitting: true,
+      authFailureOrSuccessOption: none(),
+    ));
+
+    await _firebaseCloud
+        .addCourseToUser(event.courseId, event.user)
+        .then((value) => value.fold(
+            (l) => emit(state.copyWith(
+                  isSubmitting: false,
+                  authFailureOrSuccessOption: some(left(l)),
+                )),
+            (r) => emit(state.copyWith(
+                  isSubmitting: false,
+                  authFailureOrSuccessOption: some(right(r)),
+                ))));
   }
 }

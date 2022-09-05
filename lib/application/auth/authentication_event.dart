@@ -66,3 +66,24 @@ class AuthenticationRegister extends AuthenticationEvent {
 }
 
 class AuthenticationSignOut extends AuthenticationEvent {}
+
+class AuthenticationAddCourseToUser extends AuthenticationEvent {
+  final String courseId;
+  final User user;
+  AuthenticationAddCourseToUser({
+    required this.courseId,
+    required this.user,
+  });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is AuthenticationAddCourseToUser &&
+        other.courseId == courseId &&
+        other.user == user;
+  }
+
+  @override
+  int get hashCode => courseId.hashCode ^ user.hashCode;
+}

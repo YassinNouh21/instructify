@@ -6,14 +6,20 @@ import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/screens/course_detail/widget/course_list_tile_detail.dart';
 
 class ButtomSheetDetail extends StatelessWidget {
-  final List<Content> content;
+  final Course course;
   const ButtomSheetDetail({
     Key? key,
-    required this.content,
+    required this.course,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double remainingHeight = MediaQuery.of(context).size.height -
+        (course.content.length * 95.h) -
+        20.h -
+        100.h -
+        20.h -
+        350.h;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(
@@ -40,9 +46,9 @@ class ButtomSheetDetail extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
-                '\$ See All',
+                '\$ ${course.price}',
                 style: TextStyle(
                   color: ColorManager.secondaryColor,
                   fontSize: 20.sp,
@@ -51,13 +57,35 @@ class ButtomSheetDetail extends StatelessWidget {
               ),
             ],
           ),
-          ListView.builder(itemBuilder: (context, index) {
-            return CourseListTile(
-              index: index.toString(),
-              courseName: content[index].topic,
-              duration: content[index].duration,
-            );
-          }),
+          SizedBox(
+            height: 20.h,
+          ),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: course.content.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return CourseListTile(
+                  index: index.toString(),
+                  courseName: course.content[index].topic,
+                  duration: course.content[index].duration,
+                );
+              }),
+          Container(
+            width: double.infinity,
+            color: Colors.white,
+            height: remainingHeight < 0 ? 0 : remainingHeight,
+          ),
+          // Spacer(),
+          // Column(
+          //   children: [
+          //     CourseListTile(
+          //       index: content[0].,
+          //       courseName: content[0].topic,
+          //       duration: content[0].duration,
+          //     ),
+          //   ],
+          // )
         ],
       ),
     );

@@ -6,15 +6,17 @@ import 'package:instructify/app.dart';
 import 'package:instructify/application/auth/authentication_bloc.dart';
 import 'package:instructify/domain/auth/i_auth_facade.dart';
 import 'package:instructify/firebase_options.dart';
+import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/injection.dart';
 
 import 'application/validation/validation_bloc.dart';
 
-void main() async {
+Future<void> main() async {
   return BlocOverrides.runZoned(
     () async {
       configureInjection(Environment.prod);
       WidgetsFlutterBinding.ensureInitialized();
+      await PreferenceRepository.initializePreference();
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
@@ -27,7 +29,6 @@ void main() async {
             BlocProvider(
               create: (BuildContext context) => getIt<AuthenticationBloc>(),
             ),
-            
           ],
           child: MyApp(),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/injection.dart';
 import 'package:instructify/model/course.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
@@ -35,6 +36,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider<FetchBloc>(
       create: (context) => getIt<FetchBloc>(),
       child: SafeArea(

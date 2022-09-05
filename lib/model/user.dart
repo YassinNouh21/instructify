@@ -71,7 +71,7 @@ class User {
 
     return result;
   }
-
+  
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       email: map['email'] ?? '',
@@ -93,11 +93,11 @@ class User {
   String toJson() => json.encode(toMap());
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
-
   @override
   String toString() {
     return 'User(email: $email, fullName: $fullName, type: $type, userId: $userId, phoneNumber: $phoneNumber, purshasedCourses: $purshasedCourses, progess: $progess, imgUrl: $imgUrl)';
   }
+
 
   @override
   bool operator ==(Object other) {

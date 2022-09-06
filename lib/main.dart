@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/app.dart';
 import 'package:instructify/application/auth/authentication_bloc.dart';
+import 'package:instructify/application/bloc/fetch_bloc.dart';
 import 'package:instructify/domain/auth/i_auth_facade.dart';
 import 'package:instructify/firebase_options.dart';
 import 'package:instructify/infrastructure/auth/local_auth.dart';
@@ -25,6 +26,9 @@ Future<void> main() async {
           providers: [
             BlocProvider<ValidationBloc>(
               create: (BuildContext context) => getIt<ValidationBloc>(),
+            ),
+            BlocProvider<FetchBloc>(
+              create: (BuildContext context) => getIt<FetchBloc>(),
             ),
             BlocProvider(
               create: (BuildContext context) => getIt<AuthenticationBloc>(),

@@ -41,7 +41,7 @@ class Routes {
   static const String courseDetailRoute = "/coursedetail";
   static const String coursesRoute = "/courses";
   static const String courseProgressRoute = "/courseprogress";
-  static const String searchRoute = "/seach";
+  static const String searchRoute = "/search";
   static const String paymentRoute = "/payment";
   static const String noRouteFound = "No Route Found";
 }
@@ -68,8 +68,6 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => CategoryView());
       case Routes.paymentRoute:
         return MaterialPageRoute(builder: (_) => const PaymentView());
-      case Routes.searchRoute:
-        return MaterialPageRoute(builder: (_) => SearchView());
       case Routes.courseProgressRoute:
         return MaterialPageRoute(builder: (_) => const CourseProgressView());
       case Routes.coursesRoute:

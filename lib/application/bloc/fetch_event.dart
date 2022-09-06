@@ -57,3 +57,20 @@ class SearchByCategory extends FetchEvent {
   @override
   int get hashCode => ids.hashCode;
 }
+
+class SearchByName extends FetchEvent {
+  final String name;
+  SearchByName({
+    required this.name,
+  });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SearchByName && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
+}

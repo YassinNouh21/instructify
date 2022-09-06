@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/domain/core/cloud_failure.dart';
@@ -18,10 +19,11 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
   final IFirebaseCloud _firebaseCloud;
 
   FetchBloc(this._firebaseCloud) : super(FetchState.initial()) {
-    print('fetch bloc ${hashCode}');
+    // print('fetch bloc ${hashCode}');
     on<FetchCourse>(_onFetchCourse);
     on<FetchCategory>(_onFetchCategory);
     on<SearchByCategory>(_onSearchByCategory);
+    on<SearchByName>(_onSearchByName);
   }
 
   Future<void> _onFetchCourse(
@@ -47,7 +49,7 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
       DataType.Category,
     ));
     await _firebaseCloud.getCategories().then((value) {
-      print('fetch bloc Fetched category $value');
+      // print('fetch bloc Fetched category $value');
       emit(FetchState(
         false,
         some(value),
@@ -72,8 +74,21 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
       false,
       DataType.Course,
     ));
-    print('fetch bloc search by category ${event.ids}');
+    // print('fetch bloc search by category ${event.ids}');
     return await _firebaseCloud.searchByCategory(event.ids).then((value) {
+      emit(FetchState(
+        false,
+        some(value),
+        true,
+        DataType.Course,
+      ));
+    });
+  }
+
+  FutureOr<void> _onSearchByName(
+      SearchByName event, Emitter<FetchState> emit) async {
+    print('fetch bloc search by name ${event.name}');
+    await _firebaseCloud.searchByName(event.name).then((value) {
       emit(FetchState(
         false,
         some(value),

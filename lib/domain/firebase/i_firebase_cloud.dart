@@ -11,6 +11,8 @@ abstract class IFirebaseCloud {
   Future<Either<CloudFailure, List<Category>>> getCategories();
   Future<Either<CloudFailure, List<Course>>> searchByCategory(
       List<String> coursesId);
+  Future<Either<CloudFailure, List<Course>>> searchByName(
+      String name);
   Future<Either<CloudFailure, Unit>> registerUser(User user);
   Future<Either<CloudFailure, Unit>> updateUser(User user);
   Future<Either<AuthFailure, Unit>> addCourseToUser(String courseId, User user);

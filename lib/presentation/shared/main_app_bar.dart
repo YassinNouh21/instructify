@@ -4,6 +4,7 @@ import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
+import 'package:instructify/presentation/screens/search/search_view.dart';
 import 'package:sizer/sizer.dart';
 
 class MainAppBar extends StatelessWidget {
@@ -70,7 +71,7 @@ class MainAppBar extends StatelessWidget {
           searchBar
               ? InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.searchRoute);
+                    showSearch(context: context, delegate: SearchBar());
                   },
                   child: Container(
                     height: SizeManager.s50,

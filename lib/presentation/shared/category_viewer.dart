@@ -27,7 +27,7 @@ class CategoryViewer extends StatelessWidget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
         childAspectRatio: 1,
-        mainAxisSpacing: 20,
+        mainAxisSpacing: 30,
       ),
     );
   }

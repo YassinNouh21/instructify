@@ -48,13 +48,17 @@ class CourseListTile extends StatelessWidget {
                 margin: EdgeInsets.only(
                   bottom: 10.h,
                 ),
-                child: Text(
-                  courseName,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w300,
+                width: 250.w,
+                child: Expanded(
+                  child: Text(
+                    courseName,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                 ),
               ),

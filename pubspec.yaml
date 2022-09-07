@@ -38,6 +38,7 @@ dependencies:
   injectable: ^1.5.3
   shimmer: ^2.0.0
   shared_preferences: ^2.0.15
+  flutter_typeahead: ^4.1.0
 
 dev_dependencies:
   flutter_test:

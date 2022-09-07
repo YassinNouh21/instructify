@@ -152,31 +152,31 @@ class CloudRepository implements IFirebaseCloud {
       await _firestore
           .collection('courses')
           .where('courseName', isGreaterThanOrEqualTo: name)
+          .where('courseName', isLessThanOrEqualTo: name + 'z')
+          // .where('courseName', isEqualTo: "Data Structures and Algorithms")
           .get()
           .then((value) {
-        print(
-            'cloud ${value.docs != null ? value.docs.last : 'NO DATA'} $name');
         if (value.docs.isNotEmpty) {
           courses = value.docs.map((e) {
             Map<String, dynamic> courseJson = e.data();
             return Course.fromMap(courseJson);
           }).toList();
         } else {
-          print('coud infra no data');
-          return left(CloudFailure.objectNotFound());
+          throw const CloudFailure.objectNotFound();
         }
       });
-      print('cloud course ${courses != null ? "has data " : 'NO DATA'} $name');
+
       return right(courses);
     } on FirebaseException catch (e) {
-      print('cloud Error: searchByName $e');
-
       if (e.code == 'ERROR_INVALID_ARGUMENT') {
-        return left(CloudFailure.objectNotFound());
+        return left(const CloudFailure.objectNotFound());
       }
-      return left(CloudFailure.unkown());
+
+      return left(const CloudFailure.objectNotFound());
     } catch (e) {
-      print('cloud Error: searchByName $e');
+      if (e == const CloudFailure.objectNotFound()) {
+        return left(const CloudFailure.objectNotFound());
+      }
       return left(const CloudFailure.unkown());
     }
   }

@@ -72,6 +72,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CourseProgressView());
       case Routes.coursesRoute:
         return MaterialPageRoute(builder: (_) => const CoursesView());
+      case Routes.searchRoute:
+        return MaterialPageRoute(builder: (_) =>  SearchView());
       case Routes.courseDetailRoute:
         return MaterialPageRoute(
             builder: (_) => const CourseDetailView(), settings: routeSettings);

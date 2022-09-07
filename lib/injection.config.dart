@@ -10,13 +10,14 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:google_sign_in/google_sign_in.dart' as _i5;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'application/auth/authentication_bloc.dart' as _i11;
-import 'application/bloc/fetch_bloc.dart' as _i12;
-import 'application/validation/validation_bloc.dart' as _i10;
+import 'application/auth/authentication_bloc.dart' as _i12;
+import 'application/bloc/fetch_bloc.dart' as _i13;
+import 'application/bloc/search_bloc.dart' as _i10;
+import 'application/validation/validation_bloc.dart' as _i11;
 import 'domain/auth/i_auth_facade.dart' as _i6;
 import 'domain/firebase/i_firebase_cloud.dart' as _i8;
 import 'infrastructure/auth/auth_firebase.dart' as _i7;
-import 'infrastructure/core/injectable_modules.dart' as _i13;
+import 'infrastructure/core/injectable_modules.dart' as _i14;
 import 'infrastructure/firebase_cloud/firebase_cloud.dart'
     as _i9; // ignore_for_file: unnecessary_lambdas
 
@@ -36,12 +37,13 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i7.AuthFirebase(get<_i3.FirebaseAuth>(), get<_i5.GoogleSignIn>()));
   gh.lazySingleton<_i8.IFirebaseCloud>(
       () => _i9.CloudRepository(get<_i4.FirebaseFirestore>()));
-  gh.factory<_i10.ValidationBloc>(
-      () => _i10.ValidationBloc(get<_i6.IAuthFacade>()));
-  gh.factory<_i11.AuthenticationBloc>(() => _i11.AuthenticationBloc(
+  gh.factory<_i10.SearchBloc>(() => _i10.SearchBloc(get<_i8.IFirebaseCloud>()));
+  gh.factory<_i11.ValidationBloc>(
+      () => _i11.ValidationBloc(get<_i6.IAuthFacade>()));
+  gh.factory<_i12.AuthenticationBloc>(() => _i12.AuthenticationBloc(
       get<_i6.IAuthFacade>(), get<_i8.IFirebaseCloud>()));
-  gh.factory<_i12.FetchBloc>(() => _i12.FetchBloc(get<_i8.IFirebaseCloud>()));
+  gh.factory<_i13.FetchBloc>(() => _i13.FetchBloc(get<_i8.IFirebaseCloud>()));
   return get;
 }
 
-class _$FirebaseInjectableModule extends _i13.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i14.FirebaseInjectableModule {}

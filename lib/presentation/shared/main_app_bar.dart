@@ -71,7 +71,8 @@ class MainAppBar extends StatelessWidget {
           searchBar
               ? InkWell(
                   onTap: () {
-                    showSearch(context: context, delegate: SearchBar());
+                    // showSearch(context: context, delegate: SearchBar());
+                    Navigator.pushNamed(context, Routes.searchRoute);
                   },
                   child: Container(
                     height: SizeManager.s50,

@@ -23,7 +23,7 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
     on<FetchCourse>(_onFetchCourse);
     on<FetchCategory>(_onFetchCategory);
     on<SearchByCategory>(_onSearchByCategory);
-    on<SearchByName>(_onSearchByName);
+    // on<SearchByName>(_onSearchByName);
   }
 
   Future<void> _onFetchCourse(
@@ -59,12 +59,12 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
     });
   }
 
-  @override
-  void onTransition(Transition<FetchEvent, FetchState> transition) {
-    super.onTransition(transition);
-    print(
-        'Event: ${transition.event}// Current: ${transition.currentState}// NextState: ${transition.nextState}');
-  }
+  // @override
+  // void onTransition(Transition<FetchEvent, FetchState> transition) {
+  //   super.onTransition(transition);
+  //   print(
+  //       'Event: ${transition.event}// Current: ${transition.currentState}// NextState: ${transition.nextState}');
+  // }
 
   Future<void> _onSearchByCategory(
       SearchByCategory event, Emitter<FetchState> emit) async {
@@ -85,16 +85,16 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
     });
   }
 
-  FutureOr<void> _onSearchByName(
-      SearchByName event, Emitter<FetchState> emit) async {
-    print('fetch bloc search by name ${event.name}');
-    await _firebaseCloud.searchByName(event.name).then((value) {
-      emit(FetchState(
-        false,
-        some(value),
-        true,
-        DataType.Course,
-      ));
-    });
-  }
+  // FutureOr<void> _onSearchByName(
+  //     SearchByName event, Emitter<FetchState> emit) async {
+  //   print('fetch bloc search by name ${event.name}');
+  //   await _firebaseCloud.searchByName(event.name).then((value) {
+  //     emit(FetchState(
+  //       false,
+  //       some(value),
+  //       true,
+  //       DataType.Course,
+  //     ));
+  //   });
+  // }
 }

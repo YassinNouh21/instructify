@@ -1,16 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:instructify/presentation/resource/color_manager.dart';
 
+import '../../../../model/course.dart';
+
 class SearchContainer extends StatelessWidget {
-  final String title;
-   SearchContainer({Key? key, required this.title}) : super(key: key);
+  final Course course;
+  const SearchContainer({
+    Key? key,
+    required this.course,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(25.w),
+      height: 100.h,
+      margin: EdgeInsets.all(15.w),
       padding: EdgeInsets.all(15.w),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -25,7 +32,7 @@ class SearchContainer extends StatelessWidget {
             ),
             width: 70.w,
             child: Image.network(
-              'https://dummyimage.com/100x100/000/fff',
+              course.imgUrl,
               fit: BoxFit.cover,
             ),
           ),
@@ -35,18 +42,26 @@ class SearchContainer extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Prodct Manging course $title',
-                style: Theme.of(context).textTheme.subtitle2,
+              Container(
+                width: 200.w,
+                child: Text(
+                  course.courseName,
+                  maxLines: 1,
+                  overflow: TextOverflow.clip,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+              ),
+              SizedBox(
+                height: 3.h,
               ),
               Row(
                 children: [
-                  Icon(Icons.person, color: Colors.grey, size: 8.w),
+                  Icon(Icons.person, color: Colors.grey, size: 15.w),
                   SizedBox(
-                    width: 5.w,
+                    width: 15.w,
                   ),
                   Text(
-                    'Prodct Manging course',
+                    course.instructor,
                     style: Theme.of(context)
                         .textTheme
                         .caption!
@@ -54,12 +69,14 @@ class SearchContainer extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 3.h,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // TODO: Add price of the course
                   Text(
-                    '\$ 190',
+                    '\$ ${course.price}',
                     style: Theme.of(context).textTheme.subtitle1!.copyWith(
                           color: ColorManager.secondaryColor,
                         ),
@@ -79,7 +96,7 @@ class SearchContainer extends StatelessWidget {
                       ),
                       // TODO: Add number of hours of the course
                       child: Text(
-                        '15 hours',
+                        '${course.duration}',
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.clip,
                         style: Theme.of(context).textTheme.caption!.copyWith(

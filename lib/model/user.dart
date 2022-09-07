@@ -10,6 +10,7 @@ class User {
   final String? userId;
   final String? phoneNumber;
   final List<PurshasedCourses>? purshasedCourses;
+  final List<String>? favoriteCourses;
   final List<Progess>? progess;
   final String? imgUrl;
   const User({
@@ -20,6 +21,7 @@ class User {
     this.phoneNumber,
     this.purshasedCourses,
     this.progess,
+    this.favoriteCourses,
     this.imgUrl,
   });
 
@@ -29,6 +31,7 @@ class User {
     String? type,
     String? userId,
     String? phoneNumber,
+    List<String>? favoriteCourses,
     List<PurshasedCourses>? purshasedCourses,
     List<Progess>? progess,
     String? imgUrl,
@@ -41,6 +44,7 @@ class User {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       purshasedCourses: purshasedCourses ?? this.purshasedCourses,
       progess: progess ?? this.progess,
+      favoriteCourses: favoriteCourses ?? this.favoriteCourses,
       imgUrl: imgUrl ?? this.imgUrl,
     );
   }
@@ -62,6 +66,9 @@ class User {
         'purshasedCourses': purshasedCourses!.map((x) => x?.toMap()).toList()
       });
     }
+    if (favoriteCourses != null) {
+      result.addAll({'favoriteCourses': favoriteCourses});
+    }
     if (progess != null) {
       result.addAll({'progess': progess!.map((x) => x?.toMap()).toList()});
     }
@@ -71,7 +78,7 @@ class User {
 
     return result;
   }
-  
+
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       email: map['email'] ?? '',
@@ -79,6 +86,7 @@ class User {
       type: map['type'] ?? '',
       userId: map['userId'],
       phoneNumber: map['phoneNumber'],
+      favoriteCourses: [],
       purshasedCourses: map['purshasedCourses'] != null
           ? List<PurshasedCourses>.from(
               map['purshasedCourses']?.map((x) => PurshasedCourses.fromMap(x)))
@@ -97,7 +105,6 @@ class User {
   String toString() {
     return 'User(email: $email, fullName: $fullName, type: $type, userId: $userId, phoneNumber: $phoneNumber, purshasedCourses: $purshasedCourses, progess: $progess, imgUrl: $imgUrl)';
   }
-
 
   @override
   bool operator ==(Object other) {

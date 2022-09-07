@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:instructify/application/auth/authentication_bloc.dart';
 
 class BottomContainer extends StatelessWidget {
   final VoidCallback onPressedFavorite;
+  bool? isFavorite;
   final VoidCallback onPressedBuy;
-  const BottomContainer({
+  BottomContainer({
     Key? key,
     required this.onPressedFavorite,
+    this.isFavorite,
     required this.onPressedBuy,
   }) : super(key: key);
 
@@ -30,9 +35,7 @@ class BottomContainer extends StatelessWidget {
           width: 25.w,
         ),
         InkWell(
-          onTap: () {
-            
-          },
+          onTap: onPressedFavorite,
           splashColor: Colors.amberAccent,
           child: Center(
             child: Container(
@@ -45,7 +48,8 @@ class BottomContainer extends StatelessWidget {
               child: Icon(
                 Icons.star_border,
                 size: 20.w,
-                color: const Color(0xFFFF6905),
+                color:
+                    isFavorite! ? Colors.yellowAccent : const Color(0xFFFF6905),
               ),
             ),
           ),

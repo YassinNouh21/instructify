@@ -43,7 +43,5 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   @override
   void onTransition(Transition<SearchEvent, SearchState> transition) {
     super.onTransition(transition);
-    print(
-        'Event: ${transition.event}// Current: ${transition.currentState.searchedCourses.map((a) => a.fold((l) => l, (r) => r.map((e) => e.courseName)))}// NextState: ${transition.nextState.searchedCourses.map((a) => a.fold((l) => l, (r) => r.map((e) => e.courseName)))}');
   }
 }

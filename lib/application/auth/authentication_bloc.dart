@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -27,7 +28,7 @@ class AuthenticationBloc
     on<AuthenticationSignIn>(_onSignInWithEmailAndPasswordPressed);
     on<AuthenticationRegister>(_onRegisterWithEmailAndPasswordPressed);
     on<AuthenticationSignOut>(_onSignOutPressed);
-    on<AuthenticationAddCourseToUser>(_onAddCourseToUser);
+    on<AuthenticationFavoriteCourse>(_onFavoriteCourse);
   }
 
   Future<void> _onSignInWithEmailAndPasswordPressed(
@@ -76,19 +77,23 @@ class AuthenticationBloc
                   left(l),
                 ),
               )), (r) {
-        _firebaseCloud
-            .registerUser(User(
-              email: event.email,
-              fullName: event.firstName + ' ' + event.lastName,
-              type: 'student',
-            ))
-            .then((value) => value.fold((l) => some(l), (r) => none()));
+        User temp = User(
+          email: event.email,
+          fullName: event.firstName + ' ' + event.lastName,
+          type: 'student',
+          userId: r.user!.uid,
+        );
+        _firebaseCloud.registerUser(temp);
+        PreferenceRepository.pref.setString(
+          'user',
+          jsonDecode(json.encode(temp)),
+        );
         emit(
           state.copyWith(
             isSubmitting: false,
             showErrorMessages: false,
             state: AuthenticationStates.authenticated,
-            authFailureOrSuccessOption: some(right(r)),
+            authFailureOrSuccessOption: some(right(unit)),
           ),
         );
       });
@@ -98,30 +103,35 @@ class AuthenticationBloc
   FutureOr<void> _onSignOutPressed(
       AuthenticationSignOut event, Emitter<AuthenticationState> emit) async {
     await PreferenceRepository.pref.clear();
-    emit(state.copyWith(
-      state: AuthenticationStates.unAuthenticated,
-      isSubmitting: false,
-      authFailureOrSuccessOption: none(),
-    ));
+    emit(
+      state.copyWith(
+        state: AuthenticationStates.unAuthenticated,
+        isSubmitting: false,
+        authFailureOrSuccessOption: none(),
+      ),
+    );
   }
 
-  Future<void> _onAddCourseToUser(AuthenticationAddCourseToUser event,
+  Future<void> _onFavoriteCourse(AuthenticationFavoriteCourse event,
       Emitter<AuthenticationState> emit) async {
-    emit(state.copyWith(
-      isSubmitting: true,
-      authFailureOrSuccessOption: none(),
-    ));
+    final user = User.fromJson(
+        PreferenceRepository.getDataFromSharedPreference(key: 'user'));
+    if (user.userId!.isNotEmpty) {
 
-    await _firebaseCloud
-        .addCourseToUser(event.courseId, event.user)
-        .then((value) => value.fold(
-            (l) => emit(state.copyWith(
-                  isSubmitting: false,
-                  authFailureOrSuccessOption: some(left(l)),
-                )),
-            (r) => emit(state.copyWith(
+      await _firebaseCloud.addFavoriteCourse(event.courseId, user.userId).then(
+            (value) => value.fold(
+              (l) => emit(state.copyWith(
+                isSubmitting: false,
+                authFailureOrSuccessOption: some(left(l)),
+              )),
+              (r) => emit(
+                state.copyWith(
                   isSubmitting: false,
                   authFailureOrSuccessOption: some(right(r)),
-                ))));
+                ),
+              ),
+            ),
+          );
+    }
   }
 }

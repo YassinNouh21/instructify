@@ -5,6 +5,7 @@ import 'package:instructify/domain/core/auth_failure.dart';
 
 import 'package:instructify/domain/core/cloud_failure.dart';
 import 'package:instructify/domain/firebase/i_firebase_cloud.dart';
+import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/model/category.dart';
 import 'package:instructify/model/course.dart';
 import 'package:instructify/model/user.dart';
@@ -57,7 +58,10 @@ class CloudRepository implements IFirebaseCloud {
   @override
   Future<Either<CloudFailure, Unit>> registerUser(User user) async {
     try {
-      await _firestore.collection('users').add(user.toMap());
+      await _firestore
+          .collection('users')
+          .doc(user.userId?.substring(0, 20))
+          .set(user.toMap());
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.code == 'ERROR_INVALID_ARGUMENT') {
@@ -178,6 +182,38 @@ class CloudRepository implements IFirebaseCloud {
         return left(const CloudFailure.objectNotFound());
       }
       return left(const CloudFailure.unkown());
+    }
+  }
+
+  @override
+  Future<Either<AuthFailure, Unit>> addFavoriteCourse(
+      String courseId, String? userId) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(userId?.substring(0, 20))
+          .get()
+          .then((value) => {
+                // PreferenceRepository.pref.setString('user', User.fromMap( value.data()!).toJson()),
+                if (value.exists)
+                  {
+                    _firestore
+                        .collection('users')
+                        .doc(userId?.substring(0, 20))
+                        .update({
+                      'favoriteCourses': FieldValue.arrayUnion([courseId])
+                    })
+                  }
+              });
+
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.code == 'ERROR_INVALID_ARGUMENT') {
+        return left(const CancelledByUser());
+      }
+      return left(const ServerError());
+    } catch (e) {
+      return left(const ServerError());
     }
   }
 }

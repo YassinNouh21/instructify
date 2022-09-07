@@ -109,7 +109,6 @@ class _SearchViewState extends State<SearchView> {
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                print(r.length);
                                 return SearchContainer(
                                   course: r[index],
                                 );

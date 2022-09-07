@@ -12,6 +12,7 @@ class SignInAppBar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       title: Text(title),
       leading: const AppPopButton(),
+      
     );
   }
 }

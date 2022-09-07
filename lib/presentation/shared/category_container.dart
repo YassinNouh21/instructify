@@ -43,15 +43,17 @@ class CategoryContainer extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(25.r),
+              child: SizedBox(
+                width: 50.w,
                 child: Container(
                   decoration: BoxDecoration(
+                    
+                    image: DecorationImage(
+                      image: NetworkImage(category.imgUrl),
+                      scale: 0.2,
+                      fit: BoxFit.fitWidth,
+                    ),
                     borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.network(
-                    category.imgUrl,
-                    fit: BoxFit.cover,
                   ),
                 ),
               ),

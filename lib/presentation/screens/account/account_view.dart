@@ -5,6 +5,7 @@ import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/shared/secondary_app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widgets/account_button.dart';
 
@@ -54,7 +55,10 @@ class AccountView extends StatelessWidget {
           ElevatedButton(
             style: ElevatedButton.styleFrom(primary: Colors.redAccent),
             onPressed: () {
-              Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+              SharedPreferences.getInstance().then((prefs) {
+                prefs.remove('user');
+              });
+              Navigator.of(context).pushReplacementNamed(Routes.chooseSignInMehtodRoute);
             },
             child: Text('Logout'),
           ),

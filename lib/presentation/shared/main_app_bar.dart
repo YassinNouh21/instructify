@@ -20,7 +20,7 @@ class MainAppBar extends StatelessWidget {
     return Container(
       color: ColorManager.secondaryColor,
       width: double.infinity,
-      height: 18.h,
+      height: 15.h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -28,7 +28,7 @@ class MainAppBar extends StatelessWidget {
           const SizedBox(
             width: double.infinity,
           ),
-          Container(
+          SizedBox(
             width: 85.w,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

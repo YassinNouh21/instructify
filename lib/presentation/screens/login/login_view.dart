@@ -21,53 +21,56 @@ class LoginView extends StatelessWidget {
     double width = MediaQuery.of(context).size.width -
         (MediaQuery.of(context).size.width * 0.15);
     print('preference ${PreferenceRepository.getDataFromSharedPreference(key: 'user')}');
-    return BlocListener<AuthenticationBloc, AuthenticationState>(
-      listener: (context, state) {
-        state.authFailureOrSuccessOption.map((a) => a.fold(
-              (f) async {
-                await showMyDialog(context, f.errorMessage);
-              },
-              (_) {
-                Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-              },
-            ));
-      },
-      child: SafeArea(
-        child: Scaffold(
-          appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(kToolbarHeight),
-            child: SignInAppBar(title: 'Login'),
-          ),
-          body: Column(
-            children: [
-              const Expanded(
-                flex: 1,
-                child: SizedBox(
-                  width: double.infinity,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          state.authFailureOrSuccessOption.map((a) => a.fold(
+                (f) async {
+                  await showMyDialog(context, f.errorMessage);
+                },
+                (_) {
+                  Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+                },
+              ));
+        },
+        child: SafeArea(
+          child: Scaffold(
+            appBar: const PreferredSize(
+              preferredSize: Size.fromHeight(kToolbarHeight),
+              child: SignInAppBar(title: 'Login'),
+            ),
+            body: Column(
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox(
+                    width: double.infinity,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: SizeManager.s16,
-              ),
-              ListTextFields(),
-              const Expanded(flex: 6, child: SizedBox()),
-              const ForgotPasswordButton(),
-              const Expanded(flex: 2, child: SizedBox()),
-              AppMainButton.fullWidth(
-                  onPressed: () {
-                    if (ListTextFields.formKey.currentState!.validate()) {
-                      context.read<AuthenticationBloc>().add(
-                            AuthenticationSignIn(
-                              email: ListTextFields.email,
-                              password: ListTextFields.password,
-                            ),
-                          );
-                    }
-                  },
-                  text: 'Login',
-                  widthQuery: width),
-              const SizedBox(height: SizeManager.s28)
-            ],
+                const SizedBox(
+                  height: SizeManager.s16,
+                ),
+                ListTextFields(),
+                const Expanded(flex: 6, child: SizedBox()),
+                const ForgotPasswordButton(),
+                const Expanded(flex: 2, child: SizedBox()),
+                AppMainButton.fullWidth(
+                    onPressed: () {
+                      if (ListTextFields.formKey.currentState!.validate()) {
+                        context.read<AuthenticationBloc>().add(
+                              AuthenticationSignIn(
+                                email: ListTextFields.email,
+                                password: ListTextFields.password,
+                              ),
+                            );
+                      }
+                    },
+                    text: 'Login',
+                    widthQuery: width),
+                const SizedBox(height: SizeManager.s28)
+              ],
+            ),
           ),
         ),
       ),

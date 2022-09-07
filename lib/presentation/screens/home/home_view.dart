@@ -47,137 +47,139 @@ class _HomeViewState extends State<HomeView> {
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Scaffold(
             backgroundColor: ColorManager.primaryColor,
-            body: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                MainAppBar.withSearchBar(),
-                BlocBuilder<FetchBloc, FetchState>(
-                  bloc: bloc1,
-                  builder: (context, state) {
-                    // print('ui state: ${state.dataType} ${state}');
-                    if (state.isLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      // print('state ui: ${state.dataType}');
-                      if (state.dataType == DataType.Category) {
-                        return state.failureOrSuccess.fold(
-                          () => Container(),
-                          (a) => a.fold(
-                              (l) => Container(
-                                    height: 100.h,
-                                    width: 100.w,
-                                    child: Text('Error has occur'),
-                                  ), (r) {
-                            // print('ui categoty $r');
-                            return Container(
-                              height: 130.h,
-                              child: categoryViewer(
-                                context,
-                                r as List<model.Category>,
-                              ),
-                            );
-                          }),
+            body: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MainAppBar.withSearchBar(),
+                  BlocBuilder<FetchBloc, FetchState>(
+                    bloc: bloc1,
+                    builder: (context, state) {
+                      // print('ui state: ${state.dataType} ${state}');
+                      if (state.isLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
-                      }
-                    }
-                    return Container();
-                  },
-                ),
-                BlocBuilder<FetchBloc, FetchState>(
-                  bloc: bloc2,
-                  builder: (context, state) {
-                    if (state.isLoading) {
-                      return CourseViewer.loading();
-                    }
-                    // print('state ui: ${state.dataType}')
-                    return state.failureOrSuccess.fold(
-                      () => Container(),
-                      (a) => a.fold(
-                        (l) => Container(
-                          height: 100.h,
-                          width: 100.w,
-                          child: Text('Error has occur'),
-                        ),
-                        (r) {
-                          // print('ui categoty $r');
-                          return Container(
-                            height: 240.h,
-                            child: CourseViewer(
-                              courses: r as List<Course>,
-                              title: 'Math',
-                            ),
+                      } else {
+                        // print('state ui: ${state.dataType}');
+                        if (state.dataType == DataType.Category) {
+                          return state.failureOrSuccess.fold(
+                            () => Container(),
+                            (a) => a.fold(
+                                (l) => Container(
+                                      height: 100.h,
+                                      width: 100.w,
+                                      child: Text('Error has occur'),
+                                    ), (r) {
+                              // print('ui categoty $r');
+                              return Container(
+                                height: 160.h,
+                                child: categoryViewer(
+                                  context,
+                                  r as List<model.Category>,
+                                ),
+                              );
+                            }),
                           );
-                        },
-                      ),
-                    );
-                  },
-                ),
-                BlocBuilder<FetchBloc, FetchState>(
-                  bloc: bloc3,
-                  builder: (context, state) {
-                    // print('ui state: ${state.dataType} ${state}');
-                    if (state.isLoading) {
-                      // return Center(
-                      return CourseViewer.loading();
-                      // );
-                    } else {
-                      if (state.dataType == DataType.Course) {
-                        return state.failureOrSuccess.fold(
-                          () => Container(),
-                          (a) => a.fold(
-                              (l) => Container(
-                                    height: 100.h,
-                                    width: 100.w,
-                                    child: Text('Error has occur'),
-                                  ), (r) {
+                        }
+                      }
+                      return Container();
+                    },
+                  ),
+                  BlocBuilder<FetchBloc, FetchState>(
+                    bloc: bloc2,
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return CourseViewer.loading();
+                      }
+                      // print('state ui: ${state.dataType}')
+                      return state.failureOrSuccess.fold(
+                        () => Container(),
+                        (a) => a.fold(
+                          (l) => Container(
+                            height: 100.h,
+                            width: 100.w,
+                            child: Text('Error has occur'),
+                          ),
+                          (r) {
                             // print('ui categoty $r');
                             return Container(
                               height: 240.h,
                               child: CourseViewer(
-                                title: 'Science',
                                 courses: r as List<Course>,
+                                title: 'Math',
                               ),
                             );
-                          }),
-                        );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  BlocBuilder<FetchBloc, FetchState>(
+                    bloc: bloc3,
+                    builder: (context, state) {
+                      // print('ui state: ${state.dataType} ${state}');
+                      if (state.isLoading) {
+                        // return Center(
+                        return CourseViewer.loading();
+                        // );
+                      } else {
+                        if (state.dataType == DataType.Course) {
+                          return state.failureOrSuccess.fold(
+                            () => Container(),
+                            (a) => a.fold(
+                                (l) => Container(
+                                      height: 100.h,
+                                      width: 100.w,
+                                      child: Text('Error has occur'),
+                                    ), (r) {
+                              // print('ui categoty $r');
+                              return Container(
+                                height: 240.h,
+                                child: CourseViewer(
+                                  title: 'Science',
+                                  courses: r as List<Course>,
+                                ),
+                              );
+                            }),
+                          );
+                        }
                       }
-                    }
-                    return Container();
-                  },
-                ),
-                // BlocBuilder<FetchBloc, FetchState>(
-                //   bloc: bloc2,
-                //   builder: (context, state) {
-                //     if (state.isLoading) {
-                //       return CourseViewer.loading();
-                //     } else {
-                //       if (state.dataType == DataType.Course) {
-                //         return state.failureOrSuccess.fold(
-                //           () => Container(),
-                //           (a) => a.fold(
-                //               (l) => Container(
-                //                     height: 100.h,
-                //                     width: 100.w,
-                //                     child: const Text('Error has occur'),
-                //                   ), (r) {
-                //             // print('ui categoty $r');
-                //             return Container(
-                //               height: 270.h,
-                //               child: CourseViewer(
-                //                 title: 'Science',
-                //                 courses: r as List<Course>,
-                //               ),
-                //             );
-                //           }),
-                //         );
-                //       }
-                //     }
-                //     return Container();
-                //   },
-                // ),
-              ],
+                      return Container();
+                    },
+                  ),
+                  // BlocBuilder<FetchBloc, FetchState>(
+                  //   bloc: bloc2,
+                  //   builder: (context, state) {
+                  //     if (state.isLoading) {
+                  //       return CourseViewer.loading();
+                  //     } else {
+                  //       if (state.dataType == DataType.Course) {
+                  //         return state.failureOrSuccess.fold(
+                  //           () => Container(),
+                  //           (a) => a.fold(
+                  //               (l) => Container(
+                  //                     height: 100.h,
+                  //                     width: 100.w,
+                  //                     child: const Text('Error has occur'),
+                  //                   ), (r) {
+                  //             // print('ui categoty $r');
+                  //             return Container(
+                  //               height: 270.h,
+                  //               child: CourseViewer(
+                  //                 title: 'Science',
+                  //                 courses: r as List<Course>,
+                  //               ),
+                  //             );
+                  //           }),
+                  //         );
+                  //       }
+                  //     }
+                  //     return Container();
+                  //   },
+                  // ),
+                ],
+              ),
             ),
           ),
         ),
@@ -189,12 +191,10 @@ class _HomeViewState extends State<HomeView> {
       BuildContext context, List<model.Category> categories) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: SizeManager.s10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            height: 30.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -239,7 +239,7 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           Container(
-            height: 75.h,
+            height: 105.h,
             child: CategoryViewer(categories: categories),
           ),
         ],

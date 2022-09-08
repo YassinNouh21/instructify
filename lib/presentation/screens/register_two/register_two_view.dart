@@ -14,7 +14,8 @@ import 'package:instructify/presentation/shared/sign_in_app_bar.dart';
 import '../../../application/auth/authentication_bloc.dart';
 
 class RegisterTwoView extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(debugLabel: 'GlobalFormKey #SignIn ');
+  final _formCopy = ListTextFields.formKey1;
   RegisterTwoView({Key? key}) : super(key: key);
 
   @override
@@ -42,7 +43,8 @@ class RegisterTwoView extends StatelessWidget {
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
-              child: Expanded(
+              child: Container(
+                height: 650.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -56,7 +58,7 @@ class RegisterTwoView extends StatelessWidget {
                     ),
                     AppMainButton.fullWidth(
                       onPressed: () {
-                        if (ListTextFields.formKey.currentState!.validate() &&
+                        if (_formCopy.currentState!.validate() &&
                             ListTextFields.password ==
                                 ListTextFields.rePassword) {
                           context.read<AuthenticationBloc>().add(
@@ -69,7 +71,6 @@ class RegisterTwoView extends StatelessWidget {
                                       RegisterListTexts.ListTextFields.lastName,
                                 ),
                               );
-  
                         }
                       },
                       text: 'Create Account',

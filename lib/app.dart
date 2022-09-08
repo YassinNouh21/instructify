@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               theme: getApplicationTheme(context),
               title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
               // home: MainView(),
               onGenerateRoute: RouteGenerator.getRoute,
             );

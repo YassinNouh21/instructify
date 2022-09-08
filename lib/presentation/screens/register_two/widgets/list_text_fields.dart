@@ -10,7 +10,8 @@ class ListTextFields extends StatefulWidget {
   static String email = '';
   static String rePassword = '';
   static String password = '';
-  static final formKey = GlobalKey<FormState>();
+  static final formKey1 =
+      GlobalKey<FormState>(debugLabel: 'GlobalFormKey #SignIn 2');
   const ListTextFields({Key? key}) : super(key: key);
 
   @override
@@ -25,11 +26,12 @@ class ListTextFieldsState extends State<ListTextFields> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width -
         (MediaQuery.of(context).size.width * 0.15);
+    debugPrint('width: $width');
     return BlocConsumer<ValidationBloc, ValidationState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Form(
-          key: ListTextFields.formKey,
+          key: ListTextFields.formKey1,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

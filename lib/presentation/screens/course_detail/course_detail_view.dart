@@ -1,11 +1,9 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instructify/application/auth/authentication_bloc.dart';
-import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/injection.dart';
 
 import 'package:instructify/model/course.dart';
@@ -14,8 +12,6 @@ import 'package:instructify/presentation/screens/course_detail/widget/bottom_con
 import 'package:instructify/presentation/screens/course_detail/widget/buttom_sheet_detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../model/user.dart';
-import '../../shared/main_app_bar.dart';
 
 class CourseDetailView extends StatelessWidget {
   const CourseDetailView({

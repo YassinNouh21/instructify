@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
+import 'package:instructify/presentation/screens/account/account_view.dart';
 import 'package:instructify/presentation/screens/course_detail/course_detail_view.dart';
 import 'package:instructify/presentation/screens/home/home_view.dart';
 import 'package:instructify/presentation/screens/main/main_view.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
               theme: getApplicationTheme(context),
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
-              // home: MainView(),
+              // home: AccountView(),
               onGenerateRoute: RouteGenerator.getRoute,
             );
           });

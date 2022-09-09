@@ -10,7 +10,7 @@ class TextUnderImage extends StatelessWidget {
     return Column(
       children: [
         AutoSizeText(
-          'Welcome to E-Courses',
+          'Welcome to Instructify',
           maxLines: 1,
           minFontSize: SizeManager.s18,
           maxFontSize: SizeManager.s26,

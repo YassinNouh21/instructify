@@ -40,7 +40,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i10.IAuthFacade>(() => _i11.AuthFirebase(
       get<_i3.FirebaseAuth>(),
       get<_i5.GoogleSignIn>(),
-      get<_i6.IFirebaseCloud>()));
+      get<_i6.IFirebaseCloud>(),
+      get<_i4.FirebaseFirestore>()));
   gh.factory<_i12.ValidationBloc>(
       () => _i12.ValidationBloc(get<_i10.IAuthFacade>()));
   gh.factory<_i13.AuthenticationBloc>(() => _i13.AuthenticationBloc(

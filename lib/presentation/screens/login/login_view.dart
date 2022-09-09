@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:instructify/application/auth/authentication_bloc.dart';
-import 'package:instructify/infrastructure/auth/local_auth.dart';
-import 'package:instructify/injection.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/screens/login/widgets/list_text_fields.dart';
@@ -20,7 +17,6 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width -
         (MediaQuery.of(context).size.width * 0.15);
-    print('preference ${PreferenceRepository.getDataFromSharedPreference(key: 'user')}');
     return WillPopScope(
       onWillPop: () async => false,
       child: BlocListener<AuthenticationBloc, AuthenticationState>(

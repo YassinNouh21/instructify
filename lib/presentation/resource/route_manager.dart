@@ -52,12 +52,18 @@ class RouteGenerator {
       case Routes.splashRoute:
         return MaterialPageRoute(
             builder: (_) => PreferenceRepository.pref.getString('user') == null
-                ? OnBoardingView()
-                : MainView());
+                ? const ChooseSignInMethodView()
+                : const MainView());
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.onBoardingRoute:
-        return MaterialPageRoute(builder: (_) => const OnBoardingView());
+        return MaterialPageRoute(
+            builder: (_) =>
+                PreferenceRepository.pref.getBool('onboarding') == null
+                    ? const OnBoardingView()
+                    : PreferenceRepository.pref.getBool('boarding') == true
+                        ? const OnBoardingView()
+                        : const ChooseSignInMethodView());
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterView());
       case Routes.forgotPasswordRoute:
@@ -73,7 +79,7 @@ class RouteGenerator {
       case Routes.coursesRoute:
         return MaterialPageRoute(builder: (_) => const CoursesView());
       case Routes.searchRoute:
-        return MaterialPageRoute(builder: (_) =>  SearchView());
+        return MaterialPageRoute(builder: (_) => SearchView());
       case Routes.courseDetailRoute:
         return MaterialPageRoute(
             builder: (_) => const CourseDetailView(), settings: routeSettings);

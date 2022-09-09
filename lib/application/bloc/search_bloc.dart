@@ -20,6 +20,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc(this._firebaseCloud) : super((SearchState.initial())) {
     on<_Searched>(_onSearched);
   }
+  
   String patterConverter(String keyword) {
     return keyword[0].toUpperCase() + keyword.substring(1, keyword.length);
   }

@@ -1,14 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
+import 'package:instructify/presentation/screens/home/home_view.dart';
 import 'package:instructify/presentation/screens/search/search_view.dart';
 import 'package:sizer/sizer.dart';
 
+import '../screens/account/account_view.dart';
+import '../screens/main/main_view.dart';
+
 class MainAppBar extends StatelessWidget {
   final bool searchBar;
+
   const MainAppBar({Key? key, required this.searchBar}) : super(key: key);
   factory MainAppBar.withSearchBar({searchBar = true}) {
     return MainAppBar(
@@ -17,6 +25,8 @@ class MainAppBar extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    debugPrint(
+        'preference ${jsonDecode(PreferenceRepository.pref.get('user') as String)}');
     return Container(
       color: ColorManager.secondaryColor,
       width: double.infinity,
@@ -36,9 +46,8 @@ class MainAppBar extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // TODO: Add name in User
                     Text(
-                      'Welcome Back, Ahmed',
+                      'Welcome Back, ${jsonDecode(PreferenceRepository.pref.get('user') as String)['fullName'].toString().split(' ')[0]}',
                       style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             color: Colors.white,
                           ),
@@ -51,9 +60,11 @@ class MainAppBar extends StatelessWidget {
                     ),
                   ],
                 ),
-                // TODO: Add ontap to profile the route
                 GestureDetector(
-                  // onTap: () => Navigator.pushNamed(context, Routes.profile),
+                  onTap: () => Navigator.pushReplacementNamed(
+                    context,
+                    Routes.accountRoute,
+                  ),
                   child: Container(
                     constraints: const BoxConstraints(
                       maxWidth: SizeManager.s40,
@@ -75,9 +86,35 @@ class MainAppBar extends StatelessWidget {
                     Navigator.pushNamed(context, Routes.searchRoute);
                   },
                   child: Container(
-                    height: SizeManager.s50,
+                    height: 5.h,
                     width: 85.w,
-                    color: ColorManager.primaryColor,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF4F3FD),
+                      borderRadius: BorderRadius.circular(SizeManager.s10),
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        SvgPicture.asset(
+                          AssetsManager.searchIcon,
+                          color: const Color(0xFFB8B8D2),
+                          width: 5.w,
+                        ),
+                        const SizedBox(
+                          width: SizeManager.s14,
+                        ),
+                        Text(
+                          'Find Course',
+                          style:
+                              Theme.of(context).textTheme.subtitle1!.copyWith(
+                                    color: const Color(0xFFB8B8D2),
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               : Container(),

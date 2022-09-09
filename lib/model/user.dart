@@ -12,6 +12,7 @@ class User {
   final List<PurshasedCourses>? purshasedCourses;
   final List<String>? favoriteCourses;
   final List<Progess>? progess;
+  
   final String? imgUrl;
   const User({
     required this.email,
@@ -20,8 +21,8 @@ class User {
     this.userId,
     this.phoneNumber,
     this.purshasedCourses,
-    this.progess,
     this.favoriteCourses,
+    this.progess,
     this.imgUrl,
   });
 
@@ -31,8 +32,8 @@ class User {
     String? type,
     String? userId,
     String? phoneNumber,
-    List<String>? favoriteCourses,
     List<PurshasedCourses>? purshasedCourses,
+    List<String>? favoriteCourses,
     List<Progess>? progess,
     String? imgUrl,
   }) {
@@ -43,12 +44,25 @@ class User {
       userId: userId ?? this.userId,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       purshasedCourses: purshasedCourses ?? this.purshasedCourses,
-      progess: progess ?? this.progess,
       favoriteCourses: favoriteCourses ?? this.favoriteCourses,
+      progess: progess ?? this.progess,
       imgUrl: imgUrl ?? this.imgUrl,
     );
   }
 
+  factory User.empty() {
+    return const User(
+      email: '',
+      fullName: '',
+      type: '',
+      userId: '',
+      phoneNumber: '',
+      purshasedCourses: [],
+      favoriteCourses: [],
+      progess: [],
+      imgUrl: '',
+    );
+  }
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
@@ -63,14 +77,14 @@ class User {
     }
     if (purshasedCourses != null) {
       result.addAll({
-        'purshasedCourses': purshasedCourses!.map((x) => x?.toMap()).toList()
+        'purshasedCourses': purshasedCourses!.map((x) => x.toMap()).toList()
       });
     }
     if (favoriteCourses != null) {
       result.addAll({'favoriteCourses': favoriteCourses});
     }
     if (progess != null) {
-      result.addAll({'progess': progess!.map((x) => x?.toMap()).toList()});
+      result.addAll({'progess': progess!.map((x) => x.toMap()).toList()});
     }
     if (imgUrl != null) {
       result.addAll({'imgUrl': imgUrl});
@@ -86,11 +100,11 @@ class User {
       type: map['type'] ?? '',
       userId: map['userId'],
       phoneNumber: map['phoneNumber'],
-      favoriteCourses: [],
       purshasedCourses: map['purshasedCourses'] != null
           ? List<PurshasedCourses>.from(
               map['purshasedCourses']?.map((x) => PurshasedCourses.fromMap(x)))
           : null,
+      favoriteCourses: List<String>.from(map['favoriteCourses']),
       progess: map['progess'] != null
           ? List<Progess>.from(map['progess']?.map((x) => Progess.fromMap(x)))
           : null,
@@ -101,9 +115,10 @@ class User {
   String toJson() => json.encode(toMap());
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
+
   @override
   String toString() {
-    return 'User(email: $email, fullName: $fullName, type: $type, userId: $userId, phoneNumber: $phoneNumber, purshasedCourses: $purshasedCourses, progess: $progess, imgUrl: $imgUrl)';
+    return 'User(email: $email, fullName: $fullName, type: $type, userId: $userId, phoneNumber: $phoneNumber, purshasedCourses: $purshasedCourses, favoriteCourses: $favoriteCourses, progess: $progess, imgUrl: $imgUrl)';
   }
 
   @override
@@ -117,6 +132,7 @@ class User {
         other.userId == userId &&
         other.phoneNumber == phoneNumber &&
         listEquals(other.purshasedCourses, purshasedCourses) &&
+        listEquals(other.favoriteCourses, favoriteCourses) &&
         listEquals(other.progess, progess) &&
         other.imgUrl == imgUrl;
   }
@@ -129,6 +145,7 @@ class User {
         userId.hashCode ^
         phoneNumber.hashCode ^
         purshasedCourses.hashCode ^
+        favoriteCourses.hashCode ^
         progess.hashCode ^
         imgUrl.hashCode;
   }
@@ -234,5 +251,4 @@ class Progess {
   }
 
   @override
-  int get hashCode => courseId.hashCode ^ finishedTime.hashCode;
-}
+  int get hashCode => courseId.hashCode ^ finishedTime.hashCode;

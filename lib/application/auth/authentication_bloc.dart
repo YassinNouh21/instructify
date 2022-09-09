@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/domain/auth/password_sign_object.dart';
@@ -112,26 +113,69 @@ class AuthenticationBloc
     );
   }
 
+  User get localUser => PreferenceRepository.pref.getString('user') != null
+      ? User.fromMap(jsonDecode(PreferenceRepository.pref.getString('user')!))
+      : User.empty();
+
   Future<void> _onFavoriteCourse(AuthenticationFavoriteCourse event,
       Emitter<AuthenticationState> emit) async {
+    emit(state.copyWith(
+      isSubmitting: true,
+      authFailureOrSuccessOption: some(right(unit)),
+    ));
     final user = User.fromJson(
         PreferenceRepository.getDataFromSharedPreference(key: 'user'));
     if (user.userId!.isNotEmpty) {
+      if (user.favoriteCourses!.contains(event.courseId)) {
+        user.favoriteCourses!.remove(event.courseId);
+        await _firebaseCloud
+            .removeFavoriteCourse(event.courseId, user.userId!)
+            .then((value) => value.fold(
+                    (l) => emit(state.copyWith(
+                          isSubmitting: false,
+                          authFailureOrSuccessOption: some(left(l)),
+                        )), (r) async {
+                  debugPrint('delete user: ${user.toJson().toString()}');
+                  await PreferenceRepository.pref.setString(
+                    'user',
+                    jsonDecode(json.encode(user)),
+                  );
 
-      await _firebaseCloud.addFavoriteCourse(event.courseId, user.userId).then(
-            (value) => value.fold(
-              (l) => emit(state.copyWith(
-                isSubmitting: false,
-                authFailureOrSuccessOption: some(left(l)),
-              )),
-              (r) => emit(
-                state.copyWith(
-                  isSubmitting: false,
-                  authFailureOrSuccessOption: some(right(r)),
-                ),
-              ),
-            ),
-          );
+                  emit(state.copyWith(
+                    isSubmitting: false,
+                    authFailureOrSuccessOption: some(right(unit)),
+                  ));
+                }));
+      } else {
+        await _firebaseCloud
+            .addFavoriteCourse(event.courseId, user.userId)
+            .then(
+              (value) => value.fold(
+                  (l) => emit(state.copyWith(
+                        isSubmitting: false,
+                        authFailureOrSuccessOption: some(left(l)),
+                      )), (r) async {
+                final tempUser = User.fromJson(
+                    await PreferenceRepository.getDataFromSharedPreference(
+                        key: 'user'));
+                final tempListCourses = tempUser.favoriteCourses;
+                bool? check = tempListCourses?.contains(event.courseId);
+                check! ? null : tempListCourses!.add(event.courseId);
+                tempUser.copyWith(favoriteCourses: tempListCourses);
+                debugPrint(tempUser.toJson().toString());
+                await PreferenceRepository.pref.setString(
+                  'user',
+                  jsonDecode(json.encode(tempUser)),
+                );
+                emit(
+                  state.copyWith(
+                    isSubmitting: false,
+                    authFailureOrSuccessOption: some(right(r)),
+                  ),
+                );
+              }),
+            );
+      }
     }
   }
 }

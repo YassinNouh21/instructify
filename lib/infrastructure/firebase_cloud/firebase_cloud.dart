@@ -124,31 +124,6 @@ class CloudRepository implements IFirebaseCloud {
   }
 
   @override
-  Future<Either<AuthFailure, Unit>> addCourseToUser(
-      String courseId, User user) async {
-    try {
-      // await _firestore.collection('users').doc(user.userId).update({
-      //   'courses': FieldValue.arrayUnion([courseId])
-      // });
-      List<PurshasedCourses>? purshasedCourses = user.purshasedCourses;
-      purshasedCourses!.add(PurshasedCourses(courseId: courseId));
-      User newUser = user.copyWith(purshasedCourses: purshasedCourses);
-      await _firestore
-          .collection('users')
-          .doc(user.userId)
-          .update(newUser.toMap());
-      return right(unit);
-    } on FirebaseException catch (e) {
-      if (e.code == 'ERROR_INVALID_ARGUMENT') {
-        return left(const CancelledByUser());
-      }
-      return left(const ServerError());
-    } catch (e) {
-      return left(const ServerError());
-    }
-  }
-
-  @override
   Future<Either<CloudFailure, List<Course>>> searchByName(String name) async {
     try {
       List<Course> courses = [];
@@ -206,6 +181,27 @@ class CloudRepository implements IFirebaseCloud {
                   }
               });
 
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.code == 'ERROR_INVALID_ARGUMENT') {
+        return left(const CancelledByUser());
+      }
+      return left(const ServerError());
+    } catch (e) {
+      return left(const ServerError());
+    }
+  }
+
+  @override
+  Future<Either<AuthFailure, Unit>> removeFavoriteCourse(
+      String courseId, String? userId) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(userId?.substring(0, 20))
+          .update({
+        'favoriteCourses': FieldValue.arrayRemove([courseId])
+      });
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.code == 'ERROR_INVALID_ARGUMENT') {

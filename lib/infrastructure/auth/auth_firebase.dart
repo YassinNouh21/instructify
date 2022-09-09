@@ -40,6 +40,22 @@ class AuthFirebase implements IAuthFacade {
   }
 
   @override
+  Future<Either<AuthFailure, AppUser.User>> getUserFromCloud(
+      String userId) async {
+    try {
+      return await _firestore
+          .collection('users')
+          .doc(userId.substring(0, 20))
+          .get()
+          .then((value) {
+        return right(AppUser.User.fromMap(value.data()!));
+      });
+    } catch (e) {
+      return left(const CancelledByUser());
+    }
+  }
+
+  @override
   Future<Either<AuthFailure, Unit>> signInWithEmailAndPassword(
       {required EmailSignObject emailAddress,
       required PasswordSignObject password}) async {
@@ -51,21 +67,20 @@ class AuthFirebase implements IAuthFacade {
           .signInWithEmailAndPassword(
               email: emailAddressStr, password: passwordStr)
           .then((value) => userTemp = value);
+      late AppUser.User temp;
+      await getUserFromCloud(userTemp!.user!.uid)
+          .then((value) => value.fold((l) => [], (r) {
+                debugPrint('r: $r');
+                temp = r;
+              }));
       AppUser.User tempUser = AppUser.User(
         userId: userTemp?.user?.uid,
         email: userTemp!.user!.email.toString(),
         type: 'student',
-        fullName: userTemp!.user!.displayName.toString(),
+        fullName: temp.fullName,
+        favoriteCourses: temp.favoriteCourses,
       );
-      String fullName = '';
-      await getUserFromCloud(userTemp!.user!.uid).then((value) {
-        value.fold((l) => null, (r) {
-          fullName = r.fullName;
-        });
-      });
-      if (fullName.isNotEmpty) {
-        tempUser = tempUser.copyWith(fullName: fullName);
-      }
+      debugPrint('tempUser: $tempUser');
       await PreferenceRepository.pref
           .setString('user', jsonDecode(json.encode(tempUser)));
       return right(unit);
@@ -86,23 +101,5 @@ class AuthFirebase implements IAuthFacade {
   Future<Either<AuthFailure, Unit>> signInWithGoogle() {
     // TODO: implement signInWithGoogle
     throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<AuthFailure, AppUser.User>> getUserFromCloud(
-      String userId) async {
-    try {
-      debugPrint('userId: $userId');
-      return await _firestore
-          .collection('users')
-          .doc(userId.substring(0, 20))
-          .get()
-          .then((value) {
-        debugPrint('value.data() ${value.data()}');
-        return right(AppUser.User.fromMap(value.data()!));
-      });
-    } catch (e) {
-      return left(const CancelledByUser());
-    }
   }
 }

@@ -16,4 +16,5 @@ abstract class IFirebaseCloud {
   Future<Either<CloudFailure, Unit>> registerUser(User user);
   Future<Either<CloudFailure, Unit>> updateUser(User user);
   Future<Either<AuthFailure, Unit>> addFavoriteCourse(String courseId, String? userId);
+  Future<Either<AuthFailure, Unit>> removeFavoriteCourse(String courseId, String? userId);
 }

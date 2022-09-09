@@ -46,10 +46,9 @@ class BottomContainer extends StatelessWidget {
                 color: const Color(0xFFFFEBF0),
               ),
               child: Icon(
-                Icons.star_border,
+                !isFavorite! ? Icons.star_border : Icons.star,
                 size: 20.w,
-                color:
-                    isFavorite! ? Colors.yellowAccent : const Color(0xFFFF6905),
+                color: const Color(0xFFFF6905),
               ),
             ),
           ),

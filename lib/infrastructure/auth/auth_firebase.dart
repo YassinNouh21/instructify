@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
@@ -92,14 +93,58 @@ class AuthFirebase implements IAuthFacade {
   }
 
   @override
+  Future<Either<AuthFailure, Unit>> signInWithGoogle() async {
+    try {
+      // debugPrint('user: top');
+
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      // debugPrint('user: GoogleSignInAccount');
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      // debugPrint('user: start');
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      UserCredential user =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      AppUser.User tempUser = AppUser.User(
+        userId: user.user?.uid,
+        email: user.user!.email.toString(),
+        type: 'student',
+        fullName: user.user!.displayName.toString(),
+        favoriteCourses: const [],
+      );
+      await _firebaseCloud.registerUser(tempUser).then((value) => value.fold(
+          (l) => throw (const ServerError()),
+          (r) => PreferenceRepository.pref
+              .setString('user', jsonDecode(json.encode(tempUser)))));
+      // debugPrint('temp User ${tempUser}');
+      return right(unit);
+    } catch (e) {
+      // debugPrint('user: $e');
+      return left(const ServerError());
+    }
+  }
+
+  @override
   Future<Either<AuthFailure, Unit>> signInWithFacebook() {
-    // TODO: implement signInWithFacebook
+    // TODO: implement signInWithGoogle
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<AuthFailure, Unit>> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
+  Future<Either<AuthFailure, Unit>> signOut() async {
+    try {
+      await _auth.signOut();
+      await _googleSignIn.signOut();
+      debugPrint('user: ${FirebaseAuth.instance.currentUser}');
+      return right(unit);
+    } catch (e) {
+      debugPrint('signOut: $e');
+      return left(const ServerError());
+    }
   }
 }

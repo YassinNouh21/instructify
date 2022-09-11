@@ -17,6 +17,7 @@ class CourseContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // debugPrint('CourseContainer build $course');
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.w),
         decoration: BoxDecoration(

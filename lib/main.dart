@@ -12,10 +12,10 @@ import 'package:instructify/injection.dart';
 import 'application/validation/validation_bloc.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   return BlocOverrides.runZoned(
     () async {
       configureInjection(Environment.prod);
-      WidgetsFlutterBinding.ensureInitialized();
       await PreferenceRepository.initializePreference();
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,

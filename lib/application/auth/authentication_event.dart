@@ -67,7 +67,6 @@ class AuthenticationRegister extends AuthenticationEvent {
 
 class AuthenticationSignOut extends AuthenticationEvent {}
 
-
 class AuthenticationFavoriteCourse extends AuthenticationEvent {
   final String courseId;
 
@@ -85,3 +84,5 @@ class AuthenticationFavoriteCourse extends AuthenticationEvent {
   @override
   int get hashCode => courseId.hashCode;
 }
+
+class AuthenicationSignInWithGoogle extends AuthenticationEvent {}

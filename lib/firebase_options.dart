@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAXik9QxshqhTghurR6f13uc_x0lhN1rsw',
-    appId: '1:717386503330:android:5784b940bc8468dee4f3fb',
+    appId: '1:717386503330:android:745d65675802fbf6e4f3fb',
     messagingSenderId: '717386503330',
     projectId: 'instructify-34702',
     storageBucket: 'instructify-34702.appspot.com',
@@ -66,11 +66,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyB04qykN7aQUJ4GEP8Gbyv-LnrHMTQEzcU',
-    appId: '1:717386503330:ios:e179718f55841fc9e4f3fb',
+    appId: '1:717386503330:ios:6bb4da9cc4ec3fa0e4f3fb',
     messagingSenderId: '717386503330',
     projectId: 'instructify-34702',
     storageBucket: 'instructify-34702.appspot.com',
-    iosClientId: '717386503330-pgo78k7l0q7r1grvgq3rgefhd8vfoobr.apps.googleusercontent.com',
-    iosBundleId: 'com.example.instructify',
+    androidClientId: '717386503330-dga1qri9t2b1mre1jh7epov3oecopks7.apps.googleusercontent.com',
+    iosClientId: '717386503330-r7vv91jh50fok0seplgl4ho1kein5oeu.apps.googleusercontent.com',
+    iosBundleId: 'com.yassin.instructify',
   );
 }

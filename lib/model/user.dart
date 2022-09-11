@@ -251,4 +251,5 @@ class Progess {
   }
 
   @override
-  int get hashCode => courseId.hashCode ^ finishedTime.hashCode;
+  int get hashCode => courseId.hashCode ^ finishedTime.hashCode;
+}

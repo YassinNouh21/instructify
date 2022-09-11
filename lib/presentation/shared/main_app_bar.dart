@@ -1,23 +1,23 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/resource/size_manager.dart';
-import 'package:instructify/presentation/screens/home/home_view.dart';
-import 'package:instructify/presentation/screens/search/search_view.dart';
 import 'package:sizer/sizer.dart';
 
-import '../screens/account/account_view.dart';
-import '../screens/main/main_view.dart';
+import '../../application/auth/authentication_bloc.dart';
 
 class MainAppBar extends StatelessWidget {
   final bool searchBar;
 
   const MainAppBar({Key? key, required this.searchBar}) : super(key: key);
+ 
+
   factory MainAppBar.withSearchBar({searchBar = true}) {
     return MainAppBar(
       searchBar: searchBar = true,
@@ -25,8 +25,6 @@ class MainAppBar extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        'preference ${jsonDecode(PreferenceRepository.pref.get('user') as String)}');
     return Container(
       color: ColorManager.secondaryColor,
       width: double.infinity,
@@ -47,7 +45,7 @@ class MainAppBar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Welcome Back, ${jsonDecode(PreferenceRepository.pref.get('user') as String)['fullName'].toString().split(' ')[0]}',
+                      'Welcome Back, ${context.watch<AuthenticationBloc>().localUser.fullName.split(' ')[0] ?? ''}',
                       style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             color: Colors.white,
                           ),
@@ -61,7 +59,7 @@ class MainAppBar extends StatelessWidget {
                   ],
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.pushReplacementNamed(
+                  onTap: () => Navigator.pushNamed(
                     context,
                     Routes.accountRoute,
                   ),

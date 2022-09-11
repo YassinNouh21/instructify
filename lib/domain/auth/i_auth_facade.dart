@@ -16,5 +16,6 @@ abstract class IAuthFacade {
   });
   Future<Either<AuthFailure, Unit>> signInWithGoogle();
   Future<Either<AuthFailure, Unit>> signInWithFacebook();
+  Future<Either<AuthFailure, Unit>> signOut();
   Future<Either<AuthFailure, appUser.User>> getUserFromCloud(String userId);
 }

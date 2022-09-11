@@ -3,8 +3,10 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instructify/domain/auth/password_sign_object.dart';
 import 'package:instructify/domain/core/auth_failure.dart';
@@ -28,6 +30,7 @@ class AuthenticationBloc
       : super(AuthenticationState.initial()) {
     on<AuthenticationSignIn>(_onSignInWithEmailAndPasswordPressed);
     on<AuthenticationRegister>(_onRegisterWithEmailAndPasswordPressed);
+    on<AuthenicationSignInWithGoogle>(_onSignInWithGooglePressed);
     on<AuthenticationSignOut>(_onSignOutPressed);
     on<AuthenticationFavoriteCourse>(_onFavoriteCourse);
   }
@@ -54,6 +57,8 @@ class AuthenticationBloc
   @override
   void onTransition(
       Transition<AuthenticationEvent, AuthenticationState> transition) {
+    print(
+        'on ${transition.event} from ${transition.currentState} -> ${transition.nextState}');
     super.onTransition(transition);
   }
 
@@ -83,8 +88,10 @@ class AuthenticationBloc
           fullName: event.firstName + ' ' + event.lastName,
           type: 'student',
           userId: r.user!.uid,
+          favoriteCourses: const [],
         );
         _firebaseCloud.registerUser(temp);
+        // deb x ugPrint('User Registered $temp');
         PreferenceRepository.pref.setString(
           'user',
           jsonDecode(json.encode(temp)),
@@ -103,7 +110,12 @@ class AuthenticationBloc
 
   FutureOr<void> _onSignOutPressed(
       AuthenticationSignOut event, Emitter<AuthenticationState> emit) async {
+    emit(state.copyWith(
+      isSubmitting: true,
+      authFailureOrSuccessOption: none(),
+    ));
     await PreferenceRepository.pref.clear();
+    await _authFacade.signOut();
     emit(
       state.copyWith(
         state: AuthenticationStates.unAuthenticated,
@@ -177,5 +189,26 @@ class AuthenticationBloc
             );
       }
     }
+  }
+
+  Future<void> _onSignInWithGooglePressed(AuthenicationSignInWithGoogle event,
+      Emitter<AuthenticationState> emit) async {
+    emit(state.copyWith(
+      isSubmitting: true,
+      authFailureOrSuccessOption: none(),
+    ));
+
+    await _authFacade.signInWithGoogle().then((value) => value.fold(
+            (l) => emit(state.copyWith(
+                  isSubmitting: false,
+                  state: AuthenticationStates.unAuthenticated,
+                  authFailureOrSuccessOption: some(left(l)),
+                )), (r) {
+          emit(state.copyWith(
+            isSubmitting: false,
+            state: AuthenticationStates.authenticated,
+            authFailureOrSuccessOption: some(right(unit)),
+          ));
+        }));
   }
 }

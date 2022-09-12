@@ -212,4 +212,28 @@ class CloudRepository implements IFirebaseCloud {
       return left(const ServerError());
     }
   }
+
+  @override
+  Future<Either<CloudFailure, List<Course>>> getFavoriteCourses(
+      List<String> courseId) async {
+    try {
+      List<Course> courses = [];
+      for (String id in courseId) {
+        final course =
+            await _firestore.collection('courses').doc(id).get().then((value) {
+          Map<String, dynamic> courseJson = value.data()!;
+          return Course.fromMap(courseJson);
+        });
+        courses.add(course);
+      }
+      return right(courses);
+    } on FirebaseException catch (e) {
+      if (e.code == 'ERROR_INVALID_ARGUMENT') {
+        return left(const CloudFailure.objectNotFound());
+      }
+      return left(const CloudFailure.objectServerError());
+    } catch (e) {
+      return left(const CloudFailure.unkown());
+    }
+  }
 }

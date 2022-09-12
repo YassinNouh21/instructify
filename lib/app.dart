@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
 import 'package:instructify/presentation/screens/account/account_view.dart';
 import 'package:instructify/presentation/screens/course_detail/course_detail_view.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
               // home: AccountView(),
+        
               onGenerateRoute: RouteGenerator.getRoute,
             );
           });

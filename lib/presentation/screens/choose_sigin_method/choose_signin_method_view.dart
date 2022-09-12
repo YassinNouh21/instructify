@@ -3,6 +3,7 @@ import 'package:instructify/presentation/resource/size_manager.dart';
 import 'package:instructify/presentation/screens/choose_sigin_method/widgets/list_signin_buttons.dart';
 import 'package:instructify/presentation/screens/choose_sigin_method/widgets/sign_in_text_button.dart';
 import 'package:instructify/presentation/screens/choose_sigin_method/widgets/terms_text.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/app_main_button.dart';
 import 'widgets/image_displayer.dart';
@@ -13,12 +14,15 @@ class ChooseSignInMethodView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SharedPreferences.getInstance().then((value) {
+      debugPrint('boarding done ${value.getBool('isFirstTime')}');
+    });
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.symmetric(horizontal: SizeManager.s20),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [
           Expanded(flex: 4, child: SizedBox()),
           ImageDisplayer(),
           SizedBox(height: SizeManager.s32),
@@ -30,8 +34,8 @@ class ChooseSignInMethodView extends StatelessWidget {
           Expanded(flex: 2, child: SizedBox()),
           TermsText(),
           Expanded(flex: 3, child: SizedBox()),
-              ],
-            ),
-        ));
+        ],
+      ),
+    ));
   }
 }

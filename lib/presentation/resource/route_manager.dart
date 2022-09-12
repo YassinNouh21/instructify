@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instructify/application/auth/authentication_bloc.dart';
+import 'package:instructify/application/bloc/favorite_bloc.dart';
 import 'package:instructify/application/bloc/fetch_bloc.dart';
 import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/injection.dart';
 import 'package:instructify/presentation/screens/account/account_view.dart';
+import 'package:instructify/presentation/screens/account/favorite/favorite_view.dart';
 import 'package:instructify/presentation/screens/download/download_view.dart';
 import 'package:instructify/presentation/screens/forgot_password/forgot_password_view.dart';
 import 'package:instructify/presentation/screens/home/home_view.dart';
@@ -43,6 +46,7 @@ class Routes {
   static const String courseProgressRoute = "/courseprogress";
   static const String searchRoute = "/search";
   static const String paymentRoute = "/payment";
+  static const String favoriteRoute = "/favorite";
   static const String noRouteFound = "No Route Found";
 }
 
@@ -51,19 +55,27 @@ class RouteGenerator {
     switch (routeSettings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(
-            builder: (_) => PreferenceRepository.pref.getString('user') == null
-                ? const ChooseSignInMethodView()
-                : const MainView());
+            builder: (_) =>
+                PreferenceRepository.pref.getBool('isFirstTime') == null ||
+                        PreferenceRepository.pref.getBool('isFirstTime') == true
+                    ? const OnBoardingView()
+                    : PreferenceRepository.pref.getString('user') == null
+                        ? const ChooseSignInMethodView()
+                        : const MainView());
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.onBoardingRoute:
+        return MaterialPageRoute(builder: (_) => const OnBoardingView());
+      case Routes.favoriteRoute:
         return MaterialPageRoute(
-            builder: (_) =>
-                PreferenceRepository.pref.getBool('onboarding') == null
-                    ? const OnBoardingView()
-                    : PreferenceRepository.pref.getBool('boarding') == true
-                        ? const OnBoardingView()
-                        : const ChooseSignInMethodView());
+            builder: (_) => BlocProvider(
+                  create: (_) => getIt<FavoriteBloc>()
+                    ..add(FavoriteEvent.favoriteCoursesPressed(
+                        getIt<AuthenticationBloc>()
+                            .localUser
+                            .favoriteCourses!)),
+                  child: const FavoriteScreen(),
+                ));
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterView());
       case Routes.forgotPasswordRoute:
@@ -88,7 +100,11 @@ class RouteGenerator {
       case Routes.downloadRoute:
         return MaterialPageRoute(builder: (_) => const DownloadView());
       case Routes.accountRoute:
-        return MaterialPageRoute(builder: (_) => const AccountView());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIt<FavoriteBloc>(),
+                  child: AccountView(),
+                ));
       case Routes.homeRoute:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(

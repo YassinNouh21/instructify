@@ -47,11 +47,21 @@ class AuthenticationBloc
             emailAddress: EmailSignObject.validate(event.email),
             password:
                 PasswordSignObject.validate(event.password, event.password))
-        .then((value) => emit(state.copyWith(
-              authFailureOrSuccessOption: some(value),
-              isSubmitting: false,
-              state: AuthenticationStates.authenticated,
-            )));
+        .then((value) => value.fold(
+              (l) => emit(state.copyWith(
+                  isSubmitting: false,
+                  showErrorMessages: true,
+                  state: AuthenticationStates.unAuthenticated,
+                  authFailureOrSuccessOption: some(left(l)))),
+              (r) => emit(
+                state.copyWith(
+                  isSubmitting: false,
+                  showErrorMessages: false,
+                  state: AuthenticationStates.authenticated,
+                  authFailureOrSuccessOption: some(right(r)),
+                ),
+              ),
+            ));
   }
 
   @override

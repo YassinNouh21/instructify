@@ -10,14 +10,15 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:google_sign_in/google_sign_in.dart' as _i5;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'application/auth/authentication_bloc.dart' as _i13;
-import 'application/bloc/fetch_bloc.dart' as _i9;
+import 'application/auth/authentication_bloc.dart' as _i12;
+import 'application/bloc/favorite_bloc.dart' as _i13;
+import 'application/bloc/fetch_bloc.dart' as _i14;
 import 'application/bloc/search_bloc.dart' as _i8;
-import 'application/validation/validation_bloc.dart' as _i12;
-import 'domain/auth/i_auth_facade.dart' as _i10;
+import 'application/validation/validation_bloc.dart' as _i11;
+import 'domain/auth/i_auth_facade.dart' as _i9;
 import 'domain/firebase/i_firebase_cloud.dart' as _i6;
-import 'infrastructure/auth/auth_firebase.dart' as _i11;
-import 'infrastructure/core/injectable_modules.dart' as _i14;
+import 'infrastructure/auth/auth_firebase.dart' as _i10;
+import 'infrastructure/core/injectable_modules.dart' as _i15;
 import 'infrastructure/firebase_cloud/firebase_cloud.dart'
     as _i7; // ignore_for_file: unnecessary_lambdas
 
@@ -36,17 +37,20 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i6.IFirebaseCloud>(
       () => _i7.CloudRepository(get<_i4.FirebaseFirestore>()));
   gh.factory<_i8.SearchBloc>(() => _i8.SearchBloc(get<_i6.IFirebaseCloud>()));
-  gh.factory<_i9.FetchBloc>(() => _i9.FetchBloc(get<_i6.IFirebaseCloud>()));
-  gh.lazySingleton<_i10.IAuthFacade>(() => _i11.AuthFirebase(
+  gh.lazySingleton<_i9.IAuthFacade>(() => _i10.AuthFirebase(
       get<_i3.FirebaseAuth>(),
       get<_i5.GoogleSignIn>(),
       get<_i6.IFirebaseCloud>(),
       get<_i4.FirebaseFirestore>()));
-  gh.factory<_i12.ValidationBloc>(
-      () => _i12.ValidationBloc(get<_i10.IAuthFacade>()));
-  gh.factory<_i13.AuthenticationBloc>(() => _i13.AuthenticationBloc(
-      get<_i10.IAuthFacade>(), get<_i6.IFirebaseCloud>()));
+  gh.factory<_i11.ValidationBloc>(
+      () => _i11.ValidationBloc(get<_i9.IAuthFacade>()));
+  gh.factory<_i12.AuthenticationBloc>(() => _i12.AuthenticationBloc(
+      get<_i9.IAuthFacade>(), get<_i6.IFirebaseCloud>()));
+  gh.factory<_i13.FavoriteBloc>(() =>
+      _i13.FavoriteBloc(get<_i9.IAuthFacade>(), get<_i6.IFirebaseCloud>()));
+  gh.factory<_i14.FetchBloc>(() => _i14.FetchBloc(
+      get<_i6.IFirebaseCloud>(), get<_i12.AuthenticationBloc>()));
   return get;
 }
 
-class _$FirebaseInjectableModule extends _i14.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i15.FirebaseInjectableModule {}

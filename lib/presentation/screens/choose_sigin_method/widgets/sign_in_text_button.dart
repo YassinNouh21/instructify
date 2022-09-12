@@ -7,8 +7,9 @@ class SignInTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () =>
-          Navigator.pushNamed(context, Routes.loginRoute),
+      onPressed: () {
+        Navigator.of(context).pushNamed(Routes.loginRoute);
+      },
       child: const Text(
         'Sign In',
         style: TextStyle(color: Colors.black),

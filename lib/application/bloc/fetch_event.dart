@@ -1,3 +1,4 @@
+
 part of 'fetch_bloc.dart';
 
 abstract class FetchEvent {}
@@ -73,4 +74,23 @@ class SearchByName extends FetchEvent {
 
   @override
   int get hashCode => name.hashCode;
+}
+
+class FetchFavoriteCourses extends FetchEvent {
+  final List<String> ids;
+  FetchFavoriteCourses({
+    required this.ids,
+  });
+  
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is FetchFavoriteCourses &&
+      listEquals(other.ids, ids);
+  }
+
+  @override
+  int get hashCode => ids.hashCode;
 }

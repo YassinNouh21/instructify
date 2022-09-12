@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:instructify/app.dart';
 import 'package:instructify/application/auth/authentication_bloc.dart';
 import 'package:instructify/application/bloc/search_bloc.dart';
+import 'package:instructify/bloc_observer.dart';
 import 'package:instructify/firebase_options.dart';
 import 'package:instructify/infrastructure/auth/local_auth.dart';
 import 'package:instructify/injection.dart';
@@ -17,6 +18,7 @@ Future<void> main() async {
     () async {
       configureInjection(Environment.prod);
       await PreferenceRepository.initializePreference();
+      PreferenceRepository.pref.setBool('isFirstTime', true);
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
@@ -37,5 +39,6 @@ Future<void> main() async {
         ),
       );
     },
+    blocObserver: SimpleBlocObserver(),
   );
 }

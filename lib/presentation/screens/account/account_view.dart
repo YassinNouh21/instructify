@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instructify/application/bloc/favorite_bloc.dart';
+import 'package:instructify/application/bloc/fetch_bloc.dart';
+import 'package:instructify/injection.dart';
 import 'package:instructify/presentation/resource/assets_manager.dart';
 import 'package:instructify/presentation/resource/color_manager.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
@@ -36,7 +39,11 @@ class AccountView extends StatelessWidget {
             SizedBox(height: 35.h),
             AccountButton(
               title: 'Favorite',
-              onPressed: () {},
+              onPressed: () {
+                debugPrint('favoriteCoursesPressed');
+
+                Navigator.of(context).pushNamed(Routes.favoriteRoute);
+              },
             ),
             AccountButton(
               title: 'Edit Account',

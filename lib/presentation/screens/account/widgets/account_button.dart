@@ -5,8 +5,8 @@ import 'package:instructify/presentation/resource/assets_manager.dart';
 
 class AccountButton extends StatelessWidget {
   final String title;
-  VoidCallback onPressed;
-  AccountButton({Key? key, required this.title, required this.onPressed})
+  final VoidCallback onPressed;
+  const AccountButton({Key? key, required this.title, required this.onPressed})
       : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class AccountButton extends StatelessWidget {
       height: 50.h,
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
       child: InkWell(
-        onTap: () {},
+        onTap: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -23,7 +23,7 @@ class AccountButton extends StatelessWidget {
             SvgPicture.asset(
               AssetsManager.rightIcon,
               width: 6.w,
-            )
+            ),
           ],
         ),
       ),

@@ -55,10 +55,11 @@ class _HomeViewState extends State<HomeView> {
                   BlocBuilder<FetchBloc, FetchState>(
                     bloc: bloc1,
                     builder: (context, state) {
-                      // print('ui state: ${state.dataType} ${state}');
+                      print('ui state: ${state.dataType} ${state}');
                       if (state.isLoading) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return Container(
+                          height: 160.h,
+                          child: CategoryViewer.loading(),
                         );
                       } else {
                         // print('state ui: ${state.dataType}');
@@ -74,9 +75,9 @@ class _HomeViewState extends State<HomeView> {
                               // print('ui categoty $r');
                               return Container(
                                 height: 160.h,
-                                child: categoryViewer(
-                                  context,
-                                  r as List<model.Category>,
+                                child: CategoryViewer(
+                                  categories: r as List<model.Category>,
+                                  isLoading: false,
                                 ),
                               );
                             }),
@@ -148,36 +149,36 @@ class _HomeViewState extends State<HomeView> {
                       return Container();
                     },
                   ),
-                  // BlocBuilder<FetchBloc, FetchState>(
-                  //   bloc: bloc2,
-                  //   builder: (context, state) {
-                  //     if (state.isLoading) {
-                  //       return CourseViewer.loading();
-                  //     } else {
-                  //       if (state.dataType == DataType.Course) {
-                  //         return state.failureOrSuccess.fold(
-                  //           () => Container(),
-                  //           (a) => a.fold(
-                  //               (l) => Container(
-                  //                     height: 100.h,
-                  //                     width: 100.w,
-                  //                     child: const Text('Error has occur'),
-                  //                   ), (r) {
-                  //             // print('ui categoty $r');
-                  //             return Container(
-                  //               height: 270.h,
-                  //               child: CourseViewer(
-                  //                 title: 'Science',
-                  //                 courses: r as List<Course>,
-                  //               ),
-                  //             );
-                  //           }),
-                  //         );
-                  //       }
-                  //     }
-                  //     return Container();
-                  //   },
-                  // ),
+                  BlocBuilder<FetchBloc, FetchState>(
+                    bloc: bloc2,
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return CourseViewer.loading();
+                      } else {
+                        if (state.dataType == DataType.Course) {
+                          return state.failureOrSuccess.fold(
+                            () => Container(),
+                            (a) => a.fold(
+                                (l) => Container(
+                                      height: 100.h,
+                                      width: 100.w,
+                                      child: const Text('Error has occur'),
+                                    ), (r) {
+                              // print('ui categoty $r');
+                              return Container(
+                                height: 270.h,
+                                child: CourseViewer(
+                                  title: 'Science',
+                                  courses: r as List<Course>,
+                                ),
+                              );
+                            }),
+                          );
+                        }
+                      }
+                      return Container();
+                    },
+                  ),
                 ],
               ),
             ),
@@ -186,61 +187,77 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+}
 
-  Container categoryViewer(
-      BuildContext context, List<model.Category> categories) {
-    return Container(
+class CategoryViewer extends StatelessWidget {
+  const CategoryViewer({
+    Key? key,
+    required this.categories,
+    required this.isLoading,
+  }) : super(key: key);
+  factory CategoryViewer.loading() {
+    return const CategoryViewer(
+      categories: [],
+      isLoading: true,
+    );
+  }
+  final List<model.Category> categories;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: SizeManager.s20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: SizeManager.s20),
+                child: AutoSizeText(
+                  'Topics',
+                  maxLines: 1,
+                  minFontSize: 8,
+                  maxFontSize: 16,
+                  wrapWords: true,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .copyWith(color: ColorManager.secondaryColor)
+                      .copyWith(color: Colors.black),
+                ),
+              ),
+              SizedBox(
+                width: SizeManager.s75,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.categoryRoute);
+                  },
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent)),
                   child: AutoSizeText(
-                    'Topics',
+                    'See all',
                     maxLines: 1,
                     minFontSize: 8,
-                    maxFontSize: 16,
-                    wrapWords: true,
+                    maxFontSize: 12,
+                    softWrap: true,
                     style: Theme.of(context)
                         .textTheme
-                        .headline6!
-                        .copyWith(color: ColorManager.secondaryColor)
-                        .copyWith(color: Colors.black),
+                        .subtitle2!
+                        .copyWith(color: ColorManager.secondaryColor),
                   ),
                 ),
-                SizedBox(
-                  width: SizeManager.s75,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(Routes.categoryRoute);
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.transparent)),
-                    child: AutoSizeText(
-                      'See all',
-                      maxLines: 1,
-                      minFontSize: 8,
-                      maxFontSize: 12,
-                      softWrap: true,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2!
-                          .copyWith(color: ColorManager.secondaryColor),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Container(
+          SizedBox(
             height: 105.h,
-            child: CategoryViewer(categories: categories),
+            child: isLoading
+                ? CategoryGridViewer.isLoading()
+                : CategoryGridViewer(categories: categories),
           ),
         ],
       ),

@@ -11,14 +11,11 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-  Future<void> _onBoardingDone() async {
-    await PreferenceRepository.pref.setBool('boarding', false);
-    debugPrint('boarding done ${PreferenceRepository.pref.getBool('boarding')}');
-  }
-
   @override
   void initState() {
-    _onBoardingDone();
+    PreferenceRepository.pref.setBool('isFirstTime', false);
+    debugPrint(
+        'boarding done ${PreferenceRepository.pref.getBool('isFirstTime')}');
     super.initState();
   }
 

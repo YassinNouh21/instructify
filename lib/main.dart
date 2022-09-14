@@ -18,7 +18,6 @@ Future<void> main() async {
     () async {
       configureInjection(Environment.prod);
       await PreferenceRepository.initializePreference();
-      PreferenceRepository.pref.setBool('isFirstTime', true);
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );

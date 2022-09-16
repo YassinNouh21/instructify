@@ -23,6 +23,7 @@ import '../screens/choose_sigin_method/choose_signin_method_view.dart';
 import '../screens/course_detail/course_detail_view.dart';
 import '../screens/course_progress/course_progress_view.dart';
 import '../screens/courses/courses_view.dart';
+import '../screens/no_connection/no_connection_screen.dart';
 import '../screens/search/search_view.dart';
 
 // TODO: Add profile screen
@@ -47,6 +48,7 @@ class Routes {
   static const String searchRoute = "/search";
   static const String paymentRoute = "/payment";
   static const String favoriteRoute = "/favorite";
+  static const String noConnectionRoute = "/noconnection";
   static const String noRouteFound = "No Route Found";
 }
 
@@ -92,6 +94,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CoursesView());
       case Routes.searchRoute:
         return MaterialPageRoute(builder: (_) => SearchView());
+      case Routes.noConnectionRoute:
+        return MaterialPageRoute(builder: (_) => const NoConnectionScreen());
       case Routes.courseDetailRoute:
         return MaterialPageRoute(
             builder: (_) => const CourseDetailView(), settings: routeSettings);

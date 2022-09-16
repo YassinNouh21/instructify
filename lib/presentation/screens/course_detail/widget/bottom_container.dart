@@ -6,8 +6,8 @@ import 'package:instructify/application/auth/authentication_bloc.dart';
 
 class BottomContainer extends StatelessWidget {
   final VoidCallback onPressedFavorite;
-  bool? isFavorite;
   final VoidCallback onPressedBuy;
+  bool? isFavorite;
   BottomContainer({
     Key? key,
     required this.onPressedFavorite,

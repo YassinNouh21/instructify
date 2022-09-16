@@ -1,18 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:instructify/infrastructure/auth/local_auth.dart';
+import 'package:instructify/application/bloc/connection_bloc.dart'
+    as connection;
+import 'package:instructify/application/bloc/connection_bloc.dart';
 import 'package:instructify/presentation/resource/route_manager.dart';
-import 'package:instructify/presentation/screens/account/account_view.dart';
-import 'package:instructify/presentation/screens/course_detail/course_detail_view.dart';
-import 'package:instructify/presentation/screens/home/home_view.dart';
-import 'package:instructify/presentation/screens/main/main_view.dart';
-import 'package:instructify/presentation/screens/search/search_view.dart';
+import 'package:instructify/presentation/screens/no_connection/no_connection_screen.dart';
 import 'package:sizer/sizer.dart';
 
 import 'presentation/resource/theme_manager.dart';
-import 'presentation/screens/category/category_view.dart';
-import 'presentation/screens/course/course._screen.dart';
 
 class MyApp extends StatelessWidget {
   static const instance = MyApp._private();
@@ -28,10 +24,20 @@ class MyApp extends StatelessWidget {
           builder: (context, child) {
             return MaterialApp(
               theme: getApplicationTheme(context),
-              title: 'Flutter Demo',
+              title: 'Instructify',
+              builder: (context, child) {
+                return BlocBuilder<ConnectionBloc, connection.ConnectionState>(
+                  builder: (_, stte) {
+                    debugPrint('Material App $stte');
+                    if (stte.status == connection.ConnectionStatus.connected) {
+                      return child!;
+                    } else {
+                      return const NoConnectionScreen();
+                    }
+                  },
+                );
+              },
               debugShowCheckedModeBanner: false,
-              // home: AccountView(),
-        
               onGenerateRoute: RouteGenerator.getRoute,
             );
           });

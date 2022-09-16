@@ -15,6 +15,7 @@ import 'package:instructify/model/category.dart' as model;
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
+import '../../../application/bloc/connection_bloc.dart';
 import '../../../application/bloc/fetch_bloc.dart';
 import '../../resource/route_manager.dart';
 // FIXME: Responsive design
@@ -55,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
                   BlocBuilder<FetchBloc, FetchState>(
                     bloc: bloc1,
                     builder: (context, state) {
-                      print('ui state: ${state.dataType} ${state}');
+                      print('ui state: ${state.dataType} ');
                       if (state.isLoading) {
                         return Container(
                           height: 160.h,
@@ -72,8 +73,8 @@ class _HomeViewState extends State<HomeView> {
                                       width: 100.w,
                                       child: Text('Error has occur'),
                                     ), (r) {
-                              // print('ui categoty $r');
-                              return Container(
+                              // print('ui categoty ');
+                              return SizedBox(
                                 height: 160.h,
                                 child: CategoryViewer(
                                   categories: r as List<model.Category>,
@@ -100,11 +101,11 @@ class _HomeViewState extends State<HomeView> {
                           (l) => Container(
                             height: 100.h,
                             width: 100.w,
-                            child: Text('Error has occur'),
+                            child: const Text('Error has occur'),
                           ),
                           (r) {
-                            // print('ui categoty $r');
-                            return Container(
+                            // print('ui categoty ');
+                            return SizedBox(
                               height: 240.h,
                               child: CourseViewer(
                                 courses: r as List<Course>,
@@ -119,7 +120,7 @@ class _HomeViewState extends State<HomeView> {
                   BlocBuilder<FetchBloc, FetchState>(
                     bloc: bloc3,
                     builder: (context, state) {
-                      // print('ui state: ${state.dataType} ${state}');
+                      // print('ui state: ${state.dataType} ');
                       if (state.isLoading) {
                         // return Center(
                         return CourseViewer.loading();
@@ -129,44 +130,14 @@ class _HomeViewState extends State<HomeView> {
                           return state.failureOrSuccess.fold(
                             () => Container(),
                             (a) => a.fold(
-                                (l) => Container(
-                                      height: 100.h,
-                                      width: 100.w,
-                                      child: Text('Error has occur'),
-                                    ), (r) {
-                              // print('ui categoty $r');
-                              return Container(
-                                height: 240.h,
-                                child: CourseViewer(
-                                  title: 'Science',
-                                  courses: r as List<Course>,
-                                ),
-                              );
-                            }),
-                          );
-                        }
-                      }
-                      return Container();
-                    },
-                  ),
-                  BlocBuilder<FetchBloc, FetchState>(
-                    bloc: bloc2,
-                    builder: (context, state) {
-                      if (state.isLoading) {
-                        return CourseViewer.loading();
-                      } else {
-                        if (state.dataType == DataType.Course) {
-                          return state.failureOrSuccess.fold(
-                            () => Container(),
-                            (a) => a.fold(
-                                (l) => Container(
+                                (l) => SizedBox(
                                       height: 100.h,
                                       width: 100.w,
                                       child: const Text('Error has occur'),
                                     ), (r) {
-                              // print('ui categoty $r');
-                              return Container(
-                                height: 270.h,
+                              // print('ui categoty ');
+                              return SizedBox(
+                                height: 240.h,
                                 child: CourseViewer(
                                   title: 'Science',
                                   courses: r as List<Course>,

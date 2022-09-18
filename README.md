@@ -1,16 +1,24 @@
 # instructify
 
-A new Flutter project.
+Goal:
+It is an online learning and teaching app with over 100 courses and many students. Learn programming, marketing, videography, and data analytics
 
-## Getting Started
+Features:
+1- Sign with different methods Google, with email and password.
+2- User able to list a favorite courses.
+3- Friendly UI, and Responsive UI
+4- Color Matching 
+5- Easy way to view course details 
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+Packages:
+1- BLOC 
+2- Injectable / Get_it 
+3- internet checker 
+4- dartz 
+5- Freezed 
+6- ScreenUtil 
+7- shared_preferences
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+https://user-images.githubusercontent.com/70436855/190917642-2c6373f3-43a8-4e5a-82f0-52bbafe7dd66.mp4
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
